@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Action Bar</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="webDataStatus">Web Data</string>
+    <string name="configEditor">DTN Configuration</string>
+    <string name="bundleStatistics">Bundle Statistics</string>
+
+</resources>
