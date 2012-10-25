@@ -20,6 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".WebData"
+            android:label="@string/title_activity_web_data" >
+        </activity>
+        <activity
+            android:name=".DaemonConfig"
+            android:label="@string/title_activity_daemon_config" >
+        </activity>
+        <activity
+            android:name=".BundleStatistics"
+            android:label="@string/title_activity_bundle_statistics" >
+        </activity>
     </application>
 
 </manifest>

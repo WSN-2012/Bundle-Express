@@ -1,40 +1,59 @@
 package se.kth.ssvl.tslab.wsn.apps;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
+import android.support.v4.app.FragmentActivity;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
-    @Override
+   
+	
+	@Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
-    	TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
+    	
+    	 //Resources res;
+    	 TabHost tabHost;
+    	 //TabHost.TabSpec spec;
+    	 Intent intent;
+    	
+    	/*TabHost tabHost=(TabHost)findViewById(R.id.tabHost);*/
+    	tabHost=(TabHost)findViewById(R.id.tabHost);
     	tabHost.setup();
+    	 
+    	// res=getResources();
+         //tabHost=getTabHost();
 
-    	TabSpec spec1=tabHost.newTabSpec("Gateway");
-    	spec1.setContent(R.id.Gateway);
+    	
+    	intent=new Intent().setClass(this,WebData.class);
+    	TabSpec spec1=tabHost.newTabSpec("Tab 1");
+    	//spec1.setContent(R.id.Gateway);
     	spec1.setIndicator("Gateway");
-
-    	TabSpec spec2=tabHost.newTabSpec("Config");
-    	spec2.setIndicator("Config");
-    	spec2.setContent(R.id.Config);
-
-    	TabSpec spec3=tabHost.newTabSpec("Statistics");
-    	spec3.setIndicator("Statistics");
-    	spec3.setContent(R.id.Statistics);
-
+    	spec1.setContent(intent);
+    	//startActivity(intent);
     	tabHost.addTab(spec1);
+    	
+    	intent=new Intent().setClass(this,DaemonConfig.class);
+    	TabSpec spec2=tabHost.newTabSpec("Tab 2");
+    	spec2.setIndicator("Config");
+    	//spec2.setContent(R.id.Config);
+    	spec2.setContent(intent);
     	tabHost.addTab(spec2);
+    	
+    	intent=new Intent().setClass(this,BundleStatistics.class);
+    	TabSpec spec3=tabHost.newTabSpec("Tab 3");
+    	spec3.setIndicator("Statistics");
+    	//spec3.setContent(R.id.Statistics);
+    	spec3.setContent(intent);
     	tabHost.addTab(spec3);
     	}
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
-    }
+    }*/
 }

@@ -7,5 +7,11 @@
     <string name="webDataStatus">Web Data</string>
     <string name="configEditor">DTN Configuration</string>
     <string name="bundleStatistics">Bundle Statistics</string>
+    <string name="activateDaemon">Daemon Activate</string>
+    <string name="title_activity_gateway_data">GatewayData</string>
+    <string name="title_activity_config_editor">Configuration</string>
+    <string name="title_activity_web_data">Web Data</string>
+    <string name="title_activity_daemon_config">Daemon Configuration</string>
+    <string name="title_activity_bundle_statistics">Bundle Statistics</string>
 
 </resources>
