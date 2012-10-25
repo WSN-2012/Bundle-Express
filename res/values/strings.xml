@@ -13,11 +13,14 @@
     <string name="title_activity_daemon_config">Daemon Configuration</string>
     <string name="title_activity_bundle_statistics">Bundle Statistics</string>
     
-    <string name="activateDaemon">Daemon Activate</string>
+    <string name="activateDaemon">Start Android Service</string>
     <string name="storageSpaceLimit">Space limit</string>
     <string name="Quota"></string>
     <string name="routingName">Routing Type</string>
     <string name="staticRouting">Static</string>
     <string name="epidemicRouting">Epidemic</string>
     <string name="prophetRouting">ProPHET</string>
+    <string name="ServerEndpointID">Server EID</string>
+    <string name="UpdateServerEID">dtn://server.dtn</string>
+    <string name="updateEID">Update</string>
 </resources>
