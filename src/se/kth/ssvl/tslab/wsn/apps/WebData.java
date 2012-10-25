@@ -11,7 +11,7 @@ public class WebData extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_web_data);
         TextView tv=new TextView(this);
-        tv.setText("I am in Tab A..");
+        tv.setText("Web Data");
         setContentView(tv);
     }
 

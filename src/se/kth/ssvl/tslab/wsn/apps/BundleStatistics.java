@@ -11,7 +11,7 @@ public class BundleStatistics extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_bundle_statistics);
         TextView tv=new TextView(this);
-        tv.setText("I am in Tab A..");
+        tv.setText("Bundle Statisrics");
         setContentView(tv);
     }
 

@@ -11,7 +11,7 @@ public class DaemonConfig extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_daemon_config);
         TextView tv=new TextView(this);
-        tv.setText("I am in Tab A..");
+        tv.setText("Daemon Configuration");
         setContentView(tv);
     }
 

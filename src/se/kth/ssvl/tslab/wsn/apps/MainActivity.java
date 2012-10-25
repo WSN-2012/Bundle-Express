@@ -1,12 +1,12 @@
 package se.kth.ssvl.tslab.wsn.apps;
 
+import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TabHost;
-import android.widget.TabHost.TabSpec;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends TabActivity {
 
    
 	
@@ -17,38 +17,39 @@ public class MainActivity extends FragmentActivity {
     	
     	 //Resources res;
     	 TabHost tabHost;
-    	 //TabHost.TabSpec spec;
-    	 Intent intent;
+    	 TabHost.TabSpec spec;
+    	 //Intent intent;
     	
-    	/*TabHost tabHost=(TabHost)findViewById(R.id.tabHost);*/
+    	/*TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
     	tabHost=(TabHost)findViewById(R.id.tabHost);
-    	tabHost.setup();
+    	tabHost.setup();*/
     	 
     	// res=getResources();
-         //tabHost=getTabHost();
+         tabHost=getTabHost();
 
     	
-    	intent=new Intent().setClass(this,WebData.class);
-    	TabSpec spec1=tabHost.newTabSpec("Tab 1");
+    	Intent intent1=new Intent().setClass(this,WebData.class);
+    	spec=tabHost.newTabSpec("Tab 1");
     	//spec1.setContent(R.id.Gateway);
-    	spec1.setIndicator("Gateway");
-    	spec1.setContent(intent);
+    	spec.setIndicator("Gateway");
+    	spec.setContent(intent1);
     	//startActivity(intent);
-    	tabHost.addTab(spec1);
+    	//Log.d("tabs", tabHost + ";" + spec);
+    	tabHost.addTab(spec);
     	
-    	intent=new Intent().setClass(this,DaemonConfig.class);
-    	TabSpec spec2=tabHost.newTabSpec("Tab 2");
-    	spec2.setIndicator("Config");
+    	Intent intent2=new Intent().setClass(this,DaemonConfig.class);
+    	spec=tabHost.newTabSpec("Tab 2");
+    	spec.setIndicator("Config");
     	//spec2.setContent(R.id.Config);
-    	spec2.setContent(intent);
-    	tabHost.addTab(spec2);
+    	spec.setContent(intent2);
+    	tabHost.addTab(spec);
     	
-    	intent=new Intent().setClass(this,BundleStatistics.class);
-    	TabSpec spec3=tabHost.newTabSpec("Tab 3");
-    	spec3.setIndicator("Statistics");
+    	Intent intent3=new Intent().setClass(this,BundleStatistics.class);
+    	spec=tabHost.newTabSpec("Tab 3");
+    	spec.setIndicator("Statistics");
     	//spec3.setContent(R.id.Statistics);
-    	spec3.setContent(intent);
-    	tabHost.addTab(spec3);
+    	spec.setContent(intent3);
+    	tabHost.addTab(spec);
     	}
 
    /* @Override
