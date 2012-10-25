@@ -23,4 +23,13 @@
     <string name="ServerEndpointID">Server EID</string>
     <string name="UpdateServerEID">dtn://server.dtn</string>
     <string name="updateEID">Update</string>
+    
+    
+     <string-array name="gatewaylist">
+        <item>GW1</item>
+        <item>GW2</item>
+        <item>GW3</item>
+        <item>GW4</item>
+    </string-array>
+        <string name="GatewayName">Choose your gateway</string>
 </resources>

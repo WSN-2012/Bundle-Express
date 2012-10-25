@@ -3,7 +3,6 @@ package se.kth.ssvl.tslab.wsn.apps;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TabHost;
 
 public class MainActivity extends TabActivity {
