@@ -1,9 +1,7 @@
 package se.kth.ssvl.tslab.wsn.apps;
 
 import android.app.Activity;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 
 public class WebData extends Activity {
 

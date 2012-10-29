@@ -15,7 +15,6 @@
         android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/gatewaylist"
-        android:gravity="center" />
+        android:entries="@array/gatewaylist"/>
 
 </LinearLayout>

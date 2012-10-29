@@ -32,4 +32,8 @@
         <item>GW4</item>
     </string-array>
         <string name="GatewayName">Choose your gateway</string>
+        <string name="BundleStatus">Bundle Statistics</string>
+        <string name="bundleForwardCounter">Number of bundle stored to forward</string>
+        <string name="bundleCounterSent">Number of encrypted bundle sent</string>
+        <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
 </resources>
