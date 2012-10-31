@@ -35,11 +35,6 @@
         <activity
             android:name=".WebDataContent"
             android:label="@string/title_activity_web_data_content" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
