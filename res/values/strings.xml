@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="app_name">Action Bar</string>
+    <string name="app_name">WSN-Android</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">WSN Andriod</string>
     <string name="webDataStatus">Web Data</string>
     <string name="configEditor">DTN Configuration</string>
     <string name="bundleStatistics">Bundle Statistics</string>
@@ -28,5 +28,6 @@
     <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
     <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="AndroidService">Activate Android Service</string>
+    <string name="SpaceUnit">Use MegaByte</string>
 
 </resources>

@@ -6,19 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingLeft="10dp" >
     
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:orientation="horizontal"
-         android:paddingTop="20dp" >
+         android:paddingTop="20dp">
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_weight="2"
+        android:gravity="left"
         android:text="@string/AndroidService"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -28,32 +30,37 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|end"
         android:gravity="right"
-        android:paddingLeft="20dp"
+        android:paddingLeft="10dp"
         android:text="@string/activateDaemon" />
     
       </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingTop="20dp" >
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="2"
             android:text="@string/storageSpaceLimit"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
             android:id="@+id/editText1"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="10"
+            android:hint="@string/SpaceUnit"
             android:inputType="number"
-            android:text="@string/Quota" >
+            android:text="@string/Quota"
+            android:textSize="17dp" >       
         </EditText>
+        
     </LinearLayout>
     
         <LinearLayout
@@ -73,8 +80,11 @@
 
         <RadioGroup
             android:id="@+id/radioGroup1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:paddingLeft="30dp" >
 
             <RadioButton
                 android:id="@+id/radio0"
@@ -104,17 +114,21 @@
             android:paddingTop="20dp" >
         
             <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ServerEndpointID"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/ServerEndpointID"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
         	
         <EditText
             android:id="@+id/UpdateServerEID"
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:hint="@string/UpdateServerEID" />
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:hint="@string/UpdateServerEID"
+            android:textSize="15dp" />
     
    <!-- <Button
         android:layout_width="wrap_content"
