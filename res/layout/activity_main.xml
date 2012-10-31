@@ -19,49 +19,6 @@
     		android:layout_width="match_parent"
     		android:layout_height="match_parent"
     		android:id="@android:id/tabcontent">
-     
-     				<!-- <LinearLayout
-     				android:layout_width="match_parent"
-    				android:layout_height="match_parent"
-    				android:id="@+id/Gateway"
-    				android:orientation="vertical" >
-
-     				<TextView
-         			android:id="@+id/txt1"
-         			android:layout_width="match_parent"
-         			android:layout_height="match_parent"
-         			android:text="@string/webDataStatus" />
-     				
-    
-     				</LinearLayout>
-     
-     				<LinearLayout
-    				android:layout_width="match_parent"
-    				android:layout_height="match_parent"
-    				android:id="@+id/Config"
-    				android:orientation="vertical">
-
-     				<TextView
-         			android:id="@+id/txt2"
-         			android:layout_width="match_parent"
-         			android:layout_height="match_parent"
-         			android:text="@string/configEditor" />
-   
-     				</LinearLayout>
-     
-      				<LinearLayout
-     				android:layout_width="match_parent"
-    				android:layout_height="match_parent"
-    				android:id="@+id/Statistics"
-    				android:orientation="vertical">
-
-     				<TextView
-         			android:id="@+id/txt3"
-         			android:layout_width="match_parent"
-         			android:layout_height="match_parent"
-         			android:text="@string/bundleStatistics" />
-   
-     				</LinearLayout>  -->
      		</FrameLayout>
      
      		</LinearLayout>

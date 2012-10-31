@@ -32,6 +32,15 @@
             android:name=".BundleStatistics"
             android:label="@string/title_activity_bundle_statistics" >
         </activity>
+        <activity
+            android:name=".WebDataContent"
+            android:label="@string/title_activity_web_data_content" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

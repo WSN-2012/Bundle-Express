@@ -12,8 +12,7 @@
     <string name="title_activity_web_data">Web Data</string>
     <string name="title_activity_daemon_config">Daemon Configuration</string>
     <string name="title_activity_bundle_statistics">Bundle Statistics</string>
-    
-    <string name="activateDaemon">Start Android Service</string>
+    <string name="activateDaemon"></string>
     <string name="storageSpaceLimit">Space limit</string>
     <string name="Quota"></string>
     <string name="routingName">Routing Type</string>
@@ -23,17 +22,11 @@
     <string name="ServerEndpointID">Server EID</string>
     <string name="UpdateServerEID">dtn://server.dtn</string>
     <string name="updateEID">Update</string>
-    
-    
-     <string-array name="gatewaylist">
-        <item>GW1</item>
-        <item>GW2</item>
-        <item>GW3</item>
-        <item>GW4</item>
-    </string-array>
-        <string name="GatewayName">Choose your gateway</string>
-        <string name="BundleStatus">Bundle Statistics</string>
-        <string name="bundleForwardCounter">Number of bundle stored to forward</string>
-        <string name="bundleCounterSent">Number of encrypted bundle sent</string>
-        <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
+    <string name="BundleStatus">Bundle Statistics</string>
+    <string name="bundleForwardCounter">Number of bundle stored to forward</string>
+    <string name="bundleCounterSent">Number of encrypted bundle sent</string>
+    <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
+    <string name="title_activity_web_data_content">Gateway Data</string>
+    <string name="AndroidService">Activate Android Service</string>
+
 </resources>

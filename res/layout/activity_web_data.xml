@@ -3,18 +3,13 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/GatewayName"
-        tools:context=".WebData" />
-
-    <Spinner
-        android:id="@+id/spinner1"
+    <ListView
+        android:id="@+id/listView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/gatewaylist"/>
+        android:layout_height="wrap_content" >
+    </ListView>
+    
 
 </LinearLayout>
