@@ -29,11 +29,21 @@
     <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="AndroidService">Activate Android Service</string>
     <string name="SpaceUnit">Use MegaByte</string>
-    
+
     <string-array name="RoutingSelection">
         <item>Static</item>
         <item>Epidemic</item>
         <item>ProPHET</item>
     </string-array>
+
+    <string name="title_activity_sensor_list">Sensor List</string>
+
+    <string name="SensorTemp">"Temperature: "</string>
+
+    <string name="unixTime">Unix Time:</string>
+
+    <string name="PowerSaveIndicator">Power Save Indicator:</string>
+
+    <string name="VoltageIn">Voltage In:</string>
 
 </resources>
