@@ -21,11 +21,9 @@ public class Communication implements BPFCommunication {
 	          {
 	            NetworkInterface ni = niEnum.nextElement(); //ni receive each time the name of interface, for example eth0
 	            if(!ni.isLoopback()){ //if ni-interface is not loopback, then variable interfaceAddress receive address of this interface
-	                for (InterfaceAddress interfaceAddress : ni.getInterfaceAddresses())
-	                {
-
+	                for (InterfaceAddress interfaceAddress:ni.getInterfaceAddresses())
+	                		{
 	                  found_bcast_address = interfaceAddress.getBroadcast();
-
 	                }
 	            }
 	          }
