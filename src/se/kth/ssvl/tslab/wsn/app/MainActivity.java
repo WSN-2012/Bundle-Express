@@ -1,5 +1,6 @@
-package se.kth.ssvl.tslab.wsn.apps;
+package se.kth.ssvl.tslab.wsn.app;
 
+import se.kth.ssvl.tslab.wsn.apps.R;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;

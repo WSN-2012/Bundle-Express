@@ -1,5 +1,6 @@
-package se.kth.ssvl.tslab.wsn.apps;
+package se.kth.ssvl.tslab.wsn.service;
 
+import se.kth.ssvl.tslab.wsn.apps.R;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -7,7 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-public class AndService extends Service  {
+public class BPFService extends Service  {
 /*String tag="TestService";*/
 	private static final String TAG = "AndService";
 	MediaPlayer player;

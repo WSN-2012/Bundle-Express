@@ -1,4 +1,4 @@
-package bpf;
+package se.kth.ssvl.tslab.wsn.bpf;
 
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFActionReceiver;
 import se.kth.ssvl.tslab.wsn.general.servlib.bundling.bundles.Bundle;

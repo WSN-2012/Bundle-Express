@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.apps.Helper;
+package se.kth.ssvl.tslab.wsn.app.helper;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

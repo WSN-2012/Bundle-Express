@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.apps;
+package se.kth.ssvl.tslab.wsn.app;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.kth.ssvl.tslab.wsn.apps.Helper.AlertDialogManager;
-import se.kth.ssvl.tslab.wsn.apps.Helper.ConnectionDetector;
-import se.kth.ssvl.tslab.wsn.apps.Helper.JSONParser;
+import se.kth.ssvl.tslab.wsn.app.helper.AlertDialogManager;
+import se.kth.ssvl.tslab.wsn.app.helper.ConnectionDetector;
+import se.kth.ssvl.tslab.wsn.app.helper.JSONParser;
+import se.kth.ssvl.tslab.wsn.apps.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
