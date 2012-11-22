@@ -3,7 +3,7 @@ package se.kth.ssvl.tslab.wsn.app;
 
 
 import se.kth.ssvl.tslab.wsn.apps.R;
-import se.kth.ssvl.tslab.wsn.service.BPFService;
+import se.kth.ssvl.tslab.wsn.service.WSNService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,10 +32,10 @@ public class DaemonConfig extends Activity {
 				if (((CheckBox) v).isChecked()) {
 					Toast.makeText(DaemonConfig.this,
 							"Activate Service", Toast.LENGTH_LONG).show();
-					startService(new Intent(DaemonConfig.this, BPFService.class));/*Remember as a flag*/
+					startService(new Intent(DaemonConfig.this, WSNService.class));/*Remember as a flag*/
 				}
 				else
-					stopService(new Intent(DaemonConfig.this, BPFService.class)); /*Remember as a flag*/
+					stopService(new Intent(DaemonConfig.this, WSNService.class)); /*Remember as a flag*/
 			}
 		});
 

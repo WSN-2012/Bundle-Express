@@ -52,7 +52,7 @@
             </intent-filter>
 
         </activity>
-        <service android:enabled="true" android:name=".BPFService"/>
+        <service android:enabled="true" android:name=".WSNService"/>
     </application>
 
 </manifest>

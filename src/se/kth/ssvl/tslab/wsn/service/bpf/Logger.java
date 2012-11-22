@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.bpf;
+package se.kth.ssvl.tslab.wsn.service.bpf;
 
 import android.util.Log;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFLogger;

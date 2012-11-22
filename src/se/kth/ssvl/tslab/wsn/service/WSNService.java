@@ -8,7 +8,7 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
-public class BPFService extends Service  {
+public class WSNService extends Service  {
 /*String tag="TestService";*/
 	private static final String TAG = "AndService";
 	MediaPlayer player;

@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.bpf;
+package se.kth.ssvl.tslab.wsn.service.bpf;
 
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
