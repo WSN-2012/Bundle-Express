@@ -12,6 +12,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.Environment;
 
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFDB;
@@ -27,6 +28,7 @@ public class DB implements BPFDB {
 	private Logger logger;
 	private SQLiteDatabase database;
 	private String databaseFilePath;
+	private SQLiteQueryBuilder sqlbuilder;
 
 	public DB(File dbFile, Logger logger) 
 	{  
@@ -127,19 +129,6 @@ public class DB implements BPFDB {
 		return result.toString();
 	}
 	
-	private String getCommaFromArray(String[] array) {
-		StringBuilder result = new StringBuilder(100);
-		int c = 1;
-		for (String item : array) {
-			if (c < array.length) {
-				result.append(item + ", ");
-			} else {
-				result.append(item);
-			}
-			c++;
-		}
-		return result.toString();
-	}
 	
 	private String getUpdateStringFromMap(Map<String, Object> map) {
 		StringBuilder result = new StringBuilder(100);
@@ -185,11 +174,12 @@ public class DB implements BPFDB {
 			throws BPFDBException {
 		int numOfRowsUpdated = -1;
 		database = getWritableDatabase();
-		try{
 		
+		try{
 			if (whereClause != null && !whereClause.equals("")) {
+				String sql = "DELETE FROM " + table + " WHERE " + whereClause;
 				numOfRowsUpdated = database.delete(table,whereClause,whereArgs);
-				logger.debug(TAG, "Deleting with SQL: " + whereClause);
+				logger.debug(TAG, "Deleting with SQL: " + sql);
 			} else {
 				logger.warning(TAG, "Deleting all items in: " + table);
 			}
@@ -220,11 +210,26 @@ public class DB implements BPFDB {
 			throws BPFDBException {
 		ContentValues conValues = MaptoContentValues(values);
 		
+		StringBuffer sql = new StringBuffer(150);
+		HashMap<String, Object> nonEmpty = getNonEmptyEntries(values);
+		// Add the basics to the sql
+		sql.append("INSERT OR IGNORE INTO ");
+		sql.append(table);
+		sql.append(" (");
+				
+		// Add the column names
+		sql.append(getCommaFromKey(nonEmpty));
+				
+		// Add the values
+		sql.append(") VALUES (");
+		sql.append(getCommaFromValue(nonEmpty));
+		sql.append(")");
+		
 		logger.debug(TAG, "INSERT SQL: ");
 
 		try {
 			database = getWritableDatabase();
-			database.insert(table, null, conValues);
+			database. insertWithOnConflict(table, null, conValues, SQLiteDatabase.CONFLICT_IGNORE );
 		} catch (SQLiteException e) {
 			throw new BPFDBException("Unable to insert the new row, reason: "
 					+ e.getMessage());
@@ -246,45 +251,8 @@ public class DB implements BPFDB {
 		}
 		
 		// Start building the SQL
-		StringBuilder sql = new StringBuilder(150);
-		sql.append("SELECT");
 		
-		// Add selection for the specified columns (if specified)
-		if (columns != null && columns.length > 0) {
-			sql.append(" " + getCommaFromArray(columns) + " FROM " + table);
-		} else {
-			sql.append(" * FROM " + table);
-		}
-		
-		// Add the where selection but not the arguments quite yet (prepared statement will do this)
-		if (selection != null && !selection.equals("")) {
-			sql.append(" WHERE ");
-			sql.append(selection);
-		}
-		
-		// Group by the specified argument (if spcified)
-		if (groupBy != null && !groupBy.equals("")) {
-			sql.append(" GROUP BY ");
-			sql.append(groupBy);
-		}
-		
-		// Add the having operator (if specified)
-		if (having != null && !having.equals("")) {
-			sql.append(" HAVING ");
-			sql.append(having);
-		}
-		
-		// Add the group by operator (if specified)
-		if (orderBy != null && !orderBy.equals("")) {
-			sql.append(" GROUP BY ");
-			sql.append(groupBy);
-		}
-		
-		// Add the limit (if specified)
-		if (limit != null && !limit.equals("")) {
-			sql.append(" LIMIT ");
-			sql.append(limit);
-		}
+		String sql = sqlbuilder.buildQuery(columns, selection, groupBy, having, orderBy, limit);
 
 		
 		List<Map<String, Object>> result = new ArrayList<Map<String,Object>>();
@@ -368,7 +336,7 @@ public class DB implements BPFDB {
 			//open database
 			database = getWritableDatabase();
 			logger.debug(TAG, "Updating with SQL: " + sql.toString());
-
+			
 			return database.update(table, conValues, where, whereArgs);
 		} catch (SQLiteException e) {
 			throw new BPFDBException(
