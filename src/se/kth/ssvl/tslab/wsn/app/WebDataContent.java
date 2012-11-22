@@ -13,7 +13,7 @@ import org.json.JSONObject;
 import se.kth.ssvl.tslab.wsn.app.helper.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.helper.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.helper.JSONParser;
-import se.kth.ssvl.tslab.wsn.apps.R;
+import se.kth.ssvl.tslab.wsn.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -83,7 +83,7 @@ public class WebDataContent extends ListActivity {
 		sensor_id = i.getStringExtra("sensor_id");
 
 		datalist = new ArrayList<HashMap<String, String>>();
-		
+
 		new GatewayData().execute();
 
 		Log.d("data: ", "> ");
@@ -221,8 +221,10 @@ public class WebDataContent extends ListActivity {
 					ListAdapter adapter = new SimpleAdapter(
 							WebDataContent.this, datalist,
 							R.layout.list_item_data, new String[] {
-									TAG_UTIMESTAMP, TAG_T, TAG_UT, TAG_PS, TAG_V_IN }, new int[] {
-									R.id.unixTimestamp, R.id.temp, R.id.unixTime, R.id.powerSaveIndicator, R.id.vIn });
+									TAG_UTIMESTAMP, TAG_T, TAG_UT, TAG_PS,
+									TAG_V_IN }, new int[] { R.id.unixTimestamp,
+									R.id.temp, R.id.unixTime,
+									R.id.powerSaveIndicator, R.id.vIn });
 					// updating listview
 					setListAdapter(adapter);
 				}

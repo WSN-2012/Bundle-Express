@@ -5,14 +5,19 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 public class AlertDialogManager {
-	
+
 	/**
 	 * Function to display simple Alert Dialog
-	 * @param context - application context
-	 * @param title - alert dialog title
-	 * @param message - alert message
-	 * @param status - success/failure (used to set icon)
-	 * 				 - pass null if you don't want icon
+	 * 
+	 * @param context
+	 *            - application context
+	 * @param title
+	 *            - alert dialog title
+	 * @param message
+	 *            - alert message
+	 * @param status
+	 *            - success/failure (used to set icon) - pass null if you don't
+	 *            want icon
 	 * */
 	@SuppressWarnings("deprecation")
 	public void showAlertDialog(Context context, String title, String message,
@@ -25,9 +30,10 @@ public class AlertDialogManager {
 		// Setting Dialog Message
 		alertDialog.setMessage(message);
 
-		if(status != null)
+		if (status != null)
 			// Setting alert dialog icon
-			//alertDialog.setIcon((status) ? android.R.drawable.success : android.R.drawable.fail);
+			// alertDialog.setIcon((status) ? android.R.drawable.success :
+			// android.R.drawable.fail);
 			alertDialog.setIcon(null);
 
 		// Setting OK Button

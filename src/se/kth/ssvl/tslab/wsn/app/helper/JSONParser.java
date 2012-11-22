@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class JSONParser {
-	
+
 	static InputStream is = null;
 	static JSONObject jObj = null;
 	static String json = "";
@@ -54,17 +54,17 @@ public class JSONParser {
 			} else if (method == "GET") {
 				// request method is GET
 				Log.d("get: ", "> ");
-				
+
 				DefaultHttpClient httpClient = new DefaultHttpClient();
 				String paramString = URLEncodedUtils.format(params, "utf-8");
 				url += "?" + paramString;
-				Log.d( "WEB", "URL=" +url);
+				Log.d("WEB", "URL=" + url);
 				HttpGet httpGet = new HttpGet(url);
 
 				HttpResponse httpResponse = httpClient.execute(httpGet);
 				HttpEntity httpEntity = httpResponse.getEntity();
 				is = httpEntity.getContent();
-				
+
 				Log.d("HTTPresponse: ", "> " + is);
 			}
 
@@ -77,23 +77,24 @@ public class JSONParser {
 		}
 
 		try {
-			/*BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "iso-8859-1"), 8);*/
+			/*
+			 * BufferedReader reader = new BufferedReader(new InputStreamReader(
+			 * is, "iso-8859-1"), 8);
+			 */
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
 					is, "UTF-8"), 8);
-			
+
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line + "\n");
-				
-				
+
 			}
 			is.close();
 			json = sb.toString();
-			
-			Log.d("BufferData: ", "> " +json);
-			
+
+			Log.d("BufferData: ", "> " + json);
+
 		} catch (Exception e) {
 			Log.e("Buffer Error", "Error converting result " + e.toString());
 		}

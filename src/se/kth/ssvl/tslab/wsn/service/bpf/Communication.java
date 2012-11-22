@@ -12,28 +12,31 @@ public class Communication implements BPFCommunication {
 
 	@Override
 	public InetAddress getBroadcastAddress() {
-	    InetAddress found_bcast_address=null;
-	     System.setProperty("java.net.preferIPv4Stack", "true"); 
-	        try
-	        {
-	          Enumeration<NetworkInterface> niEnum = NetworkInterface.getNetworkInterfaces();
-	          while (niEnum.hasMoreElements()) //while all interfaces are counted
-	          {
-	            NetworkInterface ni = niEnum.nextElement(); //ni receive each time the name of interface, for example eth0
-	            if(!ni.isLoopback()){ //if ni-interface is not loopback, then variable interfaceAddress receive address of this interface
-	                for (InterfaceAddress interfaceAddress:ni.getInterfaceAddresses())
-	                		{
-	                  found_bcast_address = interfaceAddress.getBroadcast();
-	                }
-	            }
-	          }
-	        }
-	        catch (SocketException e)
-	        {
-	          e.printStackTrace();
-	        }
+		InetAddress found_bcast_address = null;
+		System.setProperty("java.net.preferIPv4Stack", "true");
+		try {
+			Enumeration<NetworkInterface> niEnum = NetworkInterface
+					.getNetworkInterfaces();
+			while (niEnum.hasMoreElements()) // while all interfaces are counted
+			{
+				NetworkInterface ni = niEnum.nextElement(); // ni receive each
+															// time the name of
+															// interface, for
+															// example eth0
+				if (!ni.isLoopback()) { // if ni-interface is not loopback, then
+										// variable interfaceAddress receive
+										// address of this interface
+					for (InterfaceAddress interfaceAddress : ni
+							.getInterfaceAddresses()) {
+						found_bcast_address = interfaceAddress.getBroadcast();
+					}
+				}
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
 
-	        return found_bcast_address;
+		return found_bcast_address;
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import se.kth.ssvl.tslab.wsn.app.helper.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.helper.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.helper.JSONParser;
-import se.kth.ssvl.tslab.wsn.apps.R;
+import se.kth.ssvl.tslab.wsn.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -27,129 +27,118 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class WebData extends ListActivity {
-	
-	/*String [] gatewaylist= {
-		"Gateway1",
-		"Gateway2",
-		"Gateway3",
-		"Gateway4",
-		"Gateway5",
-		"Gateway6",
-		"Gateway7",
-		"Gateway8",
-		"Gateway9",
-		"Gateway10"
-		};*/
-	
-	
+
+	/*
+	 * String [] gatewaylist= { "Gateway1", "Gateway2", "Gateway3", "Gateway4",
+	 * "Gateway5", "Gateway6", "Gateway7", "Gateway8", "Gateway9", "Gateway10"
+	 * };
+	 */
+
 	// Connection detector
-		ConnectionDetector cd;
-		
-		// Alert dialog manager
-		AlertDialogManager alert = new AlertDialogManager();
-		
-		// Progress Dialog
-		private ProgressDialog pDialog;
+	ConnectionDetector cd;
 
-		// Creating JSON Parser object
-		JSONParser jsonParser = new JSONParser();
-		
-		ArrayList<HashMap<String, String>> gatewayslist;
-		
-		// gateways JSONArray
-		JSONArray gateways = null;
-		
-		private static final String URL_GATEWAYS = "http://130.229.130.122:8081/WSN-web/HTTPServlet";
-		
-		// ALL JSON node names
-		private static final String TAG_ID = "id";
-		private static final String TAG_NAME = "name";
-		
-		
-		
+	// Alert dialog manager
+	AlertDialogManager alert = new AlertDialogManager();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_web_data);
-        setContentView(R.layout.activity_web_data);
-        
-        cd = new ConnectionDetector(getApplicationContext());
-		 
-        // Check for Internet connection
-        if (!cd.isConnectingToInternet()) {
-            // Internet Connection is not present
-            alert.showAlertDialog(WebData.this, "Internet Connection Error",
-                    "Please connect to working Internet connection", false);
-            // stop executing code by return
-            return;
-        }
-        
-     // Hashmap for ListView
-        
-        gatewayslist = new ArrayList<HashMap<String, String>>();
-        
-        Log.d("gatewaylist: ", "> ");
-        
-     // Loading Albums JSON in Background Thread
-     		new LoadGateways().execute();
-        
-        
-        /*setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, gatewaylist));*/
-        
-        
-    
+	// Progress Dialog
+	private ProgressDialog pDialog;
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_web_data, menu);
-        return true;
-    }*/
-    
-     	// get listview
-        ListView lv = getListView();
+	// Creating JSON Parser object
+	JSONParser jsonParser = new JSONParser();
 
-        // listening to single list item on click
-       /* lv.setOnItemClickListener(new OnItemClickListener() {
-          public void onItemClick(AdapterView<?> parent, View view,
-              int position, long id) {
-        	  
-        // selected item 
-        String data = ((TextView) view).getText().toString();
-        Intent intent1 = new Intent(getApplicationContext(), WebDataContent.class);
-        intent1.putExtra("DataContent", data);
-        startActivity(intent1);
-        		}
-	        
-        });*/
-        
-        /**
-		 * Listview item click listener
-		 * WebDataContent will be lauched by passing gateway id
+	ArrayList<HashMap<String, String>> gatewayslist;
+
+	// gateways JSONArray
+	JSONArray gateways = null;
+
+	private static final String URL_GATEWAYS = "http://130.229.130.122:8081/WSN-web/HTTPServlet";
+
+	// ALL JSON node names
+	private static final String TAG_ID = "id";
+	private static final String TAG_NAME = "name";
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		// setContentView(R.layout.activity_web_data);
+		setContentView(R.layout.activity_web_data);
+
+		cd = new ConnectionDetector(getApplicationContext());
+
+		// Check for Internet connection
+		if (!cd.isConnectingToInternet()) {
+			// Internet Connection is not present
+			alert.showAlertDialog(WebData.this, "Internet Connection Error",
+					"Please connect to working Internet connection", false);
+			// stop executing code by return
+			return;
+		}
+
+		// Hashmap for ListView
+
+		gatewayslist = new ArrayList<HashMap<String, String>>();
+
+		Log.d("gatewaylist: ", "> ");
+
+		// Loading Albums JSON in Background Thread
+		new LoadGateways().execute();
+
+		/*
+		 * setListAdapter(new ArrayAdapter<String>(this,
+		 * android.R.layout.simple_expandable_list_item_1, gatewaylist));
+		 */
+
+		/*
+		 * @Override public boolean onCreateOptionsMenu(Menu menu) {
+		 * getMenuInflater().inflate(R.menu.activity_web_data, menu); return
+		 * true; }
+		 */
+
+		// get listview
+		ListView lv = getListView();
+
+		// listening to single list item on click
+		/*
+		 * lv.setOnItemClickListener(new OnItemClickListener() { public void
+		 * onItemClick(AdapterView<?> parent, View view, int position, long id)
+		 * {
+		 * 
+		 * // selected item String data = ((TextView)
+		 * view).getText().toString(); Intent intent1 = new
+		 * Intent(getApplicationContext(), WebDataContent.class);
+		 * intent1.putExtra("DataContent", data); startActivity(intent1); }
+		 * 
+		 * });
+		 */
+
+		/**
+		 * Listview item click listener WebDataContent will be lauched by
+		 * passing gateway id
 		 * */
 		lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
 				// on selecting a single gateway
-				// WebDataContent will be launched to show Data inside the gateway
+				// WebDataContent will be launched to show Data inside the
+				// gateway
 				Intent i = new Intent(getApplicationContext(), SensorList.class);
-				
-				String gateway_id = ((TextView) view.findViewById(R.id.gateway_id)).getText().toString();
-				//String gateway_name = ((TextView) view.findViewById(R.id.gateway_name)).getText().toString();
+
+				String gateway_id = ((TextView) view
+						.findViewById(R.id.gateway_id)).getText().toString();
+				// String gateway_name = ((TextView)
+				// view.findViewById(R.id.gateway_name)).getText().toString();
 				i.putExtra("gateway_id", gateway_id);
-				//i.putExtra("gateway_name", gateway_name);
-				
+				// i.putExtra("gateway_name", gateway_name);
+
 				startActivity(i);
-				
+
 			}
-		});	
-        
-  }
-    
-    
-    
-    /**
+		});
+
+	}
+
+	/**
 	 * Background Async Task to Load all Albums by making http request
 	 * */
 	class LoadGateways extends AsyncTask<String, String, String> {
@@ -166,7 +155,7 @@ public class WebData extends ListActivity {
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
-		
+
 		/**
 		 * getting Gateways JSON
 		 * */
@@ -174,12 +163,12 @@ public class WebData extends ListActivity {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 			params.add(new NameValuePair() {
-				
+
 				@Override
 				public String getValue() {
 					return "";
 				}
-				
+
 				@Override
 				public String getName() {
 					return "getGateways";
@@ -187,19 +176,17 @@ public class WebData extends ListActivity {
 			});
 
 			// getting JSON string from URL
-			
+
 			String json = jsonParser.makeHttpRequest(URL_GATEWAYS, "GET",
 					params);
-			
+
 			// Check your log cat for JSON reponse
-			
+
 			Log.d("Gateways JSON: ", "> " + json);
-			
-			
-			try {				
+
+			try {
 				gateways = new JSONArray(json);
-				
-				
+
 				if (gateways != null) {
 					// looping through All gateways
 					for (int i = 0; i < gateways.length(); i++) {
@@ -208,33 +195,33 @@ public class WebData extends ListActivity {
 						// Storing each json item values in variable
 						String id = c.getString(TAG_ID);
 						String name = c.getString(TAG_NAME);
-						
+
 						// creating new HashMap
 						HashMap<String, String> map = new HashMap<String, String>();
 
 						// adding each child node to HashMap key => value
 						map.put(TAG_ID, id);
 						map.put(TAG_NAME, name);
-						
+
 						// adding HashList to ArrayList
 						gatewayslist.add(map);
 					}
 				}
-				
-				else{
-					
+
+				else {
+
 					Log.d("Gateways: ", "null");
 				}
-				
-			} 
-			
+
+			}
+
 			catch (JSONException e) {
 				e.printStackTrace();
 			}
 
 			return null;
 		}
-		
+
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
@@ -247,25 +234,28 @@ public class WebData extends ListActivity {
 					/**
 					 * Updating parsed JSON data into ListView
 					 * */
-					ListAdapter adapter = new SimpleAdapter(
-							WebData.this, gatewayslist, R.layout.list_item_gateways, new String[] { TAG_ID,
-									TAG_NAME}, new int[] {R.id.gateway_id, R.id.gateway_name});
-					
+					ListAdapter adapter = new SimpleAdapter(WebData.this,
+							gatewayslist, R.layout.list_item_gateways,
+							new String[] { TAG_ID, TAG_NAME }, new int[] {
+									R.id.gateway_id, R.id.gateway_name });
+
 					// updating listview
 					setListAdapter(adapter);
 				}
 			});
-			
-		}
 
 		}
-   
-    // List Item selection test
-    
- /*public void onListItemClick(ListView parent, View v, int position, long id)
- 	
- {
-	 Toast.makeText(this, "You have selected" + gatewaylist[position] , Toast.LENGTH_LONG).show();
- }*/
-    
+
+	}
+
+	// List Item selection test
+
+	/*
+	 * public void onListItemClick(ListView parent, View v, int position, long
+	 * id)
+	 * 
+	 * { Toast.makeText(this, "You have selected" + gatewaylist[position] ,
+	 * Toast.LENGTH_LONG).show(); }
+	 */
+
 }
