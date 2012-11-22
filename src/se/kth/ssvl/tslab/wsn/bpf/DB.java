@@ -16,6 +16,7 @@ import android.os.Environment;
 
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFDB;
 import se.kth.ssvl.tslab.wsn.general.bpf.exceptions.BPFDBException;
+import se.kth.ssvl.tslab.wsn.service.bpf.Logger;
 
 @TargetApi(11)
 public class DB implements BPFDB {
