@@ -29,6 +29,7 @@
     <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="AndroidService">Activate Android Service</string>
     <string name="SpaceUnit">Use MegaByte</string>
+    <string name="defaultServerUrl">http://10.1.20.89:8081/WSN-web/HTTPServlet</string>
 
     <string-array name="RoutingSelection">
         <item>Static</item>

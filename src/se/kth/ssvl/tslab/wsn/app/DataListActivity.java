@@ -10,10 +10,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
-import se.kth.ssvl.tslab.wsn.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -46,8 +46,6 @@ public class DataListActivity extends ListActivity {
 
 	String sensor_id = null;
 
-	private static final String URL_DATA = "http://130.229.130.122:8081/WSN-web/HTTPServlet";
-
 	// private static final String TAG_ID = "id";
 	private static final String TAG_UTIMESTAMP = "utimestamp";
 	private static final String TAG_UT = "ut";
@@ -60,6 +58,8 @@ public class DataListActivity extends ListActivity {
 	private static final String TAG_V_IN = "v_in";
 	// private static final String TAG_V_A1 = "v_a1";
 	private static final String TAG_SENSOR_NAME = "sensorName";
+	
+	private static String URL_DATA; 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +84,10 @@ public class DataListActivity extends ListActivity {
 
 		datalist = new ArrayList<HashMap<String, String>>();
 
+		// Get the URL from settings
+		URL_DATA = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
+				getResources().getString(R.string.defaultServerUrl));
+		
 		new Data().execute();
 
 		Log.d("data: ", "> ");

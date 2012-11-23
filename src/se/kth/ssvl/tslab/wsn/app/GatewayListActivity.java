@@ -51,7 +51,7 @@ public class GatewayListActivity extends ListActivity {
 	// gateways JSONArray
 	JSONArray gateways = null;
 
-	private static final String URL_GATEWAYS = "http://130.229.130.122:8081/WSN-web/HTTPServlet";
+	private static String URL_GATEWAYS;
 
 	// ALL JSON node names
 	private static final String TAG_ID = "id";
@@ -80,6 +80,10 @@ public class GatewayListActivity extends ListActivity {
 
 		Log.d("gatewaylist: ", "> ");
 
+		// Load URL from settings
+		URL_GATEWAYS = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
+				getResources().getString(R.string.defaultServerUrl));
+		
 		// Loading Albums JSON in Background Thread
 		new LoadGateways().execute();
 

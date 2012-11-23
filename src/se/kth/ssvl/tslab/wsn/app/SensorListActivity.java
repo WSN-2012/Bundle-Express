@@ -48,7 +48,7 @@ public class SensorListActivity extends ListActivity {
 	JSONArray sensors = null;
 	String gateway_id, sensor_id;
 
-	private static final String URL_SENSOR = "http://130.229.130.122:8081/WSN-web/HTTPServlet";
+	private static String URL_SENSOR;
 
 	// ALL JSON node names
 	private static final String TAG_ID = "id";
@@ -78,6 +78,10 @@ public class SensorListActivity extends ListActivity {
 		sensorslist = new ArrayList<HashMap<String, String>>();
 
 		Log.d("sensorlist: ", "> ");
+		
+		// Load URL from settings
+		URL_SENSOR = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
+				getResources().getString(R.string.defaultServerUrl));
 
 		// Loading Albums JSON in Background Thread
 		new LoadSensors().execute();
