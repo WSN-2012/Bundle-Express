@@ -27,15 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.WebData"
+            android:name=".app.WebDataActivity"
             android:label="@string/title_activity_web_data" >
         </activity>
         <activity
-            android:name=".app.DaemonConfig"
+            android:name=".app.ConfigActivity"
             android:label="@string/title_activity_daemon_config" >
         </activity>
         <activity
-            android:name=".app.BundleStatistics"
+            android:name=".app.StatisticsActivity"
             android:label="@string/title_activity_bundle_statistics" >
         </activity>
         <activity
@@ -43,7 +43,7 @@
             android:label="@string/title_activity_web_data_content" >
         </activity>
         <activity
-            android:name=".app.SensorList"
+            android:name=".app.SensorListActivity"
             android:label="@string/title_activity_sensor_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class DaemonConfig extends Activity {
+public class ConfigActivity extends Activity {
 	private CheckBox chkIos;
 
 	@Override
@@ -29,16 +29,16 @@ public class DaemonConfig extends Activity {
 			public void onClick(View v) {
 
 				if (((CheckBox) v).isChecked()) {
-					Toast.makeText(DaemonConfig.this, "Activate Service",
+					Toast.makeText(ConfigActivity.this, "Activate Service",
 							Toast.LENGTH_LONG).show();
-					startService(new Intent(DaemonConfig.this, WSNService.class));/*
+					startService(new Intent(ConfigActivity.this, WSNService.class));/*
 																				 * Remember
 																				 * as
 																				 * a
 																				 * flag
 																				 */
 				} else
-					stopService(new Intent(DaemonConfig.this, WSNService.class)); /*
+					stopService(new Intent(ConfigActivity.this, WSNService.class)); /*
 																				 * Remember
 																				 * as
 																				 * a

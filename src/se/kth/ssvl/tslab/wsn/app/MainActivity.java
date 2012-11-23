@@ -21,19 +21,19 @@ public class MainActivity extends TabActivity {
 		// res=getResources();
 		tabHost = getTabHost();
 
-		Intent intent1 = new Intent().setClass(this, WebData.class);
+		Intent intent1 = new Intent().setClass(this, WebDataActivity.class);
 		spec = tabHost.newTabSpec("Tab 1");
 		spec.setIndicator("Gateway");
 		spec.setContent(intent1);
 		tabHost.addTab(spec);
 
-		Intent intent2 = new Intent().setClass(this, DaemonConfig.class);
+		Intent intent2 = new Intent().setClass(this, ConfigActivity.class);
 		spec = tabHost.newTabSpec("Tab 2");
 		spec.setIndicator("Config");
 		spec.setContent(intent2);
 		tabHost.addTab(spec);
 
-		Intent intent3 = new Intent().setClass(this, BundleStatistics.class);
+		Intent intent3 = new Intent().setClass(this, StatisticsActivity.class);
 		spec = tabHost.newTabSpec("Tab 3");
 		spec.setIndicator("Statistics");
 		spec.setContent(intent3);

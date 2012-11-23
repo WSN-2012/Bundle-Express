@@ -4,7 +4,7 @@ import se.kth.ssvl.tslab.wsn.R;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class BundleStatistics extends Activity {
+public class StatisticsActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
