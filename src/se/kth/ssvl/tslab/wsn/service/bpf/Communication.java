@@ -65,7 +65,7 @@ public class Communication implements BPFCommunication {
 	                }
 	            }
 	        }
-	    } catch (SocketException ex) {
+	    } catch (UnknownHostException ex) {
 	    	ex.printStackTrace();
 	    }
 		return DeviceAddress;
