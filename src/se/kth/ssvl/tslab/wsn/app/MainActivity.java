@@ -1,19 +1,27 @@
 package se.kth.ssvl.tslab.wsn.app;
 
 import se.kth.ssvl.tslab.wsn.R;
+import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.TabHost;
 
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 
+	private ConfigManager configManager;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
+		// Init configManager
+		configManager = new ConfigManager(getApplicationContext(),
+				Environment.getExternalStorageDirectory());
+		
 		// Resources res;
 		TabHost tabHost;
 		TabHost.TabSpec spec;
@@ -28,6 +36,7 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(spec);
 
 		Intent intent2 = new Intent().setClass(this, ConfigActivity.class);
+		intent2.putExtra("ConfigManager", configManager);
 		spec = tabHost.newTabSpec("Tab 2");
 		spec.setIndicator("Config");
 		spec.setContent(intent2);

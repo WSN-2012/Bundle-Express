@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,18 +33,20 @@ import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.Route
 import android.content.Context;
 import android.util.Log;
 
-public class ConfigManager {
+public class ConfigManager implements Serializable {
+
+	private static final long serialVersionUID = -6827434347784136141L;
 
 	private final static String TAG = "ConfigManager";
 
 	private Context context;
-	private String configurationPath;
+	private File configurationPath;
 
-	public ConfigManager(Context context, String configurationPath) {
+	public ConfigManager(Context context, File configurationPath) {
 		this.context = context;
 		this.configurationPath = configurationPath;
 
-		if (!new File(configurationPath).exists()) {
+		if (!configurationPath.exists()) {
 			InputStream in = null;
 			OutputStream out = null;
 			try {
@@ -107,7 +110,7 @@ public class ConfigManager {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(new File(configurationPath));
+			StreamResult result = new StreamResult(configurationPath);
 
 			transformer.transform(source, result);			
 			return true;
