@@ -39,19 +39,30 @@ public class ConfigManager implements Serializable {
 
 	private final static String TAG = "ConfigManager";
 
-	private Context context;
-	private File configurationPath;
+	private static ConfigManager mInstance;
+	private static Context mContext = null;
+	private static File mConfigurationFile = null;
 
-	public ConfigManager(Context context, File configurationPath) {
-		this.context = context;
-		this.configurationPath = configurationPath;
-
-		if (!configurationPath.exists()) {
+	public static void init(Context context, File configurationFile) {
+		mContext = context;
+		mConfigurationFile = configurationFile;
+	}
+	
+	public static ConfigManager getInstance() {
+		if (mInstance == null) {
+			mInstance = new ConfigManager();
+		}
+		
+		return mInstance;
+	}
+	
+	private ConfigManager() {
+		if (!mConfigurationFile.exists()) {
 			InputStream in = null;
 			OutputStream out = null;
 			try {
-				in = context.getAssets().open("config/dtn.config.xml");
-				out = new FileOutputStream(configurationPath);
+				in = mContext.getAssets().open("config/dtn.config.xml");
+				out = new FileOutputStream(mConfigurationFile);
 				copyFile(in, out);
 				in.close();
 				in = null;
@@ -72,7 +83,7 @@ public class ConfigManager implements Serializable {
 	public Configuration readConfig() {
 		try {
 			Log.d(TAG, "Trying to load config from assets");
-			return ConfigurationParser.parse_config_file(context.getAssets()
+			return ConfigurationParser.parse_config_file(mContext.getAssets()
 					.open("config/dtn.config.xml"));
 		} catch (InvalidDTNConfigurationException e) {
 			Log.e(TAG,
@@ -110,7 +121,7 @@ public class ConfigManager implements Serializable {
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(configurationPath);
+			StreamResult result = new StreamResult(mConfigurationFile);
 
 			transformer.transform(source, result);			
 			return true;

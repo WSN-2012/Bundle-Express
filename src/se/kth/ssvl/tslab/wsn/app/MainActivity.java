@@ -11,16 +11,13 @@ import android.widget.TabHost;
 @SuppressWarnings("deprecation")
 public class MainActivity extends TabActivity {
 
-	private ConfigManager configManager;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
 		// Init configManager
-		configManager = new ConfigManager(getApplicationContext(),
-				Environment.getExternalStorageDirectory());
+		ConfigManager.init(getApplicationContext(), Environment.getExternalStorageDirectory());
 		
 		// Resources res;
 		TabHost tabHost;
@@ -36,7 +33,6 @@ public class MainActivity extends TabActivity {
 		tabHost.addTab(spec);
 
 		Intent intent2 = new Intent().setClass(this, ConfigActivity.class);
-		intent2.putExtra("ConfigManager", configManager);
 		spec = tabHost.newTabSpec("Tab 2");
 		spec.setIndicator("Config");
 		spec.setContent(intent2);

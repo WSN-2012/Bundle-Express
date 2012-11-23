@@ -2,7 +2,6 @@ package se.kth.ssvl.tslab.wsn.app;
 
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.WSNServiceInterface;
-import se.kth.ssvl.tslab.wsn.service.WSNService;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
