@@ -63,8 +63,9 @@ public class WSNService extends Service implements BPFService {
 		comm = new Communication();
 		
 		// Init the DB object
-		db = new DB(new File("build/database.db"), logger);
+		db = new DB(new File("build/database.db"), logger); //TODO: this is not working!
 
+		logger.info(TAG, "Starting service");
 		// Try to init the BPF
 //		try {
 //			BPF.init(this, args[0]); TODO: take config path
@@ -87,7 +88,7 @@ public class WSNService extends Service implements BPFService {
 	public void onStart(Intent intent, int startid) {
 //		Log.d(TAG, "onStart");
 //		player.start();
-		BPF.getInstance().start();
+		BPF.getInstance().start(); //TODO: this is causing a null pointer!
 		logger.info(TAG, "Started BPF");
 		Toast.makeText(this, "Service Started", Toast.LENGTH_LONG).show();
 	}

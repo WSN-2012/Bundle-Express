@@ -2,6 +2,7 @@ package se.kth.ssvl.tslab.wsn.app;
 
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.WSNServiceInterface;
+import se.kth.ssvl.tslab.wsn.service.WSNService;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,9 +62,12 @@ public class ConfigActivity extends Activity {
 
 				if (((CheckBox) v).isChecked()) {
 //					startService(new Intent(ConfigActivity.this, WSNService.class));
-					Intent i = new Intent();
-					i.setClassName("se.kth.ssvl.tslab.wsn.service", "se.kth.ssvl.tslab.wsn.service.WSNService");
-					boolean ok = bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+					Intent i = new Intent(ConfigActivity.this, WSNService.class);
+//					i.setClassName("se.kth.ssvl.tslab.wsn.service",
+//							"se.kth.ssvl.tslab.wsn.service.WSNService");
+//					startService(i);
+					boolean ok = getApplicationContext().bindService(
+							i, mConnection, BIND_AUTO_CREATE);
 					Log.i("ConfigActivity","bindService: " + ok);
 					if (serviceInterface != null) {
 						try {
@@ -97,6 +101,7 @@ public class ConfigActivity extends Activity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
+			Log.i(TAG, "onServiceConnected has been called");
 			serviceInterface = WSNServiceInterface.Stub.asInterface(service);
 		}
 
