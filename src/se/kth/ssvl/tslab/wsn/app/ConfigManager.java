@@ -1,7 +1,10 @@
 package se.kth.ssvl.tslab.wsn.app;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Iterator;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,9 +42,23 @@ public class ConfigManager {
 	public ConfigManager(Context context, String configurationPath) {
 		this.context = context;
 		this.configurationPath = configurationPath;
-		
-		//TODO: Copy the assets config file when created if the config doesn't exist (first time thing)
-		
+
+		if (!new File(configurationPath).exists()) {
+			InputStream in = null;
+			OutputStream out = null;
+			try {
+				in = context.getAssets().open("config/dtn.config.xml");
+				out = new FileOutputStream(configurationPath);
+				copyFile(in, out);
+				in.close();
+				in = null;
+				out.flush();
+				out.close();
+				out = null;
+			} catch (IOException e) {
+				Log.e(TAG, "Failed to copy config file", e);
+			}
+		}
 	}
 
 	/**
@@ -106,6 +123,13 @@ public class ConfigManager {
 		return false;
 	}
 	
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+	    byte[] buffer = new byte[1024];
+	    int read;
+	    while((read = in.read(buffer)) != -1){
+	      out.write(buffer, 0, read);
+	    }
+	}
 	
 	private Element securitySettings(Document doc, Configuration config) {
 		// Create the storage object and fill it
