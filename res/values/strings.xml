@@ -1,17 +1,17 @@
 <resources>
 
     <string name="app_name">WSN-Android</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">WSN Andriod</string>
     <string name="webDataStatus">Web Data</string>
     <string name="configEditor">DTN Configuration</string>
     <string name="bundleStatistics">Bundle Statistics</string>
+    <string name="title_activity_main">WSN Andriod</string>
     <string name="title_activity_gateway_data">GatewayData</string>
     <string name="title_activity_config_editor">Configuration</string>
     <string name="title_activity_web_data">Web Data</string>
     <string name="title_activity_daemon_config">Daemon Configuration</string>
     <string name="title_activity_bundle_statistics">Bundle Statistics</string>
+    <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="activateDaemon"></string>
     <string name="storageSpaceLimit">Space limit</string>
     <string name="Quota"></string>
@@ -21,15 +21,15 @@
     <string name="prophetRouting">ProPHET</string>
     <string name="ServerEndpointID">Server EID</string>
     <string name="UpdateServerEID">dtn://server.dtn</string>
-    <string name="updateEID">Update</string>
+    <string name="configSave">Save</string>
+    <string name="configCancel">Cancel</string>
     <string name="BundleStatus">Bundle Statistics</string>
     <string name="bundleForwardCounter">Number of bundle stored to forward</string>
     <string name="bundleCounterSent">Number of encrypted bundle sent</string>
     <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
-    <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="AndroidService">Activate Android Service</string>
     <string name="SpaceUnit">Use MegaByte</string>
-    <string name="defaultServerUrl">http://10.1.20.89:8081/WSN-web/HTTPServlet</string>
+    <string name="defaultServerUrl">http://130.229.130.122:8081/WSN-web/HTTPServlet</string>
 
     <string-array name="RoutingSelection">
         <item>Static</item>

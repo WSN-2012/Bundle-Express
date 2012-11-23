@@ -18,7 +18,29 @@ public class ConfigActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_daemon_config);
 		addListenerOnChkIos();
+		updateUI();
 	}
+	
+	private void updateUI() {
+		
+	}
+	
+	/**
+	 * Method for saving the configuration 
+	 * (only to be used when save-btn is pressed)
+	 */
+	private void save() {
+		
+	}
+	
+	/**
+	 * Method for canceling the changes made
+	 * (only to be used when cancel-btn is pressed)
+	 */
+	private void cancel() {
+		
+	}
+	
 
 	private void addListenerOnChkIos() {
 		chkIos = (CheckBox) findViewById(R.id.checkBox1);
