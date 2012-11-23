@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
@@ -41,8 +42,31 @@ public class Communication implements BPFCommunication {
 
 	@Override
 	public InetAddress getDeviceIP() {
-		// TODO Auto-generated method stub
-		return null;
+		/*
+		try
+		{
+		  DeviceAddress = 
+		    InetAddress.getLocalHost();
+		}
+		catch(UnknownHostException e)
+		{
+		 e.printStackTrace(); 
+		}*/
+		InetAddress DeviceAddress = null;
+		try {
+	        for (Enumeration<NetworkInterface> en = NetworkInterface
+	                .getNetworkInterfaces(); en.hasMoreElements();) {
+	            NetworkInterface intf = en.nextElement();
+	            for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+	                InetAddress inetAddress = enumIpAddr.nextElement();
+	                if (!inetAddress.isLoopbackAddress()) {
+	                	DeviceAddress = 
+	                		    InetAddress.getLocalHost();
+	                }
+	            }
+	        }
+	    } catch (SocketException ex) {}
+		return DeviceAddress;
 	}
 
 }
