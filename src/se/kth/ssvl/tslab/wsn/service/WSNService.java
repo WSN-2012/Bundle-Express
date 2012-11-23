@@ -7,6 +7,7 @@ import se.kth.ssvl.tslab.wsn.service.bpf.Communication;
 import se.kth.ssvl.tslab.wsn.service.bpf.DB;
 import se.kth.ssvl.tslab.wsn.service.bpf.Logger;
 import se.kth.ssvl.tslab.wsn.R;
+import se.kth.ssvl.tslab.wsn.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPF;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFActionReceiver;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
@@ -30,10 +31,19 @@ public class WSNService extends Service implements BPFService {
 	private ActionReceiver action;
 	private Communication comm;
 	private DB db;
+	
+	private final WSNServiceInterface.Stub mBinder = new WSNServiceInterface.Stub() {
+	    public int start(){
+	    	logger.info(TAG, "Starting BPF...");
+	        return 55;
+	    }
+	};
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		return null;
+		logger.info(TAG, "onBind");
+		logger.info(TAG, "mBinder: " + mBinder.toString());
+		return mBinder;
 	}
 
 	@Override
@@ -44,7 +54,7 @@ public class WSNService extends Service implements BPFService {
 //		player.setLooping(false); // Set looping
 		
 		// Init a logger first of all
-//		logger = new Logger(Integer.parseInt(args[1])); TODO: take log level from config
+		logger = new Logger();
 		
 		// Init the action receiver
 		action = new ActionReceiver(logger);
@@ -56,13 +66,12 @@ public class WSNService extends Service implements BPFService {
 		db = new DB(new File("build/database.db"), logger);
 
 		// Try to init the BPF
-		try {
+//		try {
 //			BPF.init(this, args[0]); TODO: take config path
-			BPF.init(this, null);
-		} catch (BPFException e) {
-			logger.error(TAG, "Couldn't initialize the BPF, exception: " + e.getMessage());
-			System.exit(-1);
-		}
+//		} catch (BPFException e) {
+//			logger.error(TAG, "Couldn't initialize the BPF, exception: " + e.getMessage());
+//			System.exit(-1);
+//		}
 	}
 
 	@Override
@@ -85,25 +94,22 @@ public class WSNService extends Service implements BPFService {
 
 	@Override
 	public BPFActionReceiver getBPFActionReceiver() {
-		// TODO Auto-generated method stub
-		return null;
+		return action;
 	}
 
 	@Override
 	public BPFCommunication getBPFCommunication() {
-		// TODO Auto-generated method stub
-		return null;
+		return comm;
 	}
 
 	@Override
 	public BPFDB getBPFDB() {
-		// TODO Auto-generated method stub
-		return null;
+		return db;
 	}
 
 	@Override
 	public BPFLogger getBPFLogger() {
-		// TODO Auto-generated method stub
-		return null;
+		return logger;
 	}
+	
 }
