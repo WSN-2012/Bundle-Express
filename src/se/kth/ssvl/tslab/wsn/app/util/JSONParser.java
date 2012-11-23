@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.app.helper;
+package se.kth.ssvl.tslab.wsn.app.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -10,9 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.kth.ssvl.tslab.wsn.app.helper.AlertDialogManager;
-import se.kth.ssvl.tslab.wsn.app.helper.ConnectionDetector;
-import se.kth.ssvl.tslab.wsn.app.helper.JSONParser;
+import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
+import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
+import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
 import se.kth.ssvl.tslab.wsn.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -26,7 +26,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-public class WebDataContent extends ListActivity {
+public class DataListActivity extends ListActivity {
 
 	// Connection detector
 	ConnectionDetector cd;
@@ -71,7 +71,7 @@ public class WebDataContent extends ListActivity {
 		// Check if Internet present
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
-			alert.showAlertDialog(WebDataContent.this,
+			alert.showAlertDialog(DataListActivity.this,
 					"Internet Connection Error",
 					"Please connect to working Internet connection", false);
 			// stop executing code by return
@@ -84,7 +84,7 @@ public class WebDataContent extends ListActivity {
 
 		datalist = new ArrayList<HashMap<String, String>>();
 
-		new GatewayData().execute();
+		new Data().execute();
 
 		Log.d("data: ", "> ");
 
@@ -106,7 +106,7 @@ public class WebDataContent extends ListActivity {
 	/**
 	 * Background Async Task to get single song information
 	 * */
-	class GatewayData extends AsyncTask<String, String, String> {
+	class Data extends AsyncTask<String, String, String> {
 
 		/**
 		 * Before starting background thread Show Progress Dialog
@@ -114,7 +114,7 @@ public class WebDataContent extends ListActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(WebDataContent.this);
+			pDialog = new ProgressDialog(DataListActivity.this);
 			pDialog.setMessage("Loading data ...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
@@ -219,7 +219,7 @@ public class WebDataContent extends ListActivity {
 					 */
 
 					ListAdapter adapter = new SimpleAdapter(
-							WebDataContent.this, datalist,
+							DataListActivity.this, datalist,
 							R.layout.list_item_data, new String[] {
 									TAG_UTIMESTAMP, TAG_T, TAG_UT, TAG_PS,
 									TAG_V_IN }, new int[] { R.id.unixTimestamp,

@@ -21,7 +21,7 @@ public class MainActivity extends TabActivity {
 		// res=getResources();
 		tabHost = getTabHost();
 
-		Intent intent1 = new Intent().setClass(this, WebDataActivity.class);
+		Intent intent1 = new Intent().setClass(this, GatewayListActivity.class);
 		spec = tabHost.newTabSpec("Tab 1");
 		spec.setIndicator("Gateway");
 		spec.setContent(intent1);

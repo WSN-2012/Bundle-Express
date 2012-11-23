@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.app;
+package se.kth.ssvl.tslab.wsn.app.config;
 
 import java.io.File;
 import java.io.FileOutputStream;

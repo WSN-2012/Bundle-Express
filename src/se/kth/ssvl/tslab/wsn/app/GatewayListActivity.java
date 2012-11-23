@@ -9,9 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import se.kth.ssvl.tslab.wsn.app.helper.AlertDialogManager;
-import se.kth.ssvl.tslab.wsn.app.helper.ConnectionDetector;
-import se.kth.ssvl.tslab.wsn.app.helper.JSONParser;
+import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
+import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
+import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
 import se.kth.ssvl.tslab.wsn.R;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -26,7 +26,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class WebDataActivity extends ListActivity {
+public class GatewayListActivity extends ListActivity {
 
 	/*
 	 * String [] gatewaylist= { "Gateway1", "Gateway2", "Gateway3", "Gateway4",
@@ -68,7 +68,7 @@ public class WebDataActivity extends ListActivity {
 		// Check for Internet connection
 		if (!cd.isConnectingToInternet()) {
 			// Internet Connection is not present
-			alert.showAlertDialog(WebDataActivity.this, "Internet Connection Error",
+			alert.showAlertDialog(GatewayListActivity.this, "Internet Connection Error",
 					"Please connect to working Internet connection", false);
 			// stop executing code by return
 			return;
@@ -149,7 +149,7 @@ public class WebDataActivity extends ListActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(WebDataActivity.this);
+			pDialog = new ProgressDialog(GatewayListActivity.this);
 			pDialog.setMessage("Listing Gateways ...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
@@ -234,7 +234,7 @@ public class WebDataActivity extends ListActivity {
 					/**
 					 * Updating parsed JSON data into ListView
 					 * */
-					ListAdapter adapter = new SimpleAdapter(WebDataActivity.this,
+					ListAdapter adapter = new SimpleAdapter(GatewayListActivity.this,
 							gatewayslist, R.layout.list_item_gateways,
 							new String[] { TAG_ID, TAG_NAME }, new int[] {
 									R.id.gateway_id, R.id.gateway_name });

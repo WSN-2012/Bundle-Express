@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.WebDataActivity"
+            android:name=".app.GatewayListActivity"
             android:label="@string/title_activity_web_data" >
         </activity>
         <activity
@@ -39,7 +39,7 @@
             android:label="@string/title_activity_bundle_statistics" >
         </activity>
         <activity
-            android:name=".app.WebDataContent"
+            android:name=".app.DataListActivity"
             android:label="@string/title_activity_web_data_content" >
         </activity>
         <activity
