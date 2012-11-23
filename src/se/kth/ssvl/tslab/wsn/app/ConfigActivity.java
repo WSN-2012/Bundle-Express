@@ -39,7 +39,7 @@ public class ConfigActivity extends Activity {
 	 * Method for saving the configuration 
 	 * (only to be used when save-btn is pressed)
 	 */
-	private void save() {
+	public void save() {
 		
 	}
 	
@@ -47,7 +47,7 @@ public class ConfigActivity extends Activity {
 	 * Method for canceling the changes made
 	 * (only to be used when cancel-btn is pressed)
 	 */
-	private void cancel() {
+	public void cancel() {
 		
 	}
 	

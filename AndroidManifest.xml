@@ -4,7 +4,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="15" />
 
     <!-- Permission - Internet Connect -->
@@ -52,7 +52,7 @@
             </intent-filter>
 
         </activity>
-        <service android:enabled="true" android:name=".WSNService"/>
+        <service android:enabled="true" android:name=".service.WSNService"/>
     </application>
 
 </manifest>

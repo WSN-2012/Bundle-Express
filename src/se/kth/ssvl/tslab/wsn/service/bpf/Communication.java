@@ -42,16 +42,6 @@ public class Communication implements BPFCommunication {
 
 	@Override
 	public InetAddress getDeviceIP() {
-		/*
-		try
-		{
-		  DeviceAddress = 
-		    InetAddress.getLocalHost();
-		}
-		catch(UnknownHostException e)
-		{
-		 e.printStackTrace(); 
-		}*/
 		InetAddress DeviceAddress = null;
 		try {
 	        for (Enumeration<NetworkInterface> en = NetworkInterface
@@ -67,7 +57,9 @@ public class Communication implements BPFCommunication {
 	        }
 	    } catch (UnknownHostException ex) {
 	    	ex.printStackTrace();
-	    }
+	    } catch (SocketException e) {
+			e.printStackTrace();
+		}
 		return DeviceAddress;
 	}
 
