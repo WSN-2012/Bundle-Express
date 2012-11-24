@@ -86,6 +86,7 @@ public class WSNService extends Service implements BPFService {
 	public void onStart(Intent intent, int startid) {
 		// this method is not called when the service is started with bindService().
 		// we use the start() method defined in WSNServiceInterface
+//		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
 	}
 
 	@Override
