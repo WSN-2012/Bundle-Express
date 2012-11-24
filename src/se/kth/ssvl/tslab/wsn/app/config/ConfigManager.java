@@ -118,14 +118,17 @@ public class ConfigManager implements Serializable {
 	public boolean writeConfig(Configuration config) {
 		try {
 			Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+			Element root = doc.createElement(ConfigurationParser.DTNConfigurationTagName);
 			
 			// Get all the configuration and add it
-			doc.appendChild(storageSettings(doc, config));
-			doc.appendChild(interfaceSettings(doc, config));
-			doc.appendChild(linkSettings(doc, config));
-			doc.appendChild(routeSettings(doc, config));
-			doc.appendChild(discoverSettings(doc, config));
-			doc.appendChild(securitySettings(doc, config));
+			root.appendChild(storageSettings(doc, config));
+			root.appendChild(interfaceSettings(doc, config));
+			root.appendChild(linkSettings(doc, config));
+			root.appendChild(routeSettings(doc, config));
+			root.appendChild(discoverSettings(doc, config));
+			root.appendChild(securitySettings(doc, config));
+			
+			doc.appendChild(root);
 			
 			// Write the configuration
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
