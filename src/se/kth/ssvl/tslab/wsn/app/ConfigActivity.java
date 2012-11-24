@@ -115,35 +115,23 @@ public class ConfigActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				Intent i = new Intent(ConfigActivity.this, WSNService.class);
+				getApplicationContext().startService(i);
+				boolean ok = getApplicationContext().bindService(
+						i, mConnection, BIND_AUTO_CREATE);
+				Log.d(TAG, "bindService: " + ok);
 
 				if (((CheckBox) v).isChecked()) {
 //					startService(new Intent(ConfigActivity.this, WSNService.class));
-					Intent i = new Intent(ConfigActivity.this, WSNService.class);
 //					i.setClassName("se.kth.ssvl.tslab.wsn.service",
 //							"se.kth.ssvl.tslab.wsn.service.WSNService");
 //					startService(i);
-					boolean ok = getApplicationContext().bindService(
-							i, mConnection, BIND_AUTO_CREATE);
-					Log.i("ConfigActivity","bindService: " + ok);
-					if (serviceInterface != null) {
-						try {
-							int ret = serviceInterface.start();
-							Toast.makeText(ConfigActivity.this, "start method returned: " + ret,
-									Toast.LENGTH_LONG).show();
-						} catch (RemoteException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else {
-						Log.e(TAG, "Cound not call method in Service. serviceInterface is null.");
-						Toast.makeText(ConfigActivity.this, "Error communicating with service!",
-								Toast.LENGTH_LONG).show();
-					}
-					
 					
 				} else {
-					Intent i = new Intent();
-					i.setClassName("se.kth.ssvl.tslab.wsn.service", "se.kth.ssvl.tslab.wsn.service.WSNService");
+					Log.d(TAG, "Box unchecked");
+//					Intent i = new Intent(ConfigActivity.this, WSNService.class);
+//					i.setClassName("se.kth.ssvl.tslab.wsn.service", "se.kth.ssvl.tslab.wsn.service.WSNService");
+					getApplicationContext().unbindService(mConnection);
 					stopService(i);
 				}
 					
@@ -159,11 +147,28 @@ public class ConfigActivity extends Activity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.i(TAG, "onServiceConnected has been called");
 			serviceInterface = WSNServiceInterface.Stub.asInterface(service);
+			if (serviceInterface != null) {
+				try {
+					//start the BPF
+					serviceInterface.start();
+					Toast.makeText(ConfigActivity.this, "BPF started",
+							Toast.LENGTH_LONG).show();
+				} catch (RemoteException e) {
+					Log.e(TAG, "Error communicating with service!");
+					Toast.makeText(ConfigActivity.this, "Error communicating with service!",
+							Toast.LENGTH_LONG).show();
+				}
+			} else {
+				Log.e(TAG, "Cound not call method in Service. serviceInterface is null.");
+				Toast.makeText(ConfigActivity.this, "Error communicating with service!",
+						Toast.LENGTH_LONG).show();
+			}
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			serviceInterface = null;
+			Log.d(TAG, "Service disconnected");
 		}
 	};
 	
