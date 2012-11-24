@@ -1,5 +1,7 @@
 package se.kth.ssvl.tslab.wsn.app;
 
+import java.io.File;
+
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import android.app.TabActivity;
@@ -17,7 +19,8 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.activity_main);
 		
 		// Init configManager
-		ConfigManager.init(getApplicationContext(), Environment.getExternalStorageDirectory());
+		ConfigManager.init(getApplicationContext(), 
+				new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dtn.config.xml"));
 		
 		// Resources res;
 		TabHost tabHost;

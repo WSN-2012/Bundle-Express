@@ -1,6 +1,7 @@
 package se.kth.ssvl.tslab.wsn.app.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,8 +84,7 @@ public class ConfigManager implements Serializable {
 	public Configuration readConfig() {
 		try {
 			Log.d(TAG, "Trying to load config from assets");
-			return ConfigurationParser.parse_config_file(mContext.getAssets()
-					.open("config/dtn.config.xml"));
+			return ConfigurationParser.parse_config_file(new FileInputStream(mConfigurationFile));
 		} catch (InvalidDTNConfigurationException e) {
 			Log.e(TAG,
 					"There was an error in the configuration: "
