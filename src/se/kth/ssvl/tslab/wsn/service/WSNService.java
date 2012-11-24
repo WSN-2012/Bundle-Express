@@ -22,8 +22,11 @@ import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Binder;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
@@ -36,8 +39,11 @@ public class WSNService extends Service implements BPFService {
 	private Communication comm;
 	private DB db;
 
+	final RemoteCallbackList<WSNServiceInterfaceCallBack> mCallbacks = 
+			new RemoteCallbackList<WSNServiceInterfaceCallBack>();
+	
 	private final WSNServiceInterface.Stub mBinder = new WSNServiceInterface.Stub() {
-
+		
 		@Override
 		public void start() throws RemoteException {
 			logger.debug(TAG, "Start method in Service called by ConfigActivity");
@@ -54,6 +60,15 @@ public class WSNService extends Service implements BPFService {
 			s.put("received", stats.receivedBundles());
 			s.put("usage", stats.totalSize());
 			return s;
+		}
+
+		@Override
+		public void registerCallBack(WSNServiceInterfaceCallBack cb)
+				throws RemoteException {
+			if(cb!=null){
+	            Log.d(TAG, "registerCallBack registering");
+	            mCallbacks.register(cb);
+	        }
 		}
 	};
 
@@ -105,6 +120,26 @@ public class WSNService extends Service implements BPFService {
 		// we use the start() method defined in WSNServiceInterface
 //		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
 	}
+	
+	@Override
+	public void updateStats(Stats stats) {
+		logger.debug(TAG, "New Stats object received:" +
+				"\nTotal size: " + stats.totalSize() + 
+				"\nStored bundles: " + stats.storedBundles() +
+				"\nTransmitted bundles: " + stats.transmittedBundles() +
+				"\nReceived bundles: " + stats.receivedBundles() );
+		//callback
+		try {
+	        int N = mCallbacks.beginBroadcast();
+	        Log.d(TAG, "mCallBacks N value = " + N);
+	        // now for time being we will consider only one activity is bound to the service, so hardcode 0
+	        mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
+	        		stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
+	        mCallbacks.finishBroadcast();
+	    } catch (RemoteException e) {
+	        e.printStackTrace();
+	    }
+	}
 
 	@Override
 	public BPFActionReceiver getBPFActionReceiver() {
@@ -125,5 +160,6 @@ public class WSNService extends Service implements BPFService {
 	public BPFLogger getBPFLogger() {
 		return logger;
 	}
+
 
 }

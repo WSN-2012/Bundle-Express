@@ -25,14 +25,4 @@ public class ActionReceiver implements BPFActionReceiver {
 
 	}
 
-	//TODO: this method needs to notify the app
-	@Override
-	public void updateStats(Stats stats) {
-		logger.debug(TAG, "New Stats object received:" +
-				"\nTotal size: " + stats.totalSize() + 
-				"\nStored bundles: " + stats.storedBundles() +
-				"\nTransmitted bundles: " + stats.transmittedBundles() +
-				"\nReceived bundles: " + stats.receivedBundles() );
-	}
-
 }

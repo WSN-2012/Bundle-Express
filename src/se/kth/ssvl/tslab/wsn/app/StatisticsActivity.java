@@ -3,10 +3,10 @@ package se.kth.ssvl.tslab.wsn.app;
 import java.util.Map;
 
 import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
-import se.kth.ssvl.tslab.wsn.general.bpf.BPF;
 import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.service.WSNService;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterfaceCallBack;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -41,7 +41,6 @@ public class StatisticsActivity extends Activity {
 
 		if (isServiceRunning()) {
 			Intent i = new Intent(StatisticsActivity.this, WSNService.class);
-			getApplicationContext().startService(i);
 			boolean ok = getApplicationContext().bindService(
 					i, mConnection, 0);
 			Log.d(TAG, "bindService: " + ok);
@@ -54,6 +53,18 @@ public class StatisticsActivity extends Activity {
 		}
 	}
 
+	@Override
+    public void onResume() {
+		super.onResume();
+		if (isServiceRunning()) {
+			Intent i = new Intent(StatisticsActivity.this, WSNService.class);
+			boolean ok = getApplicationContext().bindService(
+					i, mConnection, 0);
+			Log.d(TAG, "bindService: " + ok);
+		}
+	}
+	
+	
 	@Override
     public void onStop() {
         super.onStop();
@@ -72,30 +83,45 @@ public class StatisticsActivity extends Activity {
 	}
 	
 	private void updateUI(Map<String, Integer> stats) {
-		stored.setText(stats.get("stored"));
-		transmitted.setText(stats.get("transmitted"));
-		received.setText(stats.get("received"));
-		usage.setText(stats.get("usage"));
+		stored.setText(Integer.toString(stats.get("stored")));
+		transmitted.setText(Integer.toString(stats.get("transmitted")));
+		received.setText(Integer.toString(stats.get("received")));
+		usage.setText(Integer.toString(stats.get("usage")));
 	}
 	
-	/** Defines callbacks for service binding, passed to bindService() */
+	private WSNServiceInterfaceCallBack mCallback = new WSNServiceInterfaceCallBack.Stub() {
+
+		@Override
+		public void updateStats(int s, int t,
+				int r, int u) throws RemoteException {
+			stored.setText(Integer.toString(s));
+			transmitted.setText(Integer.toString(t));
+			received.setText(Integer.toString(r));
+			usage.setText(Integer.toString(u));
+		}
+	    
+	};
+	
+	
 	private ServiceConnection mConnection = new ServiceConnection() {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			Log.d(TAG, "onServiceConnected has been called");
+			
 			serviceInterface = WSNServiceInterface.Stub.asInterface(service);
 			if (serviceInterface != null) {
 				try {
 					updateUI(serviceInterface.getStats());
+					serviceInterface.registerCallBack(mCallback);
 				} catch (RemoteException e) {
 					e.printStackTrace();
 				}
 			} else {
-				Log.e(TAG, "Cound not call method in Service. serviceInterface is null.");
+				Log.e(TAG, "Could not call method in Service. serviceInterface is null.");
 			}
 		}
-
+		
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
 			serviceInterface = null;
