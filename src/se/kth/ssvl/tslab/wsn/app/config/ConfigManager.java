@@ -66,6 +66,7 @@ public class ConfigManager implements Serializable {
 				if (!mConfigurationFile.exists()) {
 					if (!mConfigurationFile.getParentFile().mkdirs()) {
 						Log.e(TAG, "Couldn't create the directory for storage");
+						return;
 					}
 				}
 				

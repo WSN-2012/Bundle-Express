@@ -13,7 +13,7 @@
         type you set, the unit is Megabytes
 	keep_copy indicates whether to keep a copy of the bundle after it has been sent
     -->
-    <tns:StorageSetting quota="1" storage_path="build/dtn" test_data_log="true" keep_copy="true"/>
+    <tns:StorageSetting quota="1" storage_path="/mnt/sdcard/WSN-Android/" test_data_log="true" keep_copy="true"/>
 
 
     <!--  Interfaces Section -->
