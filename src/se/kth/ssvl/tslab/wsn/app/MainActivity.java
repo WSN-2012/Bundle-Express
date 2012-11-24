@@ -20,7 +20,7 @@ public class MainActivity extends TabActivity {
 		
 		// Init configManager
 		ConfigManager.init(getApplicationContext(), 
-				new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/dtn.config.xml"));
+				new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/WSN-Android/dtn.config.xml"));
 		
 		// Resources res;
 		TabHost tabHost;

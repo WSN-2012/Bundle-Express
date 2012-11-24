@@ -3,15 +3,14 @@ package se.kth.ssvl.tslab.wsn.app;
 import java.util.Collection;
 
 import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
-import se.kth.ssvl.tslab.wsn.general.servlib.bundling.event.LinkCreatedEvent;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.Configuration;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.LinksSetting.LinkEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.RouteEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.routing.routers.BundleRouter.router_type_t;
 import se.kth.ssvl.tslab.wsn.service.WSNService;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
@@ -65,6 +64,9 @@ public class ConfigActivity extends Activity {
 	private void updateUI() {
 		// Read the config and show it in the UI
 		config = ConfigManager.getInstance().readConfig();
+		if (config == null) {
+			return;
+		}
 		
 		// Set the checkbox depending on if the service is running
 		if (isServiceRunning()) {
@@ -74,7 +76,7 @@ public class ConfigActivity extends Activity {
 		}
 		
 		// Set the quota
-		txtQuota.setText(config.storage_setting().quota());
+		txtQuota.setText(Integer.toString(config.storage_setting().quota()));
 		
 		// Set the routing type
 		switch (config.routes_setting().router_type()) {

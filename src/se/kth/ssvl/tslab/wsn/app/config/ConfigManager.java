@@ -62,6 +62,13 @@ public class ConfigManager implements Serializable {
 			InputStream in = null;
 			OutputStream out = null;
 			try {
+				// First create the folder on the sdcard if it doesn't exist
+				if (!mConfigurationFile.exists()) {
+					if (!mConfigurationFile.getParentFile().mkdirs()) {
+						Log.e(TAG, "Couldn't create the directory for storage");
+					}
+				}
+				
 				in = mContext.getAssets().open("config/dtn.config.xml");
 				out = new FileOutputStream(mConfigurationFile);
 				copyFile(in, out);
@@ -93,6 +100,10 @@ public class ConfigManager implements Serializable {
 			return null;
 		} catch (IOException e) {
 			Log.e(TAG, "There was an IO exception when reading the config");
+			e.printStackTrace();
+			return null;
+		} catch (Exception e) {
+			Log.e(TAG, "There was a parser error when parsing the config");
 			e.printStackTrace();
 			return null;
 		}
