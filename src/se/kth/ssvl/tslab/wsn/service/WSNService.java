@@ -1,13 +1,16 @@
 package se.kth.ssvl.tslab.wsn.service;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import se.kth.ssvl.tslab.wsn.service.bpf.ActionReceiver;
 import se.kth.ssvl.tslab.wsn.service.bpf.Communication;
 import se.kth.ssvl.tslab.wsn.service.bpf.DB;
 import se.kth.ssvl.tslab.wsn.service.bpf.Logger;
 import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.WSNServiceInterface;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
+import se.kth.ssvl.tslab.wsn.app.ConfigActivity;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPF;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFActionReceiver;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
@@ -15,11 +18,13 @@ import se.kth.ssvl.tslab.wsn.general.bpf.BPFDB;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFLogger;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFService;
 import se.kth.ssvl.tslab.wsn.general.bpf.exceptions.BPFException;
+import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -32,17 +37,29 @@ public class WSNService extends Service implements BPFService {
 	private DB db;
 
 	private final WSNServiceInterface.Stub mBinder = new WSNServiceInterface.Stub() {
-		public void start() {
+
+		@Override
+		public void start() throws RemoteException {
 			logger.debug(TAG, "Start method in Service called by ConfigActivity");
 			//start BPF
 //			BPF.getInstance().start();
+		}
+		
+		@Override
+		public Map<String, Integer> getStats() throws RemoteException {
+			Stats stats = BPF.getInstance().getStats();
+			Map<String, Integer> s = new HashMap<String, Integer>();
+			s.put("stored", stats.storedBundles());
+			s.put("transmitted", stats.transmittedBundles());
+			s.put("received", stats.receivedBundles());
+			s.put("usage", stats.totalSize());
+			return s;
 		}
 	};
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		logger.info(TAG, "onBind");
-		logger.info(TAG, "mBinder: " + mBinder.toString());
+		logger.debug(TAG, "Binding...");
 		return mBinder;
 	}
 
@@ -79,7 +96,7 @@ public class WSNService extends Service implements BPFService {
 	public void onDestroy() {
 //		BPF.getInstance().stop();
 		logger.info(TAG, "Stopped BPF");
-		Toast.makeText(this, "Service Stopped", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Service stopped", Toast.LENGTH_LONG).show();
 	}
 
 	@Override

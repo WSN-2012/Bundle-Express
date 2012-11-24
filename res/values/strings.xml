@@ -32,9 +32,10 @@
     <string name="configCancel">Cancel</string>
 
     <!-- Statistics -->
-    <string name="bundleForwardCounter">Number of bundle stored to forward</string>
-    <string name="bundleCounterSent">Number of encrypted bundle sent</string>
-    <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
+    <string name="bundleForwardCounter">Stored bundles</string>
+    <string name="bundleCounterSent">Transmitted bundles</string>
+    <string name="bundleCounterReceived">Received bundles</string>
+    <string name="storageUsage">Storage usage [bytes]</string>
     
     <!-- Configuration -->
     <string-array name="RoutingSelection">
