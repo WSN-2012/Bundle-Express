@@ -52,7 +52,7 @@ public class ConfigActivity extends Activity {
 	
 	private void updateUI() {
 		// Read the config and show it in the UI
-		Configuration config = ConfigManager.getInstance().readConfig();
+//		Configuration config = ConfigManager.getInstance().readConfig();
 		
 		// Set the checkbox depending on if the service is running
 		if (isServiceRunning()) {
@@ -62,23 +62,23 @@ public class ConfigActivity extends Activity {
 		}
 		
 		// Set the quota
-		txtQuota.setText(config.storage_setting().quota());
-		
-		// Set the routing type
-		switch (config.routes_setting().router_type()) {
-		case STATIC_BUNDLE_ROUTER:
-			spinnerRouting.setSelection(0);
-			break;
-		case EPIDEMIC_BUNDLE_ROUTER:
-			spinnerRouting.setSelection(1);
-			break;
-		case PROPHET_BUNDLE_ROUTER:
-			spinnerRouting.setSelection(2);
-			break;
-		default:
-			Log.e(TAG, "Don't know what to specify in the routing spinner. Is the router type undefined?");
-			break;
-		}
+//		txtQuota.setText(config.storage_setting().quota());
+//		
+//		// Set the routing type
+//		switch (config.routes_setting().router_type()) {
+//		case STATIC_BUNDLE_ROUTER:
+//			spinnerRouting.setSelection(0);
+//			break;
+//		case EPIDEMIC_BUNDLE_ROUTER:
+//			spinnerRouting.setSelection(1);
+//			break;
+//		case PROPHET_BUNDLE_ROUTER:
+//			spinnerRouting.setSelection(2);
+//			break;
+//		default:
+//			Log.e(TAG, "Don't know what to specify in the routing spinner. Is the router type undefined?");
+//			break;
+//		}
 		
 		// Set the server eid from shared prefs
 		
@@ -115,24 +115,24 @@ public class ConfigActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				
 				Intent i = new Intent(ConfigActivity.this, WSNService.class);
-				getApplicationContext().startService(i);
-				boolean ok = getApplicationContext().bindService(
-						i, mConnection, BIND_AUTO_CREATE);
-				Log.d(TAG, "bindService: " + ok);
 
 				if (((CheckBox) v).isChecked()) {
-//					startService(new Intent(ConfigActivity.this, WSNService.class));
-//					i.setClassName("se.kth.ssvl.tslab.wsn.service",
-//							"se.kth.ssvl.tslab.wsn.service.WSNService");
-//					startService(i);
 					
+					getApplicationContext().startService(i);
+					boolean ok = getApplicationContext().bindService(
+							i, mConnection, 0);
+					Log.d(TAG, "bindService: " + ok);
+			
 				} else {
 					Log.d(TAG, "Box unchecked");
-//					Intent i = new Intent(ConfigActivity.this, WSNService.class);
-//					i.setClassName("se.kth.ssvl.tslab.wsn.service", "se.kth.ssvl.tslab.wsn.service.WSNService");
-					getApplicationContext().unbindService(mConnection);
-					stopService(i);
+					getApplicationContext().stopService(i);
+					try{
+						getApplicationContext().unbindService(mConnection);
+					} catch (IllegalArgumentException e){
+					    Log.w(TAG, "Service not bound. Only stopping it.");
+					}
 				}
 					
 			}
