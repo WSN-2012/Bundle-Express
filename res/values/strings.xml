@@ -1,10 +1,9 @@
 <resources>
-
+    <!-- General -->
     <string name="app_name">WSN-Android</string>
     <string name="menu_settings">Settings</string>
-    <string name="webDataStatus">Web Data</string>
-    <string name="configEditor">DTN Configuration</string>
-    <string name="bundleStatistics">Bundle Statistics</string>
+
+    <!-- Titles -->
     <string name="title_activity_main">WSN Android</string>
     <string name="title_activity_gateway_data">GatewayData</string>
     <string name="title_activity_config_editor">Configuration</string>
@@ -13,42 +12,45 @@
     <string name="title_activity_bundle_statistics">Bundle Statistics</string>
     <string name="title_activity_web_data_content">Gateway Data</string>
     <string name="title_activity_sensor_list">Sensor List</string>
-    <string name="activateDaemon"></string>
+
+	<!-- TextView texts -->    
+    <string name="webDataStatus">Web Data</string>
+    <string name="bundleStatistics">Bundle Statistics</string>
     <string name="storageSpaceLimit">Space limit</string>
-    <string name="Quota"></string>
     <string name="routingName">Routing Type</string>
     <string name="staticRouting">Static</string>
     <string name="epidemicRouting">Epidemic</string>
     <string name="prophetRouting">ProPHET</string>
     <string name="ServerEndpointID">Server EID</string>
-    <string name="defaultServerEid">dtn://server.dtn</string>
-    <string name="defaultServerAddress">www.server.com:4556</string>
     <string name="webServerUrl">Web server URL</string>
-    <string name="defaultWebServerUrl">http://server.com/api/service</string>
     <string name="serverAddress">Server address</string>
+    <string name="BundleStatus">Bundle Statistics</string>
+    <string name="AndroidService">Activate Android Service</string>
+
+    <!-- Buttons text -->
     <string name="configSave">Save</string>
     <string name="configCancel">Cancel</string>
-    <string name="BundleStatus">Bundle Statistics</string>
+
+    <!-- Statistics -->
     <string name="bundleForwardCounter">Number of bundle stored to forward</string>
     <string name="bundleCounterSent">Number of encrypted bundle sent</string>
     <string name="bundleCounterRecieved">Number of encrypted bundle received</string>
-    <string name="AndroidService">Activate Android Service</string>
-    <string name="SpaceUnit">megabytes</string>
-    <string name="defaultServerUrl">http://130.229.130.122:8081/WSN-web/HTTPServlet</string>
-
+    
+    <!-- Configuration -->
     <string-array name="RoutingSelection">
         <item>Static</item>
         <item>Epidemic</item>
         <item>ProPHET</item>
     </string-array>
-
-
+    <string name="defaultWebServerUrl">http://server.com/api/service</string>
+    <string name="defaultServerEid">dtn://server.dtn</string>
+    <string name="defaultServerAddress">www.server.com:4556</string>
+    <string name="SpaceUnit">megabytes</string>
+    
+    <!-- Data specific -->
     <string name="SensorTemp">"Temperature: "</string>
-
     <string name="unixTime">Unix Time:</string>
-
     <string name="PowerSaveIndicator">Power Save Indicator:</string>
-
     <string name="VoltageIn">Voltage In:</string>
 
 </resources>

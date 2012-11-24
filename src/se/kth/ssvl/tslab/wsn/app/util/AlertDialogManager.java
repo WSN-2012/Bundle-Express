@@ -15,13 +15,13 @@ public class AlertDialogManager {
 	 *            - alert dialog title
 	 * @param message
 	 *            - alert message
-	 * @param status
+	 * @param success
 	 *            - success/failure (used to set icon) - pass null if you don't
 	 *            want icon
 	 * */
 	@SuppressWarnings("deprecation")
 	public void showAlertDialog(Context context, String title, String message,
-			Boolean status) {
+			boolean success) {
 		AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 
 		// Setting Dialog Title
@@ -30,11 +30,11 @@ public class AlertDialogManager {
 		// Setting Dialog Message
 		alertDialog.setMessage(message);
 
-		if (status != null)
-			// Setting alert dialog icon
-			// alertDialog.setIcon((status) ? android.R.drawable.success :
-			// android.R.drawable.fail);
+		if (!success) {
+			alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+		} else {
 			alertDialog.setIcon(null);
+		}
 
 		// Setting OK Button
 		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {

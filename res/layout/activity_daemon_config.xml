@@ -34,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right|end"
                 android:gravity="right"
-                android:paddingLeft="10dp"
-                android:text="@string/activateDaemon" />
+                android:paddingLeft="10dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,7 +59,6 @@
                 android:ems="10"
                 android:hint="@string/SpaceUnit"
                 android:inputType="number"
-                android:text="@string/Quota"
                 android:textSize="17dp" >
             </EditText>
         </LinearLayout>

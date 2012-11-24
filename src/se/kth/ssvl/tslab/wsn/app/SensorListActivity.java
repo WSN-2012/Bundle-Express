@@ -81,7 +81,7 @@ public class SensorListActivity extends ListActivity {
 		
 		// Load URL from settings
 		URL_SENSOR = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
-				getResources().getString(R.string.defaultServerUrl));
+				getResources().getString(R.string.defaultWebServerUrl));
 
 		// Loading Albums JSON in Background Thread
 		new LoadSensors().execute();

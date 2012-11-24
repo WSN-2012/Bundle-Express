@@ -82,7 +82,7 @@ public class GatewayListActivity extends ListActivity {
 
 		// Load URL from settings
 		URL_GATEWAYS = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
-				getResources().getString(R.string.defaultServerUrl));
+				getResources().getString(R.string.defaultWebServerUrl));
 		
 		// Loading Albums JSON in Background Thread
 		new LoadGateways().execute();
