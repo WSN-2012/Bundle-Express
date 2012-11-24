@@ -1,7 +1,7 @@
 package se.kth.ssvl.tslab.wsn.app;
 
 import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.WSNServiceInterface;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.Configuration;
 import se.kth.ssvl.tslab.wsn.service.WSNService;
@@ -124,15 +124,17 @@ public class ConfigActivity extends Activity {
 					boolean ok = getApplicationContext().bindService(
 							i, mConnection, 0);
 					Log.d(TAG, "bindService: " + ok);
-			
+					
 				} else {
-					Log.d(TAG, "Box unchecked");
+					
+					Log.d(TAG, "Box unchecked. Going to stop service.");
 					getApplicationContext().stopService(i);
 					try{
 						getApplicationContext().unbindService(mConnection);
 					} catch (IllegalArgumentException e){
 					    Log.w(TAG, "Service not bound. Only stopping it.");
 					}
+					
 				}
 					
 			}
@@ -145,13 +147,13 @@ public class ConfigActivity extends Activity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			Log.i(TAG, "onServiceConnected has been called");
+			Log.d(TAG, "onServiceConnected has been called");
 			serviceInterface = WSNServiceInterface.Stub.asInterface(service);
 			if (serviceInterface != null) {
 				try {
 					//start the BPF
 					serviceInterface.start();
-					Toast.makeText(ConfigActivity.this, "BPF started",
+					Toast.makeText(ConfigActivity.this, "Service started",
 							Toast.LENGTH_LONG).show();
 				} catch (RemoteException e) {
 					Log.e(TAG, "Error communicating with service!");
