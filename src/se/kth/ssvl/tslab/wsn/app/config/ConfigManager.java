@@ -234,7 +234,7 @@ public class ConfigManager implements Serializable {
 			link = doc.createElement(ConfigurationParser.LinkTagName);
 			link.setAttribute("id", le.id());
 			link.setAttribute("conv_layer_type", le.conv_layer_type().getCaption());
-			link.setAttribute("dest", le.des());
+			link.setAttribute("dest", le.dest());
 			link.setAttribute("type", le.type().toString());
 			links.appendChild(link);
 		}

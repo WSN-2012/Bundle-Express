@@ -86,7 +86,7 @@ public class DataListActivity extends ListActivity {
 
 		// Get the URL from settings
 		URL_DATA = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
-				getResources().getString(R.string.defaultServerUrl));
+				getResources().getString(R.string.defaultWebServerUrl));
 		
 		new Data().execute();
 
