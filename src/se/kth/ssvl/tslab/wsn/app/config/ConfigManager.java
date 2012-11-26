@@ -32,7 +32,6 @@ import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.InterfacesSetting.I
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.LinksSetting.LinkEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.RouteEntry;
 import android.content.Context;
-import android.graphics.Bitmap.Config;
 import android.util.Log;
 
 public class ConfigManager implements Serializable {
@@ -64,24 +63,28 @@ public class ConfigManager implements Serializable {
 			OutputStream out = null;
 			try {
 				// First create the folder on the sdcard if it doesn't exist
-				if (!mConfigurationFile.exists()) {
-					if (!mConfigurationFile.getParentFile().mkdirs()) {
-						Log.e(TAG, "Couldn't create the directory for storage");
-						return;
-					}
+				if (!mConfigurationFile.getParentFile().mkdirs()) {
+					Log.e(TAG, "Couldn't create the directory for storage");
+					return;
 				}
 				
+				// In and output streams
 				in = mContext.getAssets().open("config/dtn.config.xml");
 				out = new FileOutputStream(mConfigurationFile);
+				
+				// Do the actual copying
 				copyFile(in, out);
 				in.close();
 				in = null;
 				out.flush();
 				out.close();
 				out = null;
+				
+				// When done, edit the config and write the path in the configuration
 				Configuration c = readConfig();
 				c.storage_setting().set_storage_path(mConfigurationFile.getParentFile().getAbsolutePath());
 				writeConfig(c);
+				
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to copy config file", e);
 			}
@@ -95,7 +98,7 @@ public class ConfigManager implements Serializable {
 	 */
 	public Configuration readConfig() {
 		try {
-			Log.d(TAG, "Trying to load config from assets");
+			Log.d(TAG, "Trying to read configuration");
 			return ConfigurationParser.parse_config_file(new FileInputStream(mConfigurationFile));
 		} catch (InvalidDTNConfigurationException e) {
 			Log.e(TAG,
@@ -191,6 +194,7 @@ public class ConfigManager implements Serializable {
 		while (d.hasNext()) {
 			de = d.next();
 			discover = doc.createElement(ConfigurationParser.DiscoveryTagName);
+			discover.setAttribute("id", de.id());
 			discover.setAttribute("address_family", de.address_family().getCaption());
 			discover.setAttribute("port", Integer.toString(de.port()));
 			discovery.appendChild(discover);
