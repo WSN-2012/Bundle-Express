@@ -3,9 +3,8 @@ package se.kth.ssvl.tslab.wsn.app;
 import java.util.Map;
 
 import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
-import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.service.WSNService;
+import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import se.kth.ssvl.tslab.wsn.service.WSNServiceInterfaceCallBack;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -18,11 +17,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class StatisticsActivity extends Activity {
 

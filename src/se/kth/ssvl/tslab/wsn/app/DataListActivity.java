@@ -46,7 +46,6 @@ public class DataListActivity extends ListActivity {
 
 	String sensor_id = null;
 
-	// private static final String TAG_ID = "id";
 	private static final String TAG_UTIMESTAMP = "utimestamp";
 	private static final String TAG_UT = "ut";
 	private static final String TAG_T = "t";
@@ -56,7 +55,6 @@ public class DataListActivity extends ListActivity {
 	private static final String TAG_UP = "up";
 	private static final String TAG_RH = "rh";
 	private static final String TAG_V_IN = "v_in";
-	// private static final String TAG_V_A1 = "v_a1";
 	private static final String TAG_SENSOR_NAME = "sensorName";
 	
 	private static String URL_DATA; 
@@ -94,10 +92,7 @@ public class DataListActivity extends ListActivity {
 
 		ListView lv = getListView();
 
-		/**
-		 * Listview on item click listener SingleTrackActivity will be lauched
-		 * by passing album id, song id
-		 * */
+		/*Listview on item click listener*/
 		lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,

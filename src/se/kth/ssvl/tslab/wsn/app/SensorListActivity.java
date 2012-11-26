@@ -83,25 +83,24 @@ public class SensorListActivity extends ListActivity {
 		URL_SENSOR = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
 				getResources().getString(R.string.defaultWebServerUrl));
 
-		// Loading Albums JSON in Background Thread
+		// Loading Sensors JSON in Background Thread
 		new LoadSensors().execute();
 
 		ListView lv = getListView();
 
 		/**
-		 * Listview on item click listener SingleTrackActivity will be lauched
-		 * by passing album id, song id
+		 * Listview on item click listener DataListActivity will be lauched
+		 * by passing sensor id
 		 * */
 		lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
-				// On selecting single track get song information
+				// On selecting single sensor to get sensor data
 				Intent i = new Intent(getApplicationContext(),
 						DataListActivity.class);
 
-				// to get song information
-				// both album id and song is needed
+				// to get sensors data, sensor id is needed
 				// String gateway_id = ((TextView)
 				// view.findViewById(R.id.gateway_id)).getText().toString();
 				String sensor_id = ((TextView) view
@@ -152,7 +151,7 @@ public class SensorListActivity extends ListActivity {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
 
-			// post album id as GET parameter
+			// post sensor id  as GET parameter
 			params.add(new BasicNameValuePair("gateway", gateway_id));
 
 			params.add(new NameValuePair() {
@@ -178,7 +177,7 @@ public class SensorListActivity extends ListActivity {
 				sensors = new JSONArray(json);
 
 				if (sensors != null) {
-					// looping through All gateways
+					// looping through All Sensors
 					for (int i = 0; i < sensors.length(); i++) {
 						JSONObject c = sensors.getJSONObject(i);
 
@@ -215,7 +214,7 @@ public class SensorListActivity extends ListActivity {
 		}
 
 		protected void onPostExecute(String file_url) {
-			// dismiss the dialog after getting all albums
+			// dismiss the dialog after getting all sensors
 			pDialog.dismiss();
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
