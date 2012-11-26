@@ -26,21 +26,25 @@ public class MainActivity extends TabActivity {
 		TabHost tabHost;
 		TabHost.TabSpec spec;
 
+		//Getting different Tabs
 		// res=getResources();
 		tabHost = getTabHost();
-
+		
+		//init gatway tab
 		Intent intent1 = new Intent().setClass(this, GatewayListActivity.class);
 		spec = tabHost.newTabSpec("Tab 1");
 		spec.setIndicator("Gateway");
 		spec.setContent(intent1);
 		tabHost.addTab(spec);
-
+		
+		//init config tab
 		Intent intent2 = new Intent().setClass(this, ConfigActivity.class);
 		spec = tabHost.newTabSpec("Tab 2");
 		spec.setIndicator("Config");
 		spec.setContent(intent2);
 		tabHost.addTab(spec);
-
+		
+		//init Statistics tab
 		Intent intent3 = new Intent().setClass(this, StatisticsActivity.class);
 		spec = tabHost.newTabSpec("Tab 3");
 		spec.setIndicator("Statistics");

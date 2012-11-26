@@ -84,7 +84,8 @@
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 android:hint="@string/defaultServerEid"
-                android:textSize="15dp" />
+                android:inputType="text"
+                android:textSize="15dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -109,6 +110,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:hint="@string/defaultServerAddress"
+                android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
                 android:textSize="15dp" />
@@ -136,6 +138,7 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:hint="@string/defaultWebServerUrl"
+                android:inputType="text"
                 android:lines="1"
                 android:maxLines="1"
                 android:textSize="15dp" />
