@@ -14,11 +14,13 @@ import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -117,8 +119,18 @@ public class DataListActivity extends ListActivity {
 			pDialog.setMessage("Loading data ...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
+			timerDelayRemoveDialog(10000,pDialog);
 			pDialog.show();
 		}
+
+		public void timerDelayRemoveDialog(long time, final Dialog d){
+			Handler handler = new Handler(); 
+			handler.postDelayed(new Runnable() {           
+	        public void run() {                
+	            d.dismiss();         
+	        		}
+				}, time); 
+			}
 
 		/**
 		 * getting song json and parsing
