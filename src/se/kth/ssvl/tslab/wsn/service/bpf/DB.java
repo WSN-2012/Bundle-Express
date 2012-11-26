@@ -26,7 +26,7 @@ public class DB implements BPFDB {
 	private Logger logger;
 	private SQLiteDatabase database;
 	private String databaseFilePath;
-	private SQLiteQueryBuilder sqlbuilder;
+	private SQLiteQueryBuilder sqlbuilder = new SQLiteQueryBuilder();
 
 	public DB(File dbFile, Logger logger) 
 	{  
@@ -293,8 +293,9 @@ public class DB implements BPFDB {
 
 				// Last but not least add the row to list with rows
 				result.add(row);
-				closeCursor(cursor);
+				cursor.moveToNext();
 			}
+		    closeCursor(cursor);
 		} catch (SQLiteException e) {
 			e.printStackTrace();
 			throw new BPFDBException(
