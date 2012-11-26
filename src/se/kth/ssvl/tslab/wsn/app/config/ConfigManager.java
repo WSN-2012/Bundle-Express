@@ -56,8 +56,30 @@ public class ConfigManager implements Serializable {
 		
 		return mInstance;
 	}
+
+	// TEMPORARY
+	public static void deleteFolder(File folder) {
+	    File[] files = folder.listFiles();
+	    if(files!=null) { //some JVMs return null for empty dirs
+	        for(File f: files) {
+	            if(f.isDirectory()) {
+	                deleteFolder(f);
+	            } else {
+	                f.delete();
+	            }
+	        }
+	    }
+	    folder.delete();
+	}
+
 	
 	private ConfigManager() {
+		//Temporary to overwrite every time
+		if (mConfigurationFile.exists()) {
+			mConfigurationFile.delete();
+			deleteFolder(new File(mConfigurationFile.getParent()));
+		}
+		
 		if (!mConfigurationFile.exists()) {
 			InputStream in = null;
 			OutputStream out = null;
@@ -67,11 +89,11 @@ public class ConfigManager implements Serializable {
 					Log.e(TAG, "Couldn't create the directory for storage");
 					return;
 				}
-				
+
 				// In and output streams
 				in = mContext.getAssets().open("config/dtn.config.xml");
 				out = new FileOutputStream(mConfigurationFile);
-				
+
 				// Do the actual copying
 				copyFile(in, out);
 				in.close();
@@ -79,12 +101,14 @@ public class ConfigManager implements Serializable {
 				out.flush();
 				out.close();
 				out = null;
-				
-				// When done, edit the config and write the path in the configuration
+
+				// When done, edit the config and write the path in the
+				// configuration
 				Configuration c = readConfig();
-				c.storage_setting().set_storage_path(mConfigurationFile.getParentFile().getAbsolutePath());
+				c.storage_setting().set_storage_path(
+						mConfigurationFile.getParentFile().getAbsolutePath());
 				writeConfig(c);
-				
+
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to copy config file", e);
 			}
