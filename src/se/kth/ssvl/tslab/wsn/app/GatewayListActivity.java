@@ -67,6 +67,7 @@ public class GatewayListActivity extends ListActivity {
 
 		// Check for Internet connection
 		if (!cd.isConnectingToInternet()) {
+		//if (true) {
 			// Internet Connection is not present
 			alert.showAlertDialog(GatewayListActivity.this, "Internet Connection Error",
 					"Please connect to working Internet connection", false);
