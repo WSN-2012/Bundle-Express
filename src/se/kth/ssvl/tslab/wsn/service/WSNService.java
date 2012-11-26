@@ -46,8 +46,22 @@ public class WSNService extends Service implements BPFService {
 		
 		//this is called from ConfigActivity right after binding
 		@Override
-		public void start() throws RemoteException {
+		public void start(String path) throws RemoteException {
+
 			logger.debug(TAG, "Start method in Service called by ConfigActivity");
+			
+			// Init the DB object
+			db = new DB(new File(path + "/database.db"), logger);
+			
+			// Try to init the BPF
+			try {
+				BPF.init(getInstance(), path + "/dtn.config.xml");
+			} catch (BPFException e) {
+				logger.error(TAG,
+						"Couldn't initialize the BPF, exception: " + e.getMessage());
+				System.exit(-1);
+			}
+			
 			//start BPF
 			BPF.getInstance().start();
 		}
@@ -106,20 +120,8 @@ public class WSNService extends Service implements BPFService {
 		// Init the communications object
 		comm = new Communication();
 
-		// Init the DB object
-		db = new DB(new File("build/database.db"), logger); // TODO: this is not
-															// working!
 		logger.debug(TAG, "Creating Service");
 		
-		// Try to init the BPF
-		try {
-			BPF.init(this, Environment.getExternalStorageDirectory()
-					.getAbsolutePath() + "/dtn.config.xml");
-		} catch (BPFException e) {
-			logger.error(TAG,
-					"Couldn't initialize the BPF, exception: " + e.getMessage());
-			System.exit(-1);
-		}
 	}
 
 	@Override
@@ -185,5 +187,8 @@ public class WSNService extends Service implements BPFService {
 		return logger;
 	}
 
+	private WSNService getInstance() {
+		return this;
+	}
 
 }

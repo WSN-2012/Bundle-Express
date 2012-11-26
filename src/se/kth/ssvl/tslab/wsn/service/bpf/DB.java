@@ -22,8 +22,6 @@ import se.kth.ssvl.tslab.wsn.general.bpf.exceptions.BPFDBException;
 public class DB implements BPFDB {
 
 	private static final String TAG = "DB";
-	private static final String DB_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
-	
 	
 	private Logger logger;
 	private SQLiteDatabase database;
@@ -32,7 +30,7 @@ public class DB implements BPFDB {
 
 	public DB(File dbFile, Logger logger) 
 	{  
-		this.databaseFilePath = DB_PATH+File.pathSeparator+dbFile.getAbsolutePath();
+		this.databaseFilePath = dbFile.getAbsolutePath();
 		
 		
 		// Init the logger

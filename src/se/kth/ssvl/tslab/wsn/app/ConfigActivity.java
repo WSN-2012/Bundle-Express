@@ -237,7 +237,7 @@ public class ConfigActivity extends Activity {
 			if (serviceInterface != null) {
 				try {
 					//start the BPF
-					serviceInterface.start();
+					serviceInterface.start(ConfigManager.getInstance().getmConfigurationFile().getParentFile().getAbsolutePath());
 					Toast.makeText(ConfigActivity.this, "Service started",
 							Toast.LENGTH_LONG).show();
 				} catch (RemoteException e) {

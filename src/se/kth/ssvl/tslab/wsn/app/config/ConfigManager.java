@@ -32,6 +32,7 @@ import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.InterfacesSetting.I
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.LinksSetting.LinkEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.RouteEntry;
 import android.content.Context;
+import android.graphics.Bitmap.Config;
 import android.util.Log;
 
 public class ConfigManager implements Serializable {
@@ -78,6 +79,9 @@ public class ConfigManager implements Serializable {
 				out.flush();
 				out.close();
 				out = null;
+				Configuration c = readConfig();
+				c.storage_setting().set_storage_path(mConfigurationFile.getParentFile().getAbsolutePath());
+				writeConfig(c);
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to copy config file", e);
 			}
@@ -289,7 +293,9 @@ public class ConfigManager implements Serializable {
 		
 		return storage;
 	}
-	
-	
-	
+
+	//getter for configuration file
+	public File getmConfigurationFile() {
+		return mConfigurationFile;
+	}
 }
