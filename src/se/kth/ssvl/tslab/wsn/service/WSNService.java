@@ -146,19 +146,22 @@ public class WSNService extends Service implements BPFService {
 				"\nReceived bundles: " + stats.receivedBundles() );
 		//callback
 		try {
-	        int N = mCallbacks.beginBroadcast();
-	        //check that callback is registered
-	        if (N > 0) {
-	        	Log.d(TAG, "mCallBacks N value = " + N);
-	        	// now for time being we will consider only one activity is bound to the service, so hardcode 0
-	        	mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
-	        			stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
-	        	mCallbacks.finishBroadcast();
-	        } else {
-	        	Log.w(TAG, "Callback to StatisticsActivity is not registered. Ignoring stats update.");
-	        }
+			int N = mCallbacks.beginBroadcast();
+			//check that callback is registered
+			if (N > 0) {
+				Log.d(TAG, "mCallBacks N value = " + N);
+				// now for time being we will consider only one activity is bound to the service, so hardcode 0
+				mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
+						stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
+				mCallbacks.finishBroadcast();
+			} else {
+				Log.w(TAG, "Callback to StatisticsActivity is not registered. Ignoring stats update.");
+			}
 	    } catch (RemoteException e) {
-	        e.printStackTrace();
+	        Log.e(TAG, "There was an error while trying to update stats in StatisticsActivity. " +
+	        		"Might be that the app crashed and did not unregister the callback." +
+	        		"Unregistering callback...");
+	        mCallbacks.unregister(mCallbacks.getBroadcastItem(0));
 	    }
 	}
 
