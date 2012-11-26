@@ -7,6 +7,8 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+import android.os.StrictMode;
+
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
 
 public class Communication implements BPFCommunication {
@@ -42,6 +44,10 @@ public class Communication implements BPFCommunication {
 
 	@Override
 	public InetAddress getDeviceIP() {
+		
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		
 		InetAddress DeviceAddress = null;
 		try {
 	        for (Enumeration<NetworkInterface> en = NetworkInterface
