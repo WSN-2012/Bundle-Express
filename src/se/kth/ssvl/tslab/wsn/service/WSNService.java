@@ -49,7 +49,7 @@ public class WSNService extends Service implements BPFService {
 		public void start() throws RemoteException {
 			logger.debug(TAG, "Start method in Service called by ConfigActivity");
 			//start BPF
-//			BPF.getInstance().start();
+			BPF.getInstance().start();
 		}
 		
 		//this is called from StatisticsActivity right after binding
@@ -107,24 +107,24 @@ public class WSNService extends Service implements BPFService {
 		comm = new Communication();
 
 		// Init the DB object
-//		db = new DB(new File("build/database.db"), logger); // TODO: this is not
+		db = new DB(new File("build/database.db"), logger); // TODO: this is not
 															// working!
 		logger.debug(TAG, "Creating Service");
 		
 		// Try to init the BPF
-//		try {
-//			BPF.init(this, Environment.getExternalStorageDirectory()
-//					.getAbsolutePath() + "/dtn.config.xml");
-//		} catch (BPFException e) {
-//			logger.error(TAG,
-//					"Couldn't initialize the BPF, exception: " + e.getMessage());
-//			System.exit(-1);
-//		}
+		try {
+			BPF.init(this, Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/dtn.config.xml");
+		} catch (BPFException e) {
+			logger.error(TAG,
+					"Couldn't initialize the BPF, exception: " + e.getMessage());
+			System.exit(-1);
+		}
 	}
 
 	@Override
 	public void onDestroy() {
-//		BPF.getInstance().stop();
+		BPF.getInstance().stop();
 		logger.info(TAG, "Stopped BPF");
 		Toast.makeText(this, "Service stopped", Toast.LENGTH_LONG).show();
 	}
@@ -133,7 +133,7 @@ public class WSNService extends Service implements BPFService {
 	public void onStart(Intent intent, int startid) {
 		// this method is not called when the service is started with bindService().
 		// we use the start() method defined in WSNServiceInterface
-//		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
 	}
 	
 	// this method is called from the BPF when new statistics are available

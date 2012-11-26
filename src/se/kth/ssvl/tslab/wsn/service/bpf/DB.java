@@ -32,7 +32,7 @@ public class DB implements BPFDB {
 
 	public DB(File dbFile, Logger logger) 
 	{  
-		this.databaseFilePath = DB_PATH+dbFile.getAbsolutePath();
+		this.databaseFilePath = DB_PATH+File.pathSeparator+dbFile.getAbsolutePath();
 		
 		
 		// Init the logger
