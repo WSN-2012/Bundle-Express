@@ -44,6 +44,7 @@ public class WSNService extends Service implements BPFService {
 	
 	private final WSNServiceInterface.Stub mBinder = new WSNServiceInterface.Stub() {
 		
+		//this is called from ConfigActivity right after binding
 		@Override
 		public void start() throws RemoteException {
 			logger.debug(TAG, "Start method in Service called by ConfigActivity");
@@ -51,6 +52,7 @@ public class WSNService extends Service implements BPFService {
 //			BPF.getInstance().start();
 		}
 		
+		//this is called from StatisticsActivity right after binding
 		@Override
 		public Map<String, Integer> getStats() throws RemoteException {
 			Stats stats = BPF.getInstance().getStats();
@@ -62,6 +64,7 @@ public class WSNService extends Service implements BPFService {
 			return s;
 		}
 
+		// this is called from StatisticsActivity right after binding
 		@Override
 		public void registerCallBack(WSNServiceInterfaceCallBack cb)
 				throws RemoteException {
@@ -69,6 +72,18 @@ public class WSNService extends Service implements BPFService {
 	            Log.d(TAG, "registerCallBack registering");
 	            mCallbacks.register(cb);
 	        }
+		}
+
+		// this is called from StatisticsActivity when it stops
+		@Override
+		public void unregisterCallBack(WSNServiceInterfaceCallBack cb)
+				throws RemoteException {
+			if (mCallbacks.unregister(cb)) {
+				Log.d(TAG, "Callback to StatisticsActivity unregistered.");
+			} else {
+				Log.w(TAG, "Trying to unregister callback to StatisticsActivity " +
+						"but couldn't find it in the list of registered callbacks");
+			}
 		}
 	};
 
@@ -121,6 +136,7 @@ public class WSNService extends Service implements BPFService {
 //		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
 	}
 	
+	// this method is called from the BPF when new statistics are available
 	@Override
 	public void updateStats(Stats stats) {
 		logger.debug(TAG, "New Stats object received:" +
@@ -131,11 +147,16 @@ public class WSNService extends Service implements BPFService {
 		//callback
 		try {
 	        int N = mCallbacks.beginBroadcast();
-	        Log.d(TAG, "mCallBacks N value = " + N);
-	        // now for time being we will consider only one activity is bound to the service, so hardcode 0
-	        mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
-	        		stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
-	        mCallbacks.finishBroadcast();
+	        //check that callback is registered
+	        if (N > 0) {
+	        	Log.d(TAG, "mCallBacks N value = " + N);
+	        	// now for time being we will consider only one activity is bound to the service, so hardcode 0
+	        	mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
+	        			stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
+	        	mCallbacks.finishBroadcast();
+	        } else {
+	        	Log.w(TAG, "Callback to StatisticsActivity is not registered. Ignoring stats update.");
+	        }
 	    } catch (RemoteException e) {
 	        e.printStackTrace();
 	    }

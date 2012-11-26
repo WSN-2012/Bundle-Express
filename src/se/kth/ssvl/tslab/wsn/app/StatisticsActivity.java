@@ -69,9 +69,17 @@ public class StatisticsActivity extends Activity {
     public void onStop() {
         super.onStop();
         try{
+        	// if we are bound to the service we unregister the callback so that
+        	// the service will not trying to contact us
+        	if (serviceInterface != null) {
+        		serviceInterface.unregisterCallBack(mCallback);
+        	}
+        	
 			getApplicationContext().unbindService(mConnection);
 		} catch (IllegalArgumentException e){
 		    Log.w(TAG, "Service not bound.");
+		} catch (RemoteException e) {
+			Log.e(TAG, "Exception while unregistering callback");
 		}
     }
 	

@@ -5,4 +5,5 @@ interface WSNServiceInterface {
     	void start();
 		Map getStats();
 		void registerCallBack(WSNServiceInterfaceCallBack cb);
+		void unregisterCallBack(WSNServiceInterfaceCallBack cb);
      }
