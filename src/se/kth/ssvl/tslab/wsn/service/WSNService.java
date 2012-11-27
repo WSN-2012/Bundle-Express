@@ -4,13 +4,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import se.kth.ssvl.tslab.wsn.service.bpf.ActionReceiver;
-import se.kth.ssvl.tslab.wsn.service.bpf.Communication;
-import se.kth.ssvl.tslab.wsn.service.bpf.DB;
-import se.kth.ssvl.tslab.wsn.service.bpf.Logger;
-import se.kth.ssvl.tslab.wsn.R;
-import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
-import se.kth.ssvl.tslab.wsn.app.ConfigActivity;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPF;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFActionReceiver;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
@@ -19,12 +12,12 @@ import se.kth.ssvl.tslab.wsn.general.bpf.BPFLogger;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFService;
 import se.kth.ssvl.tslab.wsn.general.bpf.exceptions.BPFException;
 import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
+import se.kth.ssvl.tslab.wsn.service.bpf.ActionReceiver;
+import se.kth.ssvl.tslab.wsn.service.bpf.Communication;
+import se.kth.ssvl.tslab.wsn.service.bpf.DB;
+import se.kth.ssvl.tslab.wsn.service.bpf.Logger;
 import android.app.Service;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Binder;
-import android.os.Environment;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
@@ -115,7 +108,7 @@ public class WSNService extends Service implements BPFService {
 		logger = new Logger();
 
 		// Init the action receiver
-		action = new ActionReceiver(logger);
+		action = new ActionReceiver();
 
 		// Init the communications object
 		comm = new Communication();

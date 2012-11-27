@@ -43,7 +43,7 @@
         <item>Epidemic</item>
         <item>ProPHET</item>
     </string-array>
-    <string name="defaultWebServerUrl">http://130.229.130.122:8081/WSN-web/HTTPServlet</string>
+    <string name="defaultWebServerUrl">http://lakka.se:8080/WSN-web/HTTPServlet</string>
     <string name="defaultServerEid">dtn://server.dtn</string>
     <string name="defaultServerAddress">www.server.com:4556</string>
     <string name="SpaceUnit">megabytes</string>
