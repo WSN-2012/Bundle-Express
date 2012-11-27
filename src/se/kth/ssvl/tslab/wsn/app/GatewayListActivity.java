@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,6 +112,12 @@ public class GatewayListActivity extends ListActivity {
 			}
 		});
 
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  setContentView(R.layout.activity_web_data);
 	}
 
 	/*Background Async Task to Load all Albums by making http request*/
