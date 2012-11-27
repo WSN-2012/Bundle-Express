@@ -31,23 +31,26 @@
         </activity>
         <activity
             android:name=".app.GatewayListActivity"
-            android:label="@string/title_activity_web_data" >
+            android:label="@string/title_activity_web_data">
         </activity>
         <activity
             android:name=".app.ConfigActivity"
-            android:label="@string/title_activity_daemon_config" >
+            android:label="@string/title_activity_daemon_config"
+            android:configChanges="orientation" >
         </activity>
         <activity
             android:name=".app.StatisticsActivity"
-            android:label="@string/title_activity_bundle_statistics" >
+            android:label="@string/title_activity_bundle_statistics">
         </activity>
         <activity
             android:name=".app.DataListActivity"
-            android:label="@string/title_activity_web_data_content" >
+            android:label="@string/title_activity_web_data_content"
+            android:configChanges="orientation">
         </activity>
         <activity
             android:name=".app.SensorListActivity"
-            android:label="@string/title_activity_sensor_list" >
+            android:label="@string/title_activity_sensor_list"
+            android:configChanges="orientation">
 
         </activity>
         <service android:enabled="true" android:name=".service.WSNService"/>

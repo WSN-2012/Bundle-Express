@@ -18,6 +18,7 @@ import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +56,7 @@ public class SensorListActivity extends ListActivity {
 	// ALL JSON node names
 	private static final String TAG_ID = "id";
 	private static final String TAG_NAME = "name";
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,12 @@ public class SensorListActivity extends ListActivity {
 		});
 
 	}
+	
+	/*@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	  super.onConfigurationChanged(newConfig);
+	  setContentView(R.layout.activity_web_data);
+	}*/
 
 	/*
 	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
