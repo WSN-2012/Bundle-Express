@@ -35,9 +35,10 @@ public class ConfigActivity extends Activity {
 	private WSNServiceInterface serviceInterface;
 	
 	private CheckBox checkService;
-	private EditText txtQuota;
+	private EditText quota;
 	private Spinner spinnerRouting;
 	private EditText serverEid;
+	private EditText localEid;
 	private EditText serverAddress;
 	private EditText webServerUrl;
 	
@@ -54,9 +55,10 @@ public class ConfigActivity extends Activity {
 	
 	private void getUIComponents() {
 		checkService = (CheckBox) findViewById(R.id.checkService);
-		txtQuota = (EditText) findViewById(R.id.txtQuota);
+		quota = (EditText) findViewById(R.id.txtQuota);
 		spinnerRouting = (Spinner) findViewById(R.id.spinnerRouting);
 		serverEid = (EditText) findViewById(R.id.txtServerEid);
+		localEid = (EditText) findViewById(R.id.txtLocalEid);
 		serverAddress = (EditText) findViewById(R.id.txtServerAddress);
 		webServerUrl = (EditText) findViewById(R.id.txtWebServerUrl);
 	}
@@ -76,7 +78,7 @@ public class ConfigActivity extends Activity {
 		}
 		
 		// Set the quota
-		txtQuota.setText(Integer.toString(config.storage_setting().quota()));
+		quota.setText(Integer.toString(config.storage_setting().quota()));
 		
 		// Set the routing type
 		switch (config.routes_setting().router_type()) {
@@ -101,6 +103,9 @@ public class ConfigActivity extends Activity {
 		} else {
 			serverEid.setText(getResources().getString(R.string.defaultServerEid));
 		}
+		
+		// Set the local eid
+		localEid.setText(config.routes_setting().local_eid());
 		
 		// Set the server address
 		LinkEntry link = find(config.links_setting().link_entries(), new LinksChecker(), "server");
@@ -128,7 +133,7 @@ public class ConfigActivity extends Activity {
 	
 	private void showSaveError(String msg) {
 		AlertDialogManager adm = new AlertDialogManager();
-		adm.showAlertDialog(getApplicationContext(), "Save error", msg, false);
+		adm.showAlertDialog(this, "Save error", msg, false);
 	}
 	
 	/**
@@ -146,7 +151,7 @@ public class ConfigActivity extends Activity {
 		
 		// Now fill in the values and save to config file
 		try {
-			config.storage_setting().set_quota(Integer.parseInt(txtQuota.getText().toString()));
+			config.storage_setting().set_quota(Integer.parseInt(quota.getText().toString()));
 		} catch (NumberFormatException e) {
 			showSaveError("The storage limit must be a number");
 			return;
@@ -159,6 +164,8 @@ public class ConfigActivity extends Activity {
 			showSaveError("Couldn't find the route entry in the config");
 			return;
 		}
+		
+		config.routes_setting().set_local_eid(localEid.getText().toString());
 		
 		int linkId = getId(config.links_setting().link_entries(), new LinksChecker(), "server");
 		if (linkId > -1 && linkId < config.links_setting().link_entries().size()) {
@@ -258,21 +265,6 @@ public class ConfigActivity extends Activity {
 			Log.d(TAG, "Service disconnected");
 		}
 	};
-	
-	/*
-	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
-	 * getMenuInflater().inflate(R.menu.activity_daemon_config, menu); return
-	 * true; }
-	 */
-
-	/* Called when the user clicks the save button */
-	/*
-	 * public void UpdateEID(View view) { /Do something in response to button }
-	 */
-	
-	
-	
-	/* Method for searching through configurations lists */
 	
 	interface Checker<T> {
 	    public boolean check(T object, String value);
