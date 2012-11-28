@@ -14,6 +14,7 @@
         android:paddingRight="5dp" >
 
         <!-- Checkbox -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,10 +22,11 @@
             android:paddingTop="20dp" >
 
             <!-- Made this a bit higher to make the line below have some padding -->
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="0dp"
-                android:layout_height="50dp" 
+                android:layout_height="50dp"
                 android:layout_weight="2"
                 android:gravity="left"
                 android:text="@string/AndroidService"
@@ -38,14 +40,16 @@
                 android:gravity="right"
                 android:paddingLeft="10dp" />
         </LinearLayout>
-        
+
         <!-- Separation line -->
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="#cccccc" />
-		
-		<!-- Quota -->
+
+        <!-- Quota -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +77,7 @@
         </LinearLayout>
 
         <!-- Local Enpoint ID -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,10 +100,11 @@
                 android:layout_weight="1"
                 android:hint="@string/defaultLocalEid"
                 android:inputType="text"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
         </LinearLayout>
-        
+
         <!-- Server Endpoint ID -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,10 +127,11 @@
                 android:layout_weight="1"
                 android:hint="@string/defaultServerEid"
                 android:inputType="text"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
         </LinearLayout>
 
         <!-- Server adress -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -152,9 +159,10 @@
                 android:maxLines="1"
                 android:textSize="15dp" />
         </LinearLayout>
-        
+
         <!-- Routing -->
         <!-- Made this a bit higher to make the line below have some padding -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -176,14 +184,16 @@
                 android:layout_weight="1"
                 android:entries="@array/RoutingSelection" />
         </LinearLayout>
-        
+
         <!-- Separation line -->
+
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:background="#cccccc" />
-        
+
         <!-- Web server URL -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -213,31 +223,33 @@
         </LinearLayout>
 
         <!-- Save/Cancel buttons -->
+
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="60dp"
-            android:paddingBottom="30dp" >
-            
+            android:paddingTop="60dp" >
+
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/btnCancel"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:onClick="cancel"
+                android:drawableLeft="@android:drawable/ic_menu_close_clear_cancel"
                 android:text="@string/configCancel"
-                android:textSize="25dp" />
-            
+                android:onClick="cancel" />
+
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/btnSave"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:onClick="save"
+                android:drawableLeft="@android:drawable/ic_menu_save"
                 android:text="@string/configSave"
-                android:textSize="25dp" />
-
+                android:onClick="save"  />
         </RelativeLayout>
     </LinearLayout>
 
