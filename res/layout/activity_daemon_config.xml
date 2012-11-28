@@ -13,16 +13,18 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp" >
 
+        <!-- Checkbox -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="20dp" >
 
+            <!-- Made this a bit higher to make the line below have some padding -->
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp" 
                 android:layout_weight="2"
                 android:gravity="left"
                 android:text="@string/AndroidService"
@@ -36,12 +38,19 @@
                 android:gravity="right"
                 android:paddingLeft="10dp" />
         </LinearLayout>
-
+        
+        <!-- Separation line -->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#cccccc" />
+		
+		<!-- Quota -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="20dp" >
+            android:paddingTop="30dp" >
 
             <TextView
                 android:id="@+id/textView2"
@@ -59,10 +68,37 @@
                 android:ems="10"
                 android:hint="@string/SpaceUnit"
                 android:inputType="number"
-                android:textSize="17dp" >
+                android:textSize="15dp" >
             </EditText>
         </LinearLayout>
 
+        <!-- Local Enpoint ID -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp" >
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:text="@string/LocalEndpointID"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/txtLocalEid"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:hint="@string/defaultLocalEid"
+                android:inputType="text"
+                android:textSize="15dp"/>
+        </LinearLayout>
+        
+        <!-- Server Endpoint ID -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,6 +124,7 @@
                 android:textSize="15dp"/>
         </LinearLayout>
 
+        <!-- Server adress -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -116,11 +153,42 @@
                 android:textSize="15dp" />
         </LinearLayout>
         
+        <!-- Routing -->
+        <!-- Made this a bit higher to make the line below have some padding -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="20dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="0.7"
+                android:text="@string/routingName"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Spinner
+                android:id="@+id/spinnerRouting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/RoutingSelection" />
+        </LinearLayout>
+        
+        <!-- Separation line -->
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="#cccccc" />
+        
+        <!-- Web server URL -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="30dp" >
 
             <TextView
                 android:id="@+id/textView6"
@@ -144,51 +212,32 @@
                 android:textSize="15dp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="20dp" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.7"
-                android:text="@string/routingName"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <Spinner
-                android:id="@+id/spinnerRouting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/RoutingSelection" />
-        </LinearLayout>
-
+        <!-- Save/Cancel buttons -->
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:paddingTop="60dp" >
-
+            android:paddingTop="60dp"
+            android:paddingBottom="30dp" >
+            
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:onClick="save"
-                android:text="@string/configSave"
+                android:onClick="cancel"
+                android:text="@string/configCancel"
                 android:textSize="25dp" />
-
+            
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:onClick="cancel"
-                android:text="@string/configCancel"
+                android:onClick="save"
+                android:text="@string/configSave"
                 android:textSize="25dp" />
+
         </RelativeLayout>
     </LinearLayout>
 

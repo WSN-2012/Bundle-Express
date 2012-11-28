@@ -112,7 +112,7 @@ public class ConfigActivity extends Activity {
 				
 		// Set the web service address
 		webServerUrl.setText(this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
-				getResources().getString(R.string.defaultServerEid)));
+				getResources().getString(R.string.defaultWebServerUrl)));
 		
 	}
 

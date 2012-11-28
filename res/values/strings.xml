@@ -22,6 +22,7 @@
     <string name="epidemicRouting">Epidemic</string>
     <string name="prophetRouting">ProPHET</string>
     <string name="ServerEndpointID">Server EID</string>
+    <string name="LocalEndpointID">Local EID</string>
     <string name="webServerUrl">Web server URL</string>
     <string name="serverAddress">Server address</string>
     <string name="BundleStatus">Bundle Statistics</string>
@@ -45,6 +46,7 @@
     </string-array>
     <string name="defaultWebServerUrl">http://lakka.se:8080/WSN-web/HTTPServlet</string>
     <string name="defaultServerEid">dtn://server.dtn</string>
+    <string name="defaultLocalEid">dtn://phone.dtn</string>
     <string name="defaultServerAddress">www.server.com:4556</string>
     <string name="SpaceUnit">megabytes</string>
     
