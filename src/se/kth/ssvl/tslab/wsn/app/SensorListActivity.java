@@ -10,15 +10,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
-import se.kth.ssvl.tslab.wsn.R;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -123,12 +122,6 @@ public class SensorListActivity extends ListActivity {
 		});
 
 	}
-	
-	/*@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
-	  setContentView(R.layout.activity_web_data);
-	}*/
 
 	/*
 	 * @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -158,7 +151,8 @@ public class SensorListActivity extends ListActivity {
 		public void timerDelayRemoveDialog(long time, final Dialog d){
 			Handler handler = new Handler(); 
 			handler.postDelayed(new Runnable() {           
-	        public void run() {                
+	        @Override
+			public void run() {                
 	            d.dismiss();         
 	        		}
 				}, time); 
@@ -167,6 +161,7 @@ public class SensorListActivity extends ListActivity {
 		/**
 		 * getting tracks json and parsing
 		 * */
+		@Override
 		protected String doInBackground(String... args) {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -233,11 +228,13 @@ public class SensorListActivity extends ListActivity {
 			return null;
 		}
 
+		@Override
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog after getting all sensors
 			pDialog.dismiss();
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					/**
 					 * Updating parsed JSON data into ListView

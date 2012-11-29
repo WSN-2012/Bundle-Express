@@ -104,12 +104,6 @@ public class DataListActivity extends ListActivity {
 			}
 		});
 	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-	  super.onConfigurationChanged(newConfig);
-	  setContentView(R.layout.activity_web_data);
-	}
 
 	/**
 	 * Background Async Task to get single song information
@@ -133,7 +127,8 @@ public class DataListActivity extends ListActivity {
 		public void timerDelayRemoveDialog(long time, final Dialog d){
 			Handler handler = new Handler(); 
 			handler.postDelayed(new Runnable() {           
-	        public void run() {                
+	        @Override
+			public void run() {                
 	            d.dismiss();         
 	        		}
 				}, time); 
@@ -142,6 +137,7 @@ public class DataListActivity extends ListActivity {
 		/**
 		 * getting song json and parsing
 		 * */
+		@Override
 		protected String doInBackground(String... args) {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -214,11 +210,13 @@ public class DataListActivity extends ListActivity {
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
+		@Override
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog after getting all albums
 			pDialog.dismiss();
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 
 					/**

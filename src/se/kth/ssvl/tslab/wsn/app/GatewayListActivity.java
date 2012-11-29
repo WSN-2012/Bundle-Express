@@ -53,6 +53,7 @@ public class GatewayListActivity extends ListActivity {
 	// ALL JSON node names
 	private static final String TAG_ID = "id";
 	private static final String TAG_NAME = "name";
+	
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -119,6 +120,7 @@ public class GatewayListActivity extends ListActivity {
 	  super.onConfigurationChanged(newConfig);
 	  setContentView(R.layout.activity_web_data);
 	}
+	
 
 	/*Background Async Task to Load all Albums by making http request*/
 	class LoadGateways extends AsyncTask<String, String, String> {
@@ -140,13 +142,15 @@ public class GatewayListActivity extends ListActivity {
 		public void timerDelayRemoveDialog(long time, final Dialog d){
 		Handler handler = new Handler(); 
 		handler.postDelayed(new Runnable() {           
-        public void run() {                
+        @Override
+		public void run() {                
             d.dismiss();         
         		}
 			}, time); 
 		}
 
 		/*getting Gateways JSON*/
+		@Override
 		protected String doInBackground(String... args) {
 			// Building Parameters
 			List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -210,11 +214,13 @@ public class GatewayListActivity extends ListActivity {
 		/**
 		 * After completing background task Dismiss the progress dialog
 		 * **/
+		@Override
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog after getting all gateways
 			pDialog.dismiss();
 			// updating UI from Background Thread
 			runOnUiThread(new Runnable() {
+				@Override
 				public void run() {
 					/**
 					 * Updating parsed JSON data into ListView

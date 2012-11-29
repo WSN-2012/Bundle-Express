@@ -192,6 +192,7 @@ public class ConfigActivity extends Activity {
 		
 		// By now we should be ok, let go on and write the file
 		ConfigManager.getInstance().writeConfig(config);
+		Log.d("Config :" , "Save successfully");
 	}
 	
 	/**
@@ -271,12 +272,14 @@ public class ConfigActivity extends Activity {
 	}
 
 	class RoutesChecker implements Checker<RouteEntry> {
-	    public boolean check(RouteEntry re, String id) {
+	    @Override
+		public boolean check(RouteEntry re, String id) {
 	        return re.link_id().equals(id);
 	    }
 	}
 	
 	class LinksChecker implements Checker<LinkEntry> {
+		@Override
 		public boolean check(LinkEntry le, String id) {
 			return le.id().equals(id);
 		}
