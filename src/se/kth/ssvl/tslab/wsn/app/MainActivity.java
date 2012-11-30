@@ -33,21 +33,21 @@ public class MainActivity extends TabActivity {
 		//init gatway tab
 		Intent intent1 = new Intent().setClass(this, GatewayListActivity.class);
 		spec = tabHost.newTabSpec("Tab 1");
-		spec.setIndicator("Gateway");
+		spec.setIndicator("Gateway", getResources().getDrawable(R.drawable.webdata));
 		spec.setContent(intent1);
 		tabHost.addTab(spec);
 		
 		//init config tab
 		Intent intent2 = new Intent().setClass(this, ConfigActivity.class);
 		spec = tabHost.newTabSpec("Tab 2");
-		spec.setIndicator("Config");
+		spec.setIndicator("Config", getResources().getDrawable(R.drawable.config));
 		spec.setContent(intent2);
 		tabHost.addTab(spec);
 		
 		//init Statistics tab
 		Intent intent3 = new Intent().setClass(this, StatisticsActivity.class);
 		spec = tabHost.newTabSpec("Tab 3");
-		spec.setIndicator("Statistics");
+		spec.setIndicator("Statistics", getResources().getDrawable(R.drawable.statistics));
 		spec.setContent(intent3);
 		tabHost.addTab(spec);
 	}

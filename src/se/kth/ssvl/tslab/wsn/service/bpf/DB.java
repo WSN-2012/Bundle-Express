@@ -84,6 +84,7 @@ public class DB implements BPFDB {
 
 	/* *************************** */
 
+	@Override
 	public void close() {
 		try {
 			if (database != null) {
@@ -94,6 +95,7 @@ public class DB implements BPFDB {
 		}
 	}
 
+	@Override
 	public int delete(String table, String whereClause, String[] whereArgs)
 			throws BPFDBException {
 		int numOfRowsUpdated = -1;
@@ -113,6 +115,7 @@ public class DB implements BPFDB {
 
 	}
 
+	@Override
 	public void execSQL(String sql) throws BPFDBException {
 		try {
 			database = getWritableDatabase();
@@ -126,6 +129,7 @@ public class DB implements BPFDB {
 		}
 	}
 
+	@Override
 	public int insert(String table, Map<String, Object> values)
 			throws BPFDBException {
 		ContentValues conValues = mapToContentValues(values);
@@ -149,6 +153,7 @@ public class DB implements BPFDB {
 		return -1;
 	}
 
+	@Override
 	public List<Map<String, Object>> query(String table, String[] columns,
 			String selection, String[] selectionArgs, String groupBy,
 			String having, String orderBy, String limit) throws BPFDBException {
@@ -213,6 +218,7 @@ public class DB implements BPFDB {
 		return result;
 	}
 
+	@Override
 	public int update(String table, Map<String, Object> values, String where,
 			String[] whereArgs) throws BPFDBException {
 

@@ -192,7 +192,9 @@ public class ConfigActivity extends Activity {
 		
 		// By now we should be ok, let go on and write the file
 		ConfigManager.getInstance().writeConfig(config);
-		Log.d("Config :" , "Save successfully");
+		Log.d("Config :" , "Saved successfully");
+		Toast.makeText(ConfigActivity.this, "Configuration Saved Successfully",
+				Toast.LENGTH_LONG).show();
 	}
 	
 	/**
