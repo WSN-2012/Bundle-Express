@@ -54,6 +54,30 @@
 		</LinearLayout>
 
         <!-- Quota -->
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="20dp" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="0.7"
+                android:paddingRight="12dp"
+                android:text="@string/storageName"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Spinner
+                android:id="@+id/spinnerStorage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:entries="@array/StorageSelection" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -179,6 +203,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="0.7"
+                android:paddingRight="8dp"
                 android:text="@string/routingName"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
