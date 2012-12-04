@@ -1,15 +1,21 @@
 package se.kth.ssvl.tslab.wsn.service.bpf;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import android.util.Log;
+
+import se.kth.ssvl.tslab.wsn.general.bpf.BPF;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFCommunication;
 
 public class Communication implements BPFCommunication {
 
+	private static final String TAG = "Communication";
+	
 	@Override
 	public InetAddress getBroadcastAddress() {
 		System.setProperty("java.net.preferIPv4Stack", "true");
@@ -37,19 +43,24 @@ public class Communication implements BPFCommunication {
 	@Override
 	public InetAddress getDeviceIP() {
 		try {
-			for (Enumeration<NetworkInterface> en = NetworkInterface
-					.getNetworkInterfaces(); en.hasMoreElements();) {
-				NetworkInterface intf = en.nextElement();
-				for (Enumeration<InetAddress> enumIpAddr = intf
-						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-					InetAddress inetAddress = enumIpAddr.nextElement();
-					if (!inetAddress.isLoopbackAddress()) {
-						return inetAddress;
+			Enumeration<NetworkInterface> ifaces = NetworkInterface
+					.getNetworkInterfaces();
+			while (ifaces.hasMoreElements()) {
+				NetworkInterface iface = ifaces.nextElement();
+				Enumeration<InetAddress> addresses = iface.getInetAddresses();
+
+				while (addresses.hasMoreElements()) {
+					InetAddress addr = addresses.nextElement();
+					if (addr instanceof Inet4Address
+							&& !addr.isLoopbackAddress()) {
+						Log.d(TAG,
+								"getDeviceIP returning " + addr);
+						return addr;
 					}
 				}
 			}
 		} catch (SocketException e) {
-			e.printStackTrace();
+			Log.e(TAG, "Exception while getting device address.");
 		}
 		return null;
 	}
