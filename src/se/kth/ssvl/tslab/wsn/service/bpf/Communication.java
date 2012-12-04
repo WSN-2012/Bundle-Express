@@ -45,8 +45,7 @@ public class Communication implements BPFCommunication {
 	@Override
 	public InetAddress getDeviceIP() {
 		
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy);
+		
 		
 		InetAddress DeviceAddress = null;
 		try {

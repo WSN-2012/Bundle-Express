@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.os.StrictMode;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -104,6 +105,9 @@ public class WSNService extends Service implements BPFService {
 	public void onCreate() {
 		// Toast.makeText(this, "Service Created", Toast.LENGTH_LONG).show();
 
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy);
+		
 		// Init a logger first of all
 		logger = new Logger();
 
