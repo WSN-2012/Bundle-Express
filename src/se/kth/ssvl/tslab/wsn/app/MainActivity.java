@@ -1,13 +1,10 @@
 package se.kth.ssvl.tslab.wsn.app;
 
-import java.io.File;
-
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.widget.TabHost;
 
 @SuppressWarnings("deprecation")
@@ -19,8 +16,7 @@ public class MainActivity extends TabActivity {
 		setContentView(R.layout.activity_main);
 		
 		// Init configManager
-		ConfigManager.init(getApplicationContext(), 
-				new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/WSN-Android/dtn.config.xml"));
+		ConfigManager.init(getApplicationContext());
 		
 		// Resources res;
 		TabHost tabHost;

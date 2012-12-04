@@ -53,8 +53,7 @@
 	            android:background="#cccccc" />
 		</LinearLayout>
 
-        <!-- Quota -->
-        
+		<!-- Storage selector -->        
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,9 +63,8 @@
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="0.7"
-                android:paddingRight="12dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:text="@string/storageName"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -74,11 +72,12 @@
                 android:id="@+id/spinnerStorage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:entries="@array/StorageSelection" />
+                android:layout_weight="1" 
+                android:entries="@array/StorageSelection"/>
 
         </LinearLayout>
 
+        <!-- Quota -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,7 +190,6 @@
 
         <!-- Routing -->
         <!-- Made this a bit higher to make the line below have some padding -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -199,7 +197,7 @@
             android:paddingTop="20dp" >
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="0.7"

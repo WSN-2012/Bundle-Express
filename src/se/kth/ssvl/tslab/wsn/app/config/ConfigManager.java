@@ -23,6 +23,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import se.kth.ssvl.tslab.wsn.app.util.FileUtil;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.Configuration;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.ConfigurationParser;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.exceptions.InvalidDTNConfigurationException;
@@ -32,6 +33,8 @@ import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.InterfacesSetting.I
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.LinksSetting.LinkEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.RouteEntry;
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class ConfigManager implements Serializable {
@@ -39,16 +42,30 @@ public class ConfigManager implements Serializable {
 	private static final long serialVersionUID = -6827434347784136141L;
 
 	private final static String TAG = "ConfigManager";
+	public final static String FILENAME = "dtn.config.xml";
+	public final static String PATH = "/WSN-Android/" + FILENAME;
 
 	private static ConfigManager mInstance;
 	private static Context mContext = null;
 	private static File mConfigurationFile = null;
 
-	public static void init(Context context, File configurationFile) {
+	public static void init(Context context) {
 		mContext = context;
-		mConfigurationFile = configurationFile;
+
+		// Set the preference path to the correct memory
+		Editor e = PreferenceManager.getDefaultSharedPreferences(mContext).edit();
+		e.putString("storage.path", PreferenceManager.getDefaultSharedPreferences(mContext).getString(
+				"storage.path", FileUtil.phoneStoragePath(mContext).getAbsolutePath()));
+		e.commit();
+
+		// Create a configuration file based on the preference set above
+		mConfigurationFile = new File(PreferenceManager.
+				getDefaultSharedPreferences(mContext).getString("storage.path", "") + "/" + FILENAME);
+
+		// Run the constructor
+		getInstance();
 	}
-	
+
 	public static ConfigManager getInstance() {
 		if (mInstance == null) {
 			mInstance = new ConfigManager();
@@ -56,30 +73,12 @@ public class ConfigManager implements Serializable {
 		
 		return mInstance;
 	}
-
-	// TEMPORARY
-	public static void deleteFolder(File folder) {
-	    File[] files = folder.listFiles();
-	    if(files!=null) { //some JVMs return null for empty dirs
-	        for(File f: files) {
-	            if(f.isDirectory()) {
-	                deleteFolder(f);
-	            } else {
-	                f.delete();
-	            }
-	        }
-	    }
-	    folder.delete();
+	
+	public void destruct() {
+		mInstance = null;
 	}
-
 	
 	private ConfigManager() {
-		//Temporary to overwrite every time
-		if (mConfigurationFile.exists()) {
-			mConfigurationFile.delete();
-			deleteFolder(new File(mConfigurationFile.getParent()));
-		}
-		
 		if (!mConfigurationFile.exists()) {
 			InputStream in = null;
 			OutputStream out = null;
@@ -95,20 +94,18 @@ public class ConfigManager implements Serializable {
 				out = new FileOutputStream(mConfigurationFile);
 
 				// Do the actual copying
-				copyFile(in, out);
+				FileUtil.proxyStream(in, out);
 				in.close();
 				in = null;
 				out.flush();
 				out.close();
 				out = null;
-
 				// When done, edit the config and write the path in the
 				// configuration
 				Configuration c = readConfig();
 				c.storage_setting().set_storage_path(
 						mConfigurationFile.getParentFile().getAbsolutePath());
 				writeConfig(c);
-
 			} catch (IOException e) {
 				Log.e(TAG, "Failed to copy config file", e);
 			}
@@ -122,7 +119,7 @@ public class ConfigManager implements Serializable {
 	 */
 	public Configuration readConfig() {
 		try {
-			Log.d(TAG, "Trying to read configuration");
+			Log.d(TAG, "Trying to read configuration from file: " + mConfigurationFile.getAbsolutePath());
 			return ConfigurationParser.parse_config_file(new FileInputStream(mConfigurationFile));
 		} catch (InvalidDTNConfigurationException e) {
 			Log.e(TAG,
@@ -181,14 +178,6 @@ public class ConfigManager implements Serializable {
 			e.printStackTrace();
 		}
 		return false;
-	}
-	
-	private void copyFile(InputStream in, OutputStream out) throws IOException {
-	    byte[] buffer = new byte[1024];
-	    int read;
-	    while((read = in.read(buffer)) != -1){
-	      out.write(buffer, 0, read);
-	    }
 	}
 	
 	private Element securitySettings(Document doc, Configuration config) {
@@ -283,6 +272,7 @@ public class ConfigManager implements Serializable {
 			link.setAttribute("conv_layer_type", le.conv_layer_type().getCaption());
 			link.setAttribute("dest", le.dest());
 			link.setAttribute("type", le.type().toString());
+			link.setAttribute("interval", Integer.toString(le.retryInterval()));
 			links.appendChild(link);
 		}
 
@@ -323,7 +313,7 @@ public class ConfigManager implements Serializable {
 	}
 
 	//getter for configuration file
-	public File getmConfigurationFile() {
+	public File getConfigurationFile() {
 		return mConfigurationFile;
 	}
 }

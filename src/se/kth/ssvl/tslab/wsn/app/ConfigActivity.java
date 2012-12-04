@@ -1,10 +1,13 @@
 package se.kth.ssvl.tslab.wsn.app;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.config.ConfigManager;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
+import se.kth.ssvl.tslab.wsn.app.util.FileUtil;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.Configuration;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.LinksSetting.LinkEntry;
 import se.kth.ssvl.tslab.wsn.general.servlib.config.settings.RoutesSetting.RouteEntry;
@@ -20,11 +23,14 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -33,10 +39,11 @@ import android.widget.Toast;
 public class ConfigActivity extends Activity {
 	private final String TAG = "ConfigActivity";
 	private WSNServiceInterface serviceInterface;
-	
+
 	private CheckBox checkService;
 	private EditText quota;
 	private Spinner spinnerRouting;
+	private Spinner spinnerStorage;
 	private EditText serverEid;
 	private EditText localEid;
 	private EditText serverAddress;
@@ -57,6 +64,7 @@ public class ConfigActivity extends Activity {
 		checkService = (CheckBox) findViewById(R.id.checkService);
 		quota = (EditText) findViewById(R.id.txtQuota);
 		spinnerRouting = (Spinner) findViewById(R.id.spinnerRouting);
+		spinnerStorage = (Spinner) findViewById(R.id.spinnerStorage);
 		serverEid = (EditText) findViewById(R.id.txtServerEid);
 		localEid = (EditText) findViewById(R.id.txtLocalEid);
 		serverAddress = (EditText) findViewById(R.id.txtServerAddress);
@@ -69,6 +77,26 @@ public class ConfigActivity extends Activity {
 		if (config == null) {
 			return;
 		}
+		
+		// Give only the option for the sd-card as storage if it is mounted
+		String[] storageOptions;
+		if (android.os.Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			storageOptions = new String[] {"Phone", "SD-Card"}; 
+		} else {
+			storageOptions = new String[] {"Phone"};
+		}
+		spinnerStorage.setAdapter(new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_dropdown_item, storageOptions));
+		
+		// Set the storage spinner
+		if (PreferenceManager.getDefaultSharedPreferences(this).getString("storage.path", "").contains(
+				getFilesDir().getAbsolutePath())) {
+			spinnerStorage.setSelection(0);
+		} else if (PreferenceManager.getDefaultSharedPreferences(this).getString("storage.path", "").contains(
+				Environment.getExternalStorageDirectory().getAbsolutePath())) {
+			spinnerStorage.setSelection(1);
+		}
+		
 		
 		// Set the checkbox depending on if the service is running
 		if (isServiceRunning()) {
@@ -144,7 +172,7 @@ public class ConfigActivity extends Activity {
 		// Start by saving the shared prefs values
 		SharedPreferences settings;
 		SharedPreferences.Editor editor;
-		settings = this.getPreferences(MODE_WORLD_WRITEABLE);
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = settings.edit();
 		editor.putString("server.url", webServerUrl.getText().toString());
 		editor.commit();
@@ -174,27 +202,54 @@ public class ConfigActivity extends Activity {
 			showSaveError("Couldn't find the link entry in the config");
 			return;
 		}
-		
+
 		switch (spinnerRouting.getSelectedItemPosition()) {
-		case 0:
-			config.routes_setting().set_router_type(router_type_t.STATIC_BUNDLE_ROUTER);
+		case 0: // static
+			config.routes_setting().set_router_type(
+					router_type_t.STATIC_BUNDLE_ROUTER);
 			break;
-		case 1:
-			config.routes_setting().set_router_type(router_type_t.EPIDEMIC_BUNDLE_ROUTER);
+		case 1: // epidemic
+			config.routes_setting().set_router_type(
+					router_type_t.EPIDEMIC_BUNDLE_ROUTER);
 			break;
-		case 2:
-			config.routes_setting().set_router_type(router_type_t.PROPHET_BUNDLE_ROUTER);
+		case 2: // prohphet
+			config.routes_setting().set_router_type(
+					router_type_t.PROPHET_BUNDLE_ROUTER);
 			break;
 		default:
 			showSaveError("There was a problem in understanding the routing type");
 			return;
 		}
+
+		// Last thing is to check whether we should move storage path
+		// Destruct the object and reinit it with the new position
+		boolean inPhone = settings.getString("storage.path", "").contains(
+				getFilesDir().getAbsolutePath());
+		switch (spinnerStorage.getSelectedItemPosition()) {
+		case 0: // Phone
+			if (!inPhone) { // SD-Card -> Phone
+				moveStorage(FileUtil.phoneStoragePath(this));
+			}
+			break;
+		case 1: // SD-Card
+			if (inPhone) { // Phone -> SD-Card
+				moveStorage(FileUtil.sdCardStoragePath(this));
+			}
+			break;
+		default:
+			showSaveError("The storage selector is not working properly");
+			return;
+		}
 		
 		// By now we should be ok, let go on and write the file
-		ConfigManager.getInstance().writeConfig(config);
-		Log.d("Config :" , "Saved successfully");
-		Toast.makeText(ConfigActivity.this, "Configuration Saved Successfully",
-				Toast.LENGTH_LONG).show();
+		if (ConfigManager.getInstance().writeConfig(config)) {
+			Log.d(TAG , "Saved successfully");
+			Toast.makeText(ConfigActivity.this, "Configuration Saved Successfully",
+					Toast.LENGTH_LONG).show();
+		} else {
+			Log.e(TAG, "Saving configuration file didn't succeed");
+			showSaveError("Couldn't write the configuration");
+		}
 	}
 	
 	/**
@@ -247,7 +302,7 @@ public class ConfigActivity extends Activity {
 			if (serviceInterface != null) {
 				try {
 					//start the BPF
-					serviceInterface.start(ConfigManager.getInstance().getmConfigurationFile().getParentFile().getAbsolutePath());
+					serviceInterface.start(ConfigManager.getInstance().getConfigurationFile().getParentFile().getAbsolutePath());
 					Toast.makeText(ConfigActivity.this, "Service started",
 							Toast.LENGTH_LONG).show();
 				} catch (RemoteException e) {
@@ -268,6 +323,33 @@ public class ConfigActivity extends Activity {
 			Log.d(TAG, "Service disconnected");
 		}
 	};
+	
+	private void moveStorage(File to) {
+		SharedPreferences settings;
+		SharedPreferences.Editor editor;
+		settings = PreferenceManager.getDefaultSharedPreferences(this);
+		editor = settings.edit();
+		try {
+			// Move the folder to the sd-card
+			if (!FileUtil.moveFolder(new File(settings.getString("storage.path", "")),
+					to)) {
+				showSaveError("There was a problem when moving the files");
+				Log.e(TAG, "There were problems in moving the folder");
+				return;
+			}
+		} catch (IOException e) {
+			showSaveError("There was an error in moving the files to SD-Card");
+			e.printStackTrace();
+		} finally {
+			editor = settings.edit();
+			editor.putString("storage.path", to.getAbsolutePath());
+			editor.commit();
+			ConfigManager.getInstance().destruct();
+			ConfigManager.init(getApplicationContext());
+			editor.putString("storage.path", to.getAbsolutePath());
+			config.storage_setting().set_storage_path(settings.getString("storage.path", ""));
+		}
+	}
 	
 	interface Checker<T> {
 	    public boolean check(T object, String value);
