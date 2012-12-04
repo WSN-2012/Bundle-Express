@@ -67,7 +67,7 @@ public class ActionReceiver extends Activity implements BPFActionReceiver {
 		/*Log.d(TAG, "NOTIFICATION :" + header + description);*/
 		
 		NotificationCompat.Builder mBuilder =new NotificationCompat.Builder(this)
-		.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.notification_icon) //add notification icon
+		.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.ic_stat_notify) //add notification icon
         .setContentTitle("New bundle: ")
         .setContentText(header+" "+description);
 // Creates an explicit intent for an Activity in your app
