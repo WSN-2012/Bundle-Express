@@ -13,7 +13,7 @@
         type you set, the unit is Megabytes
 	keep_copy indicates whether to keep a copy of the bundle after it has been sent
     -->
-    <tns:StorageSetting quota="1" storage_path="/mnt/sdcard/WSN-Android/" test_data_log="true" keep_copy="true"/>
+    <tns:StorageSetting quota="1" storage_path="/" test_data_log="true" keep_copy="true"/>
 
 
     <!--  Interfaces Section -->
@@ -52,7 +52,7 @@
     <!-- ks_password: password to access the keystore -->
     <!-- use_pcb [true|false]: Payload Confidentiality Block for confidentiality and integrity -->
     <!-- use_pib [true|false]: Payload Integrity Block for integrity and authenticity -->
-    <tns:SecuritySetting ks_path="path/to/keystore" ks_password="password" use_pcb="true" use_pib="false"></tns:SecuritySetting>
+    <tns:SecuritySetting ks_path="path/to/keystore" ks_password="password" use_pcb="false" use_pib="false"></tns:SecuritySetting>
 
 </tns:DTNConfiguration>
 	  
