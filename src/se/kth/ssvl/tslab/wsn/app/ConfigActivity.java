@@ -1,7 +1,6 @@
 package se.kth.ssvl.tslab.wsn.app;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Collection;
 
 import se.kth.ssvl.tslab.wsn.R;
@@ -17,8 +16,10 @@ import se.kth.ssvl.tslab.wsn.service.WSNServiceInterface;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
@@ -163,12 +164,62 @@ public class ConfigActivity extends Activity {
 		AlertDialogManager adm = new AlertDialogManager();
 		adm.showAlertDialog(this, "Save error", msg, false);
 	}
-	
+
+	public void preSave(View v) {
+		
+		DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        switch (which){
+		        case DialogInterface.BUTTON_POSITIVE:
+		            save();
+		            break;
+		        case DialogInterface.BUTTON_NEGATIVE:
+		        	
+		            break;
+		        }
+		    }
+		};
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("If you change storage type all your storage is going to be deleted. Do you want to continue?")
+			.setPositiveButton("Yes", dialogClickListener)
+		    .setNegativeButton("No", dialogClickListener);
+		
+		boolean inPhone = PreferenceManager.getDefaultSharedPreferences(this).
+				getString("storage.path", "").contains(getFilesDir().getAbsolutePath());
+		switch (spinnerStorage.getSelectedItemPosition()) {
+		case 0: // Phone
+			if (!inPhone) { // SD-Card -> Phone
+				builder.show();
+			} else {
+				save();
+			}
+			break;
+		case 1: // SD-Card
+			if (inPhone) { // Phone -> SD-Card
+				builder.show();
+			} else {
+				save();
+			}
+			break;
+		default:
+			showSaveError("The storage selector is not working properly");
+			return;
+		}
+	}
+
 	/**
 	 * Method for saving the configuration 
 	 * (only to be used when save-btn is pressed)
 	 */
-	public void save(View v) {
+	public void save() {
+		// Check that the service is not running before saving
+		if (isServiceRunning()) {
+			showSaveError("You have to stop the service first!");
+			return;
+		}
+		
 		// Start by saving the shared prefs values
 		SharedPreferences settings;
 		SharedPreferences.Editor editor;
@@ -329,26 +380,31 @@ public class ConfigActivity extends Activity {
 		SharedPreferences.Editor editor;
 		settings = PreferenceManager.getDefaultSharedPreferences(this);
 		editor = settings.edit();
-		try {
-			// Move the folder to the sd-card
-			if (!FileUtil.moveFolder(new File(settings.getString("storage.path", "")),
-					to)) {
-				showSaveError("There was a problem when moving the files");
-				Log.e(TAG, "There were problems in moving the folder");
-				return;
-			}
-		} catch (IOException e) {
-			showSaveError("There was an error in moving the files to SD-Card");
-			e.printStackTrace();
-		} finally {
-			editor = settings.edit();
-			editor.putString("storage.path", to.getAbsolutePath());
-			editor.commit();
-			ConfigManager.getInstance().destruct();
-			ConfigManager.init(getApplicationContext());
-			editor.putString("storage.path", to.getAbsolutePath());
-			config.storage_setting().set_storage_path(settings.getString("storage.path", ""));
+		
+		// Move the config file
+		if (!FileUtil.moveFile(
+				new File(settings.getString("storage.path", "") + "/" + ConfigManager.FILENAME),
+				new File(to.getAbsoluteFile() + "/" + ConfigManager.FILENAME))) {
+			showSaveError("There was a problem when moving the files");
+			Log.e(TAG, "There were problems in moving the folder");
+			return;
 		}
+		
+		// Delete the old folder
+		FileUtil.deleteFolder(new File(settings.getString("storage.path", "")));
+		
+		// Set the new storage path
+		editor = settings.edit();
+		editor.putString("storage.path", to.getAbsolutePath());
+		editor.commit();
+		
+		// Reconstruct the configmanager with the new path
+		ConfigManager.getInstance().destruct();
+		ConfigManager.init(getApplicationContext());
+		
+		// Set the storage path in the config
+		config.storage_setting().set_storage_path(
+				settings.getString("storage.path", ""));
 	}
 	
 	interface Checker<T> {

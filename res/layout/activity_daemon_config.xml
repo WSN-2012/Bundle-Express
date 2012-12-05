@@ -282,7 +282,7 @@
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@android:drawable/ic_menu_save"
                 android:text="@string/configSave"
-                android:onClick="save"  />
+                android:onClick="preSave"  />
         </RelativeLayout>
     </LinearLayout>
 
