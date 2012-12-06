@@ -36,12 +36,16 @@
         <activity
             android:name=".app.ConfigActivity"
             android:label="@string/title_activity_daemon_config"
-            android:configChanges="orientation|screenSize">>
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity
             android:name=".app.StatisticsActivity"
             android:label="@string/title_activity_bundle_statistics"
-            android:configChanges="orientation|screenSize">>
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".app.MainActivity"> <!-- notification, Pending Intent -->
+             <meta-data
+                  android:name="android.support.PARENT_ACTIVITY"
+                  android:value=".app.MainActivity"/>
         </activity>
         <activity
             android:name=".app.DataListActivity"
