@@ -3,6 +3,7 @@ package se.kth.ssvl.tslab.wsn.app;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
+import se.kth.ssvl.tslab.wsn.app.util.JSONHelper;
 import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -42,12 +44,15 @@ public class DataListActivity extends ListActivity {
 	// Creating JSON Parser object
 	JSONParser jsonParser = new JSONParser();
 
-	ArrayList<HashMap<String, String>> datalist;
+	ArrayList<HashMap<String, Object>> datalist;
 
 	JSONArray data = null;
+	JSONObject wsdata = null;
 
 	String sensor_id = null;
+	String sensor_name = null;
 
+	private static final String TAG_WSDATA = "wsdata";
 	private static final String TAG_UTIMESTAMP = "utimestamp";
 	private static final String TAG_UT = "ut";
 	private static final String TAG_T = "t";
@@ -58,8 +63,8 @@ public class DataListActivity extends ListActivity {
 	private static final String TAG_RH = "rh";
 	private static final String TAG_V_IN = "v_in";
 	private static final String TAG_SENSOR_NAME = "sensorName";
-	
-	private static String URL_DATA; 
+
+	private static String URL_DATA;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -81,20 +86,22 @@ public class DataListActivity extends ListActivity {
 		Intent i = getIntent();
 		// getting attached intent data;
 		sensor_id = i.getStringExtra("sensor_id");
+		sensor_name = i.getStringExtra("sensor_name");
 
-		datalist = new ArrayList<HashMap<String, String>>();
+		datalist = new ArrayList<HashMap<String, Object>>();
 
 		// Get the URL from settings
-		URL_DATA = this.getPreferences(MODE_WORLD_READABLE).getString("server.url", 
+		URL_DATA = this.getPreferences(MODE_WORLD_READABLE).getString(
+				"server.url",
 				getResources().getString(R.string.defaultWebServerUrl));
-		
+
 		new Data().execute();
 
 		Log.d("data: ", "> ");
 
 		ListView lv = getListView();
 
-		/*Listview on item click listener*/
+		/* Listview on item click listener */
 		lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
@@ -119,19 +126,19 @@ public class DataListActivity extends ListActivity {
 			pDialog.setMessage("Loading data ...");
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(false);
-			timerDelayRemoveDialog(10000,pDialog);
+			timerDelayRemoveDialog(10000, pDialog);
 			pDialog.show();
 		}
 
-		public void timerDelayRemoveDialog(long time, final Dialog d){
-			Handler handler = new Handler(); 
-			handler.postDelayed(new Runnable() {           
-	        @Override
-			public void run() {                
-	            d.dismiss();         
-	        		}
-				}, time); 
-			}
+		public void timerDelayRemoveDialog(long time, final Dialog d) {
+			Handler handler = new Handler();
+			handler.postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					d.dismiss();
+				}
+			}, time);
+		}
 
 		/**
 		 * getting song json and parsing
@@ -151,44 +158,35 @@ public class DataListActivity extends ListActivity {
 			Log.d("Gateway Data JSON: ", json);
 
 			try {
+				// JSONObject jObj = new JSONObject(json);
 				data = new JSONArray(json);
-
 				if (data != null) {
 
-					// looping through All data
 					for (int i = 0; i < data.length(); i++) {
 						JSONObject jObj = data.getJSONObject(i);
-
+						// if (jObj != null) {
 						String utimestamp = jObj.getString(TAG_UTIMESTAMP);
-						String ut = jObj.getString(TAG_UT);
-						String t = jObj.getString(TAG_T);
-						String ps = jObj.getString(TAG_PS);
-						String t_mcu = jObj.getString(TAG_T_MCU);
-						String v_mcu = jObj.getString(TAG_V_MCU);
-						String up = jObj.getString(TAG_UP);
-						String rh = jObj.getString(TAG_RH);
-						String v_in = jObj.getString(TAG_V_IN);
 						String sensorName = jObj.getString(TAG_SENSOR_NAME);
+						Log.d("Sensor Name: ", sensorName);
 
-						Log.d("Up time: ", ut);
+						wsdata = jObj.getJSONObject(TAG_WSDATA);
 
-						// creating new HashMap
-						HashMap<String, String> map = new HashMap<String, String>();
+						if (wsdata != null) {
+							// Create a map out of the json objects
+							HashMap<String, Object> map = JSONHelper
+									.toMap(wsdata);
+							
+							// Add the sensor name and timestamp
+							map.put(TAG_UTIMESTAMP, utimestamp);
+							map.put(TAG_SENSOR_NAME, sensorName);
+							
+							// adding HashList to ArrayList
+							datalist.add(map);
+						} else {
 
-						// adding each child node to HashMap key => value
-						map.put(TAG_UTIMESTAMP, utimestamp);
-						map.put(TAG_UT, ut);
-						map.put(TAG_T, t);
-						map.put(TAG_PS, ps);
-						map.put(TAG_T_MCU, t_mcu);
-						map.put(TAG_V_MCU, v_mcu);
-						map.put(TAG_UP, up);
-						map.put(TAG_RH, rh);
-						map.put(TAG_V_IN, v_in);
-						map.put(TAG_SENSOR_NAME, sensorName);
+							Log.d("Data: ", "null");
+						}
 
-						// adding HashList to ArrayList
-						datalist.add(map);
 					}
 				}
 
@@ -196,7 +194,6 @@ public class DataListActivity extends ListActivity {
 
 					Log.d("Data: ", "null");
 				}
-
 			}
 
 			catch (JSONException e) {
@@ -221,25 +218,15 @@ public class DataListActivity extends ListActivity {
 					/**
 					 * Updating parsed JSON data into ListView
 					 * */
-					/*
-					 * ListAdapter adapter = new SimpleAdapter(
-					 * WebDataContent.this, datalist, R.layout.list_item_data,
-					 * new String[] { TAG_UTIMESTAMP, TAG_UT, TAG_T, TAG_PS,
-					 * TAG_T_MCU, TAG_V_MCU,TAG_UP, TAG_RH,
-					 * TAG_V_IN,TAG_SENSOR_NAME}, new int[] {R.id.unixTimestamp,
-					 * R.id.unixTime,R.id.temp,
-					 * R.id.powerSaveIndicator,R.id.mTemp, R.id.mVolt,
-					 * R.id.upTime, R.id.rhumidity, R.id.vIn,
-					 * R.id.sensor_name});
-					 */
+					
 
 					ListAdapter adapter = new SimpleAdapter(
 							DataListActivity.this, datalist,
 							R.layout.list_item_data, new String[] {
 									TAG_UTIMESTAMP, TAG_T, TAG_UT, TAG_PS,
-									TAG_V_IN }, new int[] { R.id.unixTimestamp,
+									TAG_V_IN, TAG_RH, TAG_UP,TAG_T_MCU, TAG_V_MCU }, new int[] { R.id.unixTimestamp,
 									R.id.temp, R.id.unixTime,
-									R.id.powerSaveIndicator, R.id.vIn });
+									R.id.powerSaveIndicator, R.id.vIn, R.id.rhumidity, R.id.upTime,R.id.mTemp, R.id.mVolt });
 					// updating listview
 					setListAdapter(adapter);
 				}

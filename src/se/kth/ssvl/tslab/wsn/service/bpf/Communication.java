@@ -28,6 +28,7 @@ public class Communication implements BPFCommunication {
 					for (InterfaceAddress interfaceAddress : ni
 							.getInterfaceAddresses()) {
 						if (interfaceAddress.getBroadcast() != null) {
+							Log.d("Broadcasr Address", ">"+interfaceAddress.getBroadcast());
 							return interfaceAddress.getBroadcast();
 						}
 					}

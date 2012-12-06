@@ -104,8 +104,8 @@ public class SensorListActivity extends ListActivity {
 						DataListActivity.class);
 
 				// to get sensors data, sensor id is needed
-				// String gateway_id = ((TextView)
-				// view.findViewById(R.id.gateway_id)).getText().toString();
+				String sensor_name = ((TextView)
+				view.findViewById(R.id.sensor_name)).getText().toString();
 				String sensor_id = ((TextView) view
 						.findViewById(R.id.sensor_id)).getText().toString();
 
@@ -114,8 +114,8 @@ public class SensorListActivity extends ListActivity {
 						"gateway Id: " + gateway_id + ", Sensor Id: "
 								+ sensor_id, Toast.LENGTH_SHORT).show();
 
-				// i.putExtra("gateway_id", gateway_id);
 				i.putExtra("sensor_id", sensor_id);
+				i.putExtra("sensor_name", sensor_name);
 
 				startActivity(i);
 			}

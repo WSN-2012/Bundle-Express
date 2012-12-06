@@ -3,10 +3,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingLeft="15dp" >
-    
-<!-- Album id / Hidden by default -->
-    
-    <!-- sensor id / Hidden by default -->
+        
         
     <TextView
         android:id="@+id/unixTimestamp"
@@ -21,13 +18,13 @@
          android:orientation="horizontal">
          
        <TextView
-           android:layout_width="wrap_content"
+       	   android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:gravity="left"
            android:text="@string/SensorTemp" />
    
-     <TextView
-        android:id="@+id/temp"
+   	 	<TextView
+       	 android:id="@+id/temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="left"/>
@@ -36,7 +33,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:gravity="left"
-          android:paddingLeft="15dp"
+          android:paddingLeft="30dp"
           android:text="@string/unixTime" />
      
       <TextView
@@ -75,63 +72,74 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"/>
+   </LinearLayout>
+         
+     
+     
+   <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+      
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/relativeHumidity" />
+      
+         <TextView
+        	android:id="@+id/rhumidity"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"/>
+         
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="left"
+             android:paddingLeft="15dp"
+             android:text="@string/upTime" />
+         
+         <TextView
+       		android:id="@+id/upTime"
+        	android:layout_width="match_parent"
+       	 	android:layout_height="wrap_content"
+        	android:gravity="left"/>
          
          
          
          </LinearLayout>
-    
-  <!-- <TextView
-        android:id="@+id/unixTimestamp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/unixTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    
-    
-    
-    <TextView
-        android:id="@+id/powerSaveIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
+         
+     
+     
+    <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal">
+      
+          <TextView
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="left"
+              android:text="@string/mcTemp" />
+      
+         <TextView
         android:id="@+id/mTemp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    
-    <TextView
+         
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="left"
+             android:paddingLeft="35dp"
+             android:text="@string/mcVolt" />
+         
+         <TextView
         android:id="@+id/mVolt"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/upTime"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/rhumidity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    
-    <TextView
-        android:id="@+id/vIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    
-    
+        android:layout_height="wrap_content"
+        android:gravity="left"/>
+    </LinearLayout>
+         
 
-    <TextView
-        android:id="@+id/sensor_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/> -->
-    
  </LinearLayout>

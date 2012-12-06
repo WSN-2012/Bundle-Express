@@ -10,7 +10,7 @@
     <string name="title_activity_web_data">Web Data</string>
     <string name="title_activity_daemon_config">Daemon Configuration</string>
     <string name="title_activity_bundle_statistics">Bundle Statistics</string>
-    <string name="title_activity_web_data_content">Gateway Data</string>
+    <string name="title_activity_web_data_content">Sensor Data</string>
     <string name="title_activity_sensor_list">Sensor List</string>
 
 	<!-- TextView texts -->    
@@ -61,5 +61,9 @@
     <string name="PowerSaveIndicator">Power Save Indicator:</string>
     <string name="VoltageIn">Voltage In:</string>
     <string name="storageName">Storage Type</string>
+    <string name="relativeHumidity">Relative Humidity :</string>
+    <string name="upTime">Up Time :</string>
+    <string name="mcTemp">M_Temperature :</string>
+    <string name="mcVolt">M_Voltage :</string>
 
 </resources>
