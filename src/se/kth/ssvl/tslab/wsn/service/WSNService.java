@@ -11,6 +11,8 @@ import se.kth.ssvl.tslab.wsn.general.bpf.BPFDB;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFLogger;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFService;
 import se.kth.ssvl.tslab.wsn.general.bpf.exceptions.BPFException;
+import se.kth.ssvl.tslab.wsn.general.dtnapi.exceptions.DTNOpenException;
+import se.kth.ssvl.tslab.wsn.general.dtnapi.types.DTNEndpointID;
 import se.kth.ssvl.tslab.wsn.general.servlib.storage.Stats;
 import se.kth.ssvl.tslab.wsn.service.bpf.ActionReceiver;
 import se.kth.ssvl.tslab.wsn.service.bpf.Communication;
@@ -130,9 +132,6 @@ public class WSNService extends Service implements BPFService {
 
 	@Override
 	public void onStart(Intent intent, int startid) {
-		// this method is not called when the service is started with bindService().
-		// we use the start() method defined in WSNServiceInterface
-		Toast.makeText(this, "Service Started (onStart)", Toast.LENGTH_LONG).show();
 	}
 	
 	// this method is called from the BPF when new statistics are available
@@ -152,10 +151,10 @@ public class WSNService extends Service implements BPFService {
 				// now for time being we will consider only one activity is bound to the service, so hardcode 0
 				mCallbacks.getBroadcastItem(0).updateStats(stats.storedBundles(),
 						stats.transmittedBundles(), stats.receivedBundles(), stats.totalSize());
-				mCallbacks.finishBroadcast();
 			} else {
 				Log.w(TAG, "Callback to StatisticsActivity is not registered. Ignoring stats update.");
 			}
+			mCallbacks.finishBroadcast();
 	    } catch (RemoteException e) {
 	        Log.e(TAG, "There was an error while trying to update stats in StatisticsActivity. " +
 	        		"Might be that the app crashed and did not unregister the callback." +

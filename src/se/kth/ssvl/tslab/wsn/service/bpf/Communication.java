@@ -17,7 +17,7 @@ public class Communication implements BPFCommunication {
 	private static final String TAG = "Communication";
 	
 	@Override
-	public InetAddress getBroadcastAddress() {
+	public InetAddress getBroadcastAddress(String interfaceName) {
 		System.setProperty("java.net.preferIPv4Stack", "true");
 		try {
 			Enumeration<NetworkInterface> niEnum = NetworkInterface
@@ -42,7 +42,7 @@ public class Communication implements BPFCommunication {
 	}
 
 	@Override
-	public InetAddress getDeviceIP() {
+	public InetAddress getDeviceIP(String interfaceName) {
 		try {
 			Enumeration<NetworkInterface> ifaces = NetworkInterface
 					.getNetworkInterfaces();
