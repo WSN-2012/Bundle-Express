@@ -17,7 +17,8 @@ import android.util.Log;
 
 public class ActionReceiver extends Activity implements BPFActionReceiver {
 	private static final String TAG = "Actions";
-	private static final int mId = 1;  // allows you to update the notification later on
+	private static final int mId = 19;  // allows you to update the notification later on
+	private NotificationManager mNotificationManager=null;
 	public ActionReceiver() {
 	}
 
@@ -59,27 +60,19 @@ public class ActionReceiver extends Activity implements BPFActionReceiver {
 
 	@Override
 	public void notify(String header, String description)	{ 
-		/*Log.d(TAG, "NOTIFICATION :" + header + description);*/		
+		 mNotificationManager =
+			    (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+		/*Log.d(TAG, "NOTIFICATION :" + header + description);*/
+		int numMessages = 0; /*Begin loop if phone receives new bundle*/
+		PendingIntent resultPendingIntent= PendingIntent.getActivity( 
+		        this, 0, new Intent(this, se.kth.ssvl.tslab.wsn.app.StatisticsActivity.class), PendingIntent.FLAG_UPDATE_CURRENT); 		
 		NotificationCompat.Builder mBuilder =new NotificationCompat.Builder(this)
 		.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.ic_stat_notify) //add notification icon
         .setContentTitle("New bundle: "/*header*/)
-        .setContentText(header+" "+description);
-// Creates an explicit intent for an Activity in your app
-Intent resultIntent = new Intent(this, se.kth.ssvl.tslab.wsn.app.StatisticsActivity.class);
-PendingIntent resultPendingIntent= PendingIntent.getActivity( 
-        this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT); 
-   mBuilder.setContentIntent(resultPendingIntent); //start an activity 
-                                               //when the user clicks the notification text 
-                                              //in the notification drawer
-NotificationManager mNotificationManager =
-    (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        .setContentText(description).setNumber(++numMessages)
+        .setContentIntent(resultPendingIntent);
+// Creates an intent for an Activity
 
-int numMessages = 0; /*Begin loop if phone receives new bundle*/
-
-mBuilder.setContentText("New bundle received ").setNumber(++numMessages); // Because the ID remains 
-                                                                         //unchanged
-                                                                        //the existing 
-                                                                       //notification is updated.
 mNotificationManager.notify(mId, mBuilder.build());
 
 	}
