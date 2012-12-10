@@ -15,11 +15,13 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-public class ActionReceiver extends Activity implements BPFActionReceiver {
+public class ActionReceiver implements BPFActionReceiver {
 	private static final String TAG = "Actions";
 	private static final int mId = 19;  // allows you to update the notification later on
 	private NotificationManager mNotificationManager=null;
-	public ActionReceiver() {
+	private Context mContext;
+	public ActionReceiver(Context context) {
+		mContext = context;
 	}
 
 	@Override
@@ -59,21 +61,24 @@ public class ActionReceiver extends Activity implements BPFActionReceiver {
 	}
 
 	@Override
-	public void notify(String header, String description)	{ 
-		 mNotificationManager =
-			    (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-		/*Log.d(TAG, "NOTIFICATION :" + header + description);*/
-		int numMessages = 0; /*Begin loop if phone receives new bundle*/
-		PendingIntent resultPendingIntent= PendingIntent.getActivity( 
-		        this, 0, new Intent(this, se.kth.ssvl.tslab.wsn.app.StatisticsActivity.class), PendingIntent.FLAG_UPDATE_CURRENT); 		
-		NotificationCompat.Builder mBuilder =new NotificationCompat.Builder(this)
-		.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.ic_stat_notify) //add notification icon
-        .setContentTitle("New bundle: "/*header*/)
-        .setContentText(description).setNumber(++numMessages)
-        .setContentIntent(resultPendingIntent);
-// Creates an intent for an Activity
+	public void notify(String header, String description) {
+		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+		/* Log.d(TAG, "NOTIFICATION :" + header + description); */
+		int numMessages = 0; /* Begin loop if phone receives new bundle */
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext, 0,
+				new Intent(mContext,
+						se.kth.ssvl.tslab.wsn.app.StatisticsActivity.class),
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+				mContext)
+				.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.ic_stat_notify)
+				// add notification icon
+				.setContentTitle(header)
+				.setContentText(description).setNumber(++numMessages)
+				.setContentIntent(resultPendingIntent);
+		// Creates an intent for an Activity
 
-mNotificationManager.notify(mId, mBuilder.build());
+		mNotificationManager.notify(mId, mBuilder.build());
 
 	}
 
