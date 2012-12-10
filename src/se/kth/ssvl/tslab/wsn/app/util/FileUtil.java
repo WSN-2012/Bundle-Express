@@ -97,7 +97,7 @@ public class FileUtil {
 	public static boolean copyFile(File src, File dst) {
 		try {
 			// Create the parent directories if they don't exist
-			if (!dst.getParentFile().mkdirs()) {
+			if (!dst.getParentFile().exists() && !dst.getParentFile().mkdirs()) {
 				return false;
 			}
 			// Start the copying

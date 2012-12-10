@@ -13,9 +13,9 @@ import org.json.JSONObject;
 
 import se.kth.ssvl.tslab.wsn.R;
 import se.kth.ssvl.tslab.wsn.app.net.ConnectionDetector;
+import se.kth.ssvl.tslab.wsn.app.net.HTTPRequest;
 import se.kth.ssvl.tslab.wsn.app.util.AlertDialogManager;
 import se.kth.ssvl.tslab.wsn.app.util.JSONHelper;
-import se.kth.ssvl.tslab.wsn.app.util.JSONParser;
 import android.app.Dialog;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
@@ -42,7 +42,7 @@ public class DataListActivity extends ListActivity {
 	private ProgressDialog pDialog;
 
 	// Creating JSON Parser object
-	JSONParser jsonParser = new JSONParser();
+	HTTPRequest jsonParser = new HTTPRequest();
 
 	ArrayList<HashMap<String, Object>> datalist;
 

@@ -1,4 +1,4 @@
-package se.kth.ssvl.tslab.wsn.app.util;
+package se.kth.ssvl.tslab.wsn.app.net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,14 +19,14 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class JSONParser {
+public class HTTPRequest {
 
 	static InputStream is = null;
 	static JSONObject jObj = null;
 	static String json = "";
 
 	// constructor
-	public JSONParser() {
+	public HTTPRequest() {
 
 	}
 

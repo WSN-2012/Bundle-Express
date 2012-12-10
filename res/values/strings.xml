@@ -1,10 +1,10 @@
 <resources>
     <!-- General -->
-    <string name="app_name">WSN-Android</string>
+    <string name="app_name">Bundle-Express</string>
     <string name="menu_settings">Settings</string>
 
     <!-- Titles -->
-    <string name="title_activity_main">WSN Android</string>
+    <string name="title_activity_main">Bundle Express</string>
     <string name="title_activity_gateway_data">GatewayData</string>
     <string name="title_activity_config_editor">Configuration</string>
     <string name="title_activity_web_data">Web Data</string>
