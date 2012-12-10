@@ -114,7 +114,7 @@ public class WSNService extends Service implements BPFService {
 		logger = new Logger();
 
 		// Init the action receiver
-		action = new ActionReceiver();
+		action = new ActionReceiver(getApplicationContext());
 
 		// Init the communications object
 		comm = new Communication();
