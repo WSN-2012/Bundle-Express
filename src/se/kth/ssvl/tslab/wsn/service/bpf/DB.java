@@ -74,9 +74,6 @@ public class DB implements BPFDB {
 				conValues.put(entry.getKey(), (Integer) entry.getValue());
 			} else if (entry.getValue() instanceof String) {
 				String entryString = entry.getValue().toString();
-				if(entryString.length() > 2 && entryString.startsWith("'") ) {
-					entryString = entryString.substring(1, entryString.length()-1);
-				}
 				conValues.put(entry.getKey(), entryString);
 			} else {
 				Log.e(TAG, "There was an error converting object to a class");
