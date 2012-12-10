@@ -1,10 +1,13 @@
 package se.kth.ssvl.tslab.wsn.app;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -98,7 +101,7 @@ public class GatewayListActivity extends ListActivity {
 			public void onItemClick(AdapterView<?> arg0, View view, int arg2,
 					long arg3) {
 				// on selecting a single gateway
-				// SensorListActivity will be launched to show Data inside the gateway
+				// SensorListActivity will be launched to show sensor list inside the gateway
 				Intent i = new Intent(getApplicationContext(), SensorListActivity.class);
 
 				String gateway_id = ((TextView) view
@@ -167,14 +170,18 @@ public class GatewayListActivity extends ListActivity {
 				}
 			});
 
-			// getting JSON string from URL
-			String json = jsonParser.makeHttpRequest(URL_GATEWAYS, "GET",
-					params);
-			
-			// Check your log cat for JSON reponse
-			Log.d("Gateways JSON: ", "> " + json);
+		
+
 
 			try {
+				
+				// getting JSON string from URL
+				String json = jsonParser.makeHttpRequest(URL_GATEWAYS, "GET",
+						params);
+				
+				// Check your log cat for JSON reponse
+				Log.d("Gateways JSON: ", "> " + json);
+				
 				gateways = new JSONArray(json);
 
 				if (gateways != null) {
@@ -205,6 +212,16 @@ public class GatewayListActivity extends ListActivity {
 			}
 
 			catch (JSONException e) {
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(GatewayListActivity.this, "Internet Connection Error",
+						"Please connect to working Internet connection", false);
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(GatewayListActivity.this, "Internet Connection Error",
+						"Please connect to working Internet connection", false);
 				e.printStackTrace();
 			}
 

@@ -1,11 +1,11 @@
 package se.kth.ssvl.tslab.wsn.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -151,13 +151,16 @@ public class DataListActivity extends ListActivity {
 			// post gateway id as GET parameters
 			params.add(new BasicNameValuePair("sensor", sensor_id));
 
-			// getting JSON string from URL
-			String json = jsonParser.makeHttpRequest(URL_DATA, "GET", params);
-
-			// Check your log cat for JSON reponse
-			Log.d("Gateway Data JSON: ", json);
+			
 
 			try {
+				
+				// getting JSON string from URL
+				String json = jsonParser.makeHttpRequest(URL_DATA, "GET", params);
+
+				// Check your log cat for JSON reponse
+				Log.d("Gateway Data JSON: ", json);
+				
 				// JSONObject jObj = new JSONObject(json);
 				data = new JSONArray(json);
 				if (data != null) {
@@ -167,7 +170,6 @@ public class DataListActivity extends ListActivity {
 						// if (jObj != null) {
 						String utimestamp = jObj.getString(TAG_UTIMESTAMP);
 						String sensorName = jObj.getString(TAG_SENSOR_NAME);
-						Log.d("Sensor Name: ", sensorName);
 
 						wsdata = jObj.getJSONObject(TAG_WSDATA);
 
@@ -198,6 +200,18 @@ public class DataListActivity extends ListActivity {
 
 			catch (JSONException e) {
 				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(DataListActivity.this,
+						"Internet Connection Error",
+						"Please connect to working Internet connection", false);
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(DataListActivity.this,
+						"Internet Connection Error",
+						"Please connect to working Internet connection", false);
+				e.printStackTrace();
 			}
 
 			return null;
@@ -218,15 +232,15 @@ public class DataListActivity extends ListActivity {
 					/**
 					 * Updating parsed JSON data into ListView
 					 * */
-					
 
 					ListAdapter adapter = new SimpleAdapter(
 							DataListActivity.this, datalist,
 							R.layout.list_item_data, new String[] {
 									TAG_UTIMESTAMP, TAG_T, TAG_UT, TAG_PS,
-									TAG_V_IN, TAG_RH, TAG_UP,TAG_T_MCU, TAG_V_MCU }, new int[] { R.id.unixTimestamp,
-									R.id.temp, R.id.unixTime,
-									R.id.powerSaveIndicator, R.id.vIn, R.id.rhumidity, R.id.upTime,R.id.mTemp, R.id.mVolt });
+									TAG_V_IN, TAG_RH, TAG_UP,TAG_T_MCU, TAG_V_MCU }, new int[] {
+									R.id.unixTimestamp, R.id.temp, R.id.unixTime,
+									R.id.powerSaveIndicator, R.id.vIn, R.id.rhumidity, 
+									R.id.upTime,R.id.mTemp, R.id.mVolt });
 					// updating listview
 					setListAdapter(adapter);
 				}

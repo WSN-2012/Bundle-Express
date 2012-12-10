@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.apache.http.HttpEntity;
@@ -34,70 +33,58 @@ public class JSONParser {
 	// function get json from url
 	// by making HTTP POST or GET mehtod
 	public String makeHttpRequest(String url, String method,
-			List<NameValuePair> params) {
+			List<NameValuePair> params) throws ClientProtocolException,
+			IOException {
+		HttpGet httpGet = null;
 
 		// Making HTTP request
-		try {
 
-			// check for request method
-			if (method == "POST") {
-				// request method is POST
-				// defaultHttpClient
-				DefaultHttpClient httpClient = new DefaultHttpClient();
-				HttpPost httpPost = new HttpPost(url);
-				httpPost.setEntity(new UrlEncodedFormEntity(params));
+		// check for request method
+		if (method == "POST") {
+			// request method is POST
+			// defaultHttpClient
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			HttpPost httpPost = new HttpPost(url);
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
 
-				HttpResponse httpResponse = httpClient.execute(httpPost);
-				HttpEntity httpEntity = httpResponse.getEntity();
-				is = httpEntity.getContent();
+			HttpResponse httpResponse = httpClient.execute(httpPost);
+			HttpEntity httpEntity = httpResponse.getEntity();
+			is = httpEntity.getContent();
 
-			} else if (method == "GET") {
-				// request method is GET
-				Log.d("get: ", "> ");
+		} else if (method == "GET") {
+			// request method is GET
+			Log.d("get: ", "> ");
 
-				DefaultHttpClient httpClient = new DefaultHttpClient();
-				String paramString = URLEncodedUtils.format(params, "utf-8");
-				url += "?" + paramString;
-				Log.d("WEB", "URL=" + url);
-				HttpGet httpGet = new HttpGet(url);
+			DefaultHttpClient httpClient = new DefaultHttpClient();
+			String paramString = URLEncodedUtils.format(params, "utf-8");
+			url += "?" + paramString;
+			Log.d("WEB", "URL=" + url);
+			httpGet = new HttpGet(url);
 
-				HttpResponse httpResponse = httpClient.execute(httpGet);
-				HttpEntity httpEntity = httpResponse.getEntity();
-				is = httpEntity.getContent();
+			HttpResponse httpResponse = httpClient.execute(httpGet);
+			HttpEntity httpEntity = httpResponse.getEntity();
+			is = httpEntity.getContent();
 
-				Log.d("HTTPresponse: ", "> " + is);
-			}
-
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+			Log.d("HTTPresponse: ", "> " + is);
 		}
 
-		try {
-			/*
-			 * BufferedReader reader = new BufferedReader(new InputStreamReader(
-			 * is, "UTF-8"), 8);
-			 */
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					is, "UTF-8"), 8);
+		/*
+		 * BufferedReader reader = new BufferedReader(new InputStreamReader( is,
+		 * "UTF-8"), 8);
+		 */
+		BufferedReader reader = new BufferedReader(new InputStreamReader(is,
+				"UTF-8"), 8);
 
-			StringBuilder sb = new StringBuilder();
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
+		StringBuilder sb = new StringBuilder();
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			sb.append(line + "\n");
 
-			}
-			is.close();
-			json = sb.toString();
-
-			Log.d("BufferData: ", "> " + json);
-
-		} catch (Exception e) {
-			Log.e("Buffer Error", "Error converting result " + e.toString());
 		}
+		is.close();
+		json = sb.toString();
+
+		Log.d("BufferData: ", "> " + json);
 
 		// return JSON String
 		return json;

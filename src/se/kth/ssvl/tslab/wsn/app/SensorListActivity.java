@@ -1,10 +1,12 @@
 package se.kth.ssvl.tslab.wsn.app;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -182,13 +184,15 @@ public class SensorListActivity extends ListActivity {
 				}
 			});
 
-			// getting JSON string from URL
-			String json = jsonParser.makeHttpRequest(URL_SENSOR, "GET", params);
-
-			// Check your log cat for JSON reponse
-			Log.d("Sensor List JSON: ", json);
+			
 
 			try {
+				
+				// getting JSON string from URL
+				String json = jsonParser.makeHttpRequest(URL_SENSOR, "GET", params);
+
+				// Check your log cat for JSON reponse
+				Log.d("Sensor List JSON: ", json);
 				sensors = new JSONArray(json);
 
 				if (sensors != null) {
@@ -222,6 +226,16 @@ public class SensorListActivity extends ListActivity {
 			}
 
 			catch (JSONException e) {
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(SensorListActivity.this, "Internet Connection Error",
+						"Please connect to working Internet connection", false);
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				alert.showAlertDialog(SensorListActivity.this, "Internet Connection Error",
+						"Please connect to working Internet connection", false);
 				e.printStackTrace();
 			}
 
