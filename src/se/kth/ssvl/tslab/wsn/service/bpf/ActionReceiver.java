@@ -7,7 +7,7 @@ import java.io.RandomAccessFile;
 import se.kth.ssvl.tslab.wsn.general.bpf.BPFActionReceiver;
 import se.kth.ssvl.tslab.wsn.general.servlib.bundling.bundles.Bundle;
 import se.kth.ssvl.tslab.wsn.general.servlib.bundling.exception.BundleLockNotHeldByCurrentThread;
-import android.app.Activity;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -17,11 +17,15 @@ import android.util.Log;
 
 public class ActionReceiver implements BPFActionReceiver {
 	private static final String TAG = "Actions";
-	private static final int mId = 19;  // allows you to update the notification later on
-	private NotificationManager mNotificationManager=null;
+
+	private int appId = 0;
+	private NotificationManager mNotificationManager;
 	private Context mContext;
+
 	public ActionReceiver(Context context) {
 		mContext = context;
+		mNotificationManager = (NotificationManager) mContext
+				.getSystemService(Context.NOTIFICATION_SERVICE);
 	}
 
 	@Override
@@ -36,8 +40,9 @@ public class ActionReceiver implements BPFActionReceiver {
 				f.read(buffer);
 				Log.i(TAG, new String(buffer));
 			} catch (FileNotFoundException e) {
-				Log.e(TAG, "Payload should be in file: " + 
-						bundle.payload().file().getAbsolutePath() + ". But did not exist!");
+				Log.e(TAG, "Payload should be in file: "
+						+ bundle.payload().file().getAbsolutePath()
+						+ ". But did not exist!");
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
 			} finally {
@@ -62,23 +67,21 @@ public class ActionReceiver implements BPFActionReceiver {
 
 	@Override
 	public void notify(String header, String description) {
-		mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-		/* Log.d(TAG, "NOTIFICATION :" + header + description); */
-		int numMessages = 0; /* Begin loop if phone receives new bundle */
-		PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext, 0,
-				new Intent(mContext,
+		PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
+				0, new Intent(mContext,
 						se.kth.ssvl.tslab.wsn.app.StatisticsActivity.class),
 				PendingIntent.FLAG_UPDATE_CURRENT);
+
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				mContext)
 				.setSmallIcon(se.kth.ssvl.tslab.wsn.R.drawable.ic_stat_notify)
-				// add notification icon
-				.setContentTitle(header)
-				.setContentText(description).setNumber(++numMessages)
-				.setContentIntent(resultPendingIntent);
-		// Creates an intent for an Activity
+				.setContentTitle(header).setContentText(description)
+				.setContentIntent(resultPendingIntent).setTicker(header);
 
-		mNotificationManager.notify(mId, mBuilder.build());
+		Notification notification = mBuilder.build();
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+		mNotificationManager.notify((appId++ % 5), notification);
 
 	}
 

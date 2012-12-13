@@ -43,7 +43,7 @@ public class ConfigManager implements Serializable {
 
 	private final static String TAG = "ConfigManager";
 	public final static String FILENAME = "dtn.config.xml";
-	public final static String PATH = "/WSN-Android/" + FILENAME;
+	public final static String PATH = "/Bundle-Express/" + FILENAME;
 
 	private static ConfigManager mInstance;
 	private static Context mContext = null;
