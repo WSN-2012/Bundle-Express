@@ -23,7 +23,7 @@ Follow the below steps to build BPF.
 4.  `cd libs/BPF`
 5.  `ant`
 
-After these steps above, you need to import this file located in specific folder to Eclipse project.
+After these steps above, you need to import this file located in a specific folder into Eclipse project. It can be done using "File -> Import -> Existing Android Code Into Workspace".
 
 Note: When building the configuration located in config/dtn.config.xml is copied into the build folder together with the built jar. If you want to change any configuration options please edit the configuration stored in the built folder or rebuild.
 
