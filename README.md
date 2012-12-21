@@ -15,13 +15,15 @@ The project is also using a storage option in order to store encrypted bundles.
 
 ### Building 
 The BPF is included as a submodule and it is built automatically when building the service. It is possible to configure several settings in the configuration file.
-Follow the below steps to build service and BPF.
+Follow the below steps to build BPF.
 
 1.  `git clone --recursive https://github.com/WSN-2012/Bundle-Express.git`
 2.  `cd Bundle-Express`
 3.  `vi assets/config/dtn.config.xml`
 4.  `cd libs/BPF`
 5.  `ant`
+
+After these steps above, you need to import this file located in specific folder to Eclipse project.
 
 Note: When building the configuration located in config/dtn.config.xml is copied into the build folder together with the built jar. If you want to change any configuration options please edit the configuration stored in the built folder or rebuild.
 
