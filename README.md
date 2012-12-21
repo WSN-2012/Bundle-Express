@@ -1,12 +1,12 @@
-# Android Application “Bundle-Express” 
+# Android Application ï¿½Bundle-Expressï¿½ 
 ## General
 ### About
 This is a project made by (or partially by) WSN-Team 2012 in the course CSD, which is part of the [Technology Transfer Alliance](http://ttaportal.org/).
 ### Purpose
-One of the goals of the project is to be able to send data upstream from rural areas and to do this DTN communication has been used. Developed BPF(Bundle Protocol Framework)is a tool to achieve it and connect a gateway, mobile unit and central repository. It is independent platform, therefore it must be adapted. In this case, it implemented in Android platform. This project, “Bundle Express” application, is an example of such service.
+One of the goals of the project is to be able to send data upstream from rural areas and to do this DTN communication has been used. Developed BPF(Bundle Protocol Framework)is a tool to achieve it and connect a gateway, mobile unit and central repository. It is independent platform, therefore it must be adapted. In this case, it is implemented in Android platform. This project, ï¿½Bundle Expressï¿½ application, is an example of such service.
 ### Description
 This project is an android application able to carry data called bundle from a gateway to a central repository, there is implemented the BPF platform-dependent classes provided the functionalities for the mobile unit within the context of the WSN-Team 2012 project. 
-In particular for the mobile node, the service using discovery mechanism receives and sends bundles to the next point automatically following epidemic routing. It can be a mobile unit with installed application within the same network or a central repository. Mobile unit receives service notifications and stores bundles into the phone/SD card memory. Bundles are not readable. Data in a readable format can be fetched only via a central repository.
+In particular for the mobile node, the service using discovery mechanism receives and sends bundles to the next point automatically following epidemic routing. It can be a mobile unit with installed application within the same network, or a central repository. Mobile unit receives service notifications and stores bundles into the phone/SD card memory. Bundles are not readable. Data in a readable format can be fetched only via a central repository.
 ## Build & Install
 ### Prerequisites
 You will need to have ant to compile this in an easy way. To get ant look into how to install it on your platform.
@@ -43,7 +43,7 @@ To be able to monitor the service and automatically restarting it, we suggest us
 3.  `/etc/init.d/monit restart`
 
 ### Start at boot ??????
-Do not forget to add the service to start at boot. E.g: `sudo update–rc.d bpf-service defaults`
+Do not forget to add the service to start at boot. E.g: `sudo updateï¿½rc.d bpf-service defaults`
 
 ## License
 Copyright 2012 KTH
