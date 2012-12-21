@@ -20,7 +20,7 @@ Follow the below steps to build service and BPF.
 1.  `git clone --recursive https://github.com/WSN-2012/Bundle-Express.git`
 2.  `cd Bundle-Express`
 3.  `vi assets/config/dtn.config.xml`
-4.  cd libs/BPF
+4.  `cd libs/BPF`
 5.  `ant`
 
 Note: When building the configuration located in config/dtn.config.xml is copied into the build folder together with the built jar. If you want to change any configuration options please edit the configuration stored in the built folder or rebuild.
