@@ -14,7 +14,7 @@ and use an Android Phone or Emulator with version 3.0 or later (minimum API leve
 The project is also using a storage option in order to store encrypted bundles. 
 
 ### Building 
-The BPF is included as a submodule and it is built automatically when building the service. It is possible to configure several settings in the configuration file.
+The BPF is included as a submodule and it is built automatically. It is possible to configure several settings in the configuration file.
 Follow the below steps to build BPF.
 
 1.  `git clone --recursive https://github.com/WSN-2012/Bundle-Express.git`
