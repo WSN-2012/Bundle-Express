@@ -9,9 +9,8 @@ This project is an android application able to carry data called bundle from a g
 In particular for the mobile node, the service using discovery mechanism receives and sends bundles to the next point automatically following epidemic routing. It can be a mobile unit with installed application within the same network, or a central repository. Mobile unit receives service notifications and stores bundles into the phone/SD card memory. Bundles are not readable. Data in a readable format can be fetched only via a central repository.
 ## Build & Install
 ### Prerequisites
-You will need to have ant to compile this in an easy way. To get ant look into how to install it on your platform.
-Eclipse with ADT Plugin (Not mandatory)
-Android Phone or Emulator with version 3.0 or later (minimum API level 11)
+You will need to have ant to compile this in an easy way. To get ant look into how to install it on your platform. Additionally, there is need to install Eclipse with ADT Plugin (Not mandatory)
+and use an Android Phone or Emulator with version 3.0 or later (minimum API level 11).
 The project is also using a storage option in order to store encrypted bundles. 
 
 ### Building 
